@@ -49,19 +49,23 @@ checks the spec's AES against FIPS-197 C.1, C.2 and C.3.
 
 ## Performance
 
-`results/r8-{v2,n3,n1}/benchstat.txt`: benchstat of master against the Go
+`results/r9-{v2,n3,n1}/benchstat.txt`: benchstat of master against the Go
 change on Neoverse-V2 (GCP c4a), Neoverse-N3 (n4a) and Neoverse-N1 (t2a), 8
 rounds that run the test binaries in turn, with crypto/cipher's
 `BenchmarkAESCTR` and the change's new `BenchmarkAESCTRBlocks` (messages of 1
 to 12 whole blocks; master was measured with it added). The raw
-`go test -bench` outputs are next to them (`r7-base.txt` is master, `cand.txt`
-the change, `r7-new.txt` the change as first written). Geomean B/s of
-`BenchmarkAESCTR`: +36.5%, +17.0%, +20.3%. Messages of exactly 1, 2, 4 or 8
+`go test -bench` outputs are next to them (`r9-base.txt` is master at
+d695060f5b, `r9-new.txt` the change on top of it). Geomean B/s of
+`BenchmarkAESCTR`: +38.1%, +16.9%, +20.4%. Messages of exactly 1, 2, 4 or 8
 blocks, which master passes to one fixed-size function, change in throughput
-by -2.1% to +10.2%: the only decreases are for 4 blocks on Neoverse-N1 (about
-2%) and 8 blocks with AES-256 on Neoverse-V2 (0.5%). The other whole-block
-sizes gain 7.9% to 45.7%. `tools/blocks_table.py` makes the table of these in
+by -2.7% to +9.5%: the only decreases are for 4 blocks on Neoverse-N1 (2.4% to
+2.7%) and 8 blocks with AES-256 on Neoverse-V2 (0.2%). The other whole-block
+sizes gain 8.4% to 46.2%. `tools/blocks_table.py` makes the table of these in
 the description of the Go change.
+
+`results/r8-*` is the same comparison on master d56a7e140c, before the change
+was rebased (`r7-base.txt` is master, `cand.txt` the change, `r7-new.txt` the
+change as first written).
 
 The change as first written (`r7-*`; Go side in `exp/aes6/`) called the
 assembly through a Go function that chose the variant, split the call where

@@ -1,0 +1,15 @@
+goos: linux
+goarch: arm64
+pkg: crypto/cipher
+              │    master    │                 new                 │
+              │     B/s      │     B/s       vs base               │
+AESCTR/128/50   1.266Gi ± 0%   1.338Gi ± 0%   +5.64% (p=0.000 n=8)
+AESCTR/128/1K   4.776Gi ± 0%   6.040Gi ± 0%  +26.48% (p=0.000 n=8)
+AESCTR/128/8K   5.658Gi ± 1%   7.242Gi ± 0%  +27.98% (p=0.000 n=8)
+AESCTR/192/50   1.197Gi ± 1%   1.261Gi ± 0%   +5.28% (p=0.000 n=8)
+AESCTR/192/1K   4.383Gi ± 1%   5.355Gi ± 0%  +22.18% (p=0.000 n=8)
+AESCTR/192/8K   5.190Gi ± 1%   6.327Gi ± 0%  +21.89% (p=0.000 n=8)
+AESCTR/256/50   1.127Gi ± 1%   1.192Gi ± 0%   +5.83% (p=0.000 n=8)
+AESCTR/256/1K   4.020Gi ± 1%   4.815Gi ± 0%  +19.76% (p=0.000 n=8)
+AESCTR/256/8K   4.674Gi ± 1%   5.615Gi ± 0%  +20.11% (p=0.000 n=8)
+geomean         3.001Gi        3.508Gi       +16.91%
