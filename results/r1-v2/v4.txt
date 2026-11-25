@@ -1,0 +1,108 @@
+goos: linux
+goarch: arm64
+pkg: crypto/cipher
+BenchmarkAESCTR/128/50      	27724539	        43.03 ns/op	1162.09 MB/s
+BenchmarkAESCTR/128/1K      	 7126066	       168.4 ns/op	6051.14 MB/s
+BenchmarkAESCTR/128/8K      	 1388284	       864.5 ns/op	9470.67 MB/s
+BenchmarkAESCTR/192/50      	25722722	        46.66 ns/op	1071.64 MB/s
+BenchmarkAESCTR/192/1K      	 6553174	       183.2 ns/op	5563.45 MB/s
+BenchmarkAESCTR/192/8K      	 1270206	       943.6 ns/op	8676.06 MB/s
+BenchmarkAESCTR/256/50      	24234080	        49.51 ns/op	1009.91 MB/s
+BenchmarkAESCTR/256/1K      	 6249234	       192.0 ns/op	5307.31 MB/s
+BenchmarkAESCTR/256/8K      	 1211125	       990.6 ns/op	8265.03 MB/s
+goos: linux
+goarch: arm64
+pkg: crypto/cipher
+BenchmarkAESCTR/128/50      	27876266	        42.83 ns/op	1167.46 MB/s
+BenchmarkAESCTR/128/1K      	 7155063	       167.7 ns/op	6076.37 MB/s
+BenchmarkAESCTR/128/8K      	 1394385	       860.7 ns/op	9512.44 MB/s
+BenchmarkAESCTR/192/50      	25810298	        46.47 ns/op	1076.04 MB/s
+BenchmarkAESCTR/192/1K      	 6579025	       182.4 ns/op	5587.70 MB/s
+BenchmarkAESCTR/192/8K      	 1271817	       943.7 ns/op	8675.61 MB/s
+BenchmarkAESCTR/256/50      	24232446	        50.41 ns/op	 991.94 MB/s
+BenchmarkAESCTR/256/1K      	 6249180	       192.0 ns/op	5307.47 MB/s
+BenchmarkAESCTR/256/8K      	 1212048	       990.5 ns/op	8265.82 MB/s
+goos: linux
+goarch: arm64
+pkg: crypto/cipher
+BenchmarkAESCTR/128/50      	27818047	        42.88 ns/op	1166.06 MB/s
+BenchmarkAESCTR/128/1K      	 7155327	       167.7 ns/op	6075.11 MB/s
+BenchmarkAESCTR/128/8K      	 1394282	       860.7 ns/op	9511.51 MB/s
+BenchmarkAESCTR/192/50      	25429648	        46.56 ns/op	1073.86 MB/s
+BenchmarkAESCTR/192/1K      	 6578575	       182.4 ns/op	5587.81 MB/s
+BenchmarkAESCTR/192/8K      	 1271972	       943.4 ns/op	8678.21 MB/s
+BenchmarkAESCTR/256/50      	24201958	        49.53 ns/op	1009.39 MB/s
+BenchmarkAESCTR/256/1K      	 6248774	       192.0 ns/op	5307.03 MB/s
+BenchmarkAESCTR/256/8K      	 1211427	       990.6 ns/op	8264.35 MB/s
+goos: linux
+goarch: arm64
+pkg: crypto/cipher
+BenchmarkAESCTR/128/50      	27858295	        42.83 ns/op	1167.31 MB/s
+BenchmarkAESCTR/128/1K      	 7157449	       167.7 ns/op	6075.68 MB/s
+BenchmarkAESCTR/128/8K      	 1394238	       860.7 ns/op	9512.39 MB/s
+BenchmarkAESCTR/192/50      	25831861	        46.51 ns/op	1074.95 MB/s
+BenchmarkAESCTR/192/1K      	 6578784	       182.4 ns/op	5587.13 MB/s
+BenchmarkAESCTR/192/8K      	 1271962	       943.5 ns/op	8677.40 MB/s
+BenchmarkAESCTR/256/50      	24237751	        49.49 ns/op	1010.27 MB/s
+BenchmarkAESCTR/256/1K      	 6250206	       192.0 ns/op	5307.32 MB/s
+BenchmarkAESCTR/256/8K      	 1212030	       990.2 ns/op	8267.89 MB/s
+goos: linux
+goarch: arm64
+pkg: crypto/cipher
+BenchmarkAESCTR/128/50      	27846139	        42.86 ns/op	1166.63 MB/s
+BenchmarkAESCTR/128/1K      	 7154060	       167.7 ns/op	6075.16 MB/s
+BenchmarkAESCTR/128/8K      	 1394350	       862.0 ns/op	9497.61 MB/s
+BenchmarkAESCTR/192/50      	25812162	        46.51 ns/op	1075.02 MB/s
+BenchmarkAESCTR/192/1K      	 6580850	       182.4 ns/op	5587.49 MB/s
+BenchmarkAESCTR/192/8K      	 1271984	       943.4 ns/op	8677.86 MB/s
+BenchmarkAESCTR/256/50      	24210951	        49.54 ns/op	1009.22 MB/s
+BenchmarkAESCTR/256/1K      	 6249321	       192.0 ns/op	5306.93 MB/s
+BenchmarkAESCTR/256/8K      	 1211728	       990.4 ns/op	8266.66 MB/s
+goos: linux
+goarch: arm64
+pkg: crypto/cipher
+BenchmarkAESCTR/128/50      	27849464	        42.88 ns/op	1165.95 MB/s
+BenchmarkAESCTR/128/1K      	 7149802	       167.7 ns/op	6075.85 MB/s
+BenchmarkAESCTR/128/8K      	 1394278	       860.8 ns/op	9511.41 MB/s
+BenchmarkAESCTR/192/50      	25739823	        46.49 ns/op	1075.47 MB/s
+BenchmarkAESCTR/192/1K      	 6578148	       182.4 ns/op	5586.50 MB/s
+BenchmarkAESCTR/192/8K      	 1272112	       943.4 ns/op	8678.20 MB/s
+BenchmarkAESCTR/256/50      	24211417	        49.53 ns/op	1009.44 MB/s
+BenchmarkAESCTR/256/1K      	 6248458	       192.0 ns/op	5306.71 MB/s
+BenchmarkAESCTR/256/8K      	 1211750	       990.4 ns/op	8266.05 MB/s
+goos: linux
+goarch: arm64
+pkg: crypto/cipher
+BenchmarkAESCTR/128/50      	27836373	        42.86 ns/op	1166.54 MB/s
+BenchmarkAESCTR/128/1K      	 7153466	       167.7 ns/op	6075.89 MB/s
+BenchmarkAESCTR/128/8K      	 1394422	       862.1 ns/op	9496.48 MB/s
+BenchmarkAESCTR/192/50      	25773108	        46.51 ns/op	1075.15 MB/s
+BenchmarkAESCTR/192/1K      	 6576874	       182.4 ns/op	5587.44 MB/s
+BenchmarkAESCTR/192/8K      	 1271926	       943.4 ns/op	8677.80 MB/s
+BenchmarkAESCTR/256/50      	24231213	        49.52 ns/op	1009.59 MB/s
+BenchmarkAESCTR/256/1K      	 6249667	       192.0 ns/op	5307.40 MB/s
+BenchmarkAESCTR/256/8K      	 1211562	       990.3 ns/op	8267.04 MB/s
+goos: linux
+goarch: arm64
+pkg: crypto/cipher
+BenchmarkAESCTR/128/50      	27895735	        42.83 ns/op	1167.33 MB/s
+BenchmarkAESCTR/128/1K      	 7157226	       167.7 ns/op	6076.22 MB/s
+BenchmarkAESCTR/128/8K      	 1390827	       864.6 ns/op	9468.66 MB/s
+BenchmarkAESCTR/192/50      	25716853	        46.63 ns/op	1072.35 MB/s
+BenchmarkAESCTR/192/1K      	 6549062	       183.2 ns/op	5563.32 MB/s
+BenchmarkAESCTR/192/8K      	 1266439	       947.2 ns/op	8643.03 MB/s
+BenchmarkAESCTR/256/50      	24127707	        49.73 ns/op	1005.43 MB/s
+BenchmarkAESCTR/256/1K      	 6219440	       192.9 ns/op	5281.53 MB/s
+BenchmarkAESCTR/256/8K      	 1206129	       991.2 ns/op	8259.74 MB/s
+goos: linux
+goarch: arm64
+pkg: crypto/cipher
+BenchmarkAESCTR/128/50      	27831987	        42.86 ns/op	1166.59 MB/s
+BenchmarkAESCTR/128/1K      	 7150668	       167.7 ns/op	6076.27 MB/s
+BenchmarkAESCTR/128/8K      	 1394106	       860.6 ns/op	9512.62 MB/s
+BenchmarkAESCTR/192/50      	25735718	        46.53 ns/op	1074.56 MB/s
+BenchmarkAESCTR/192/1K      	 6577861	       182.4 ns/op	5587.73 MB/s
+BenchmarkAESCTR/192/8K      	 1271899	       943.3 ns/op	8678.82 MB/s
+BenchmarkAESCTR/256/50      	24219829	        49.53 ns/op	1009.58 MB/s
+BenchmarkAESCTR/256/1K      	 6249454	       192.0 ns/op	5306.94 MB/s
+BenchmarkAESCTR/256/8K      	 1211412	       990.7 ns/op	8263.79 MB/s
