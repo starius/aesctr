@@ -5,9 +5,6 @@ Axiom audit: the theorems may depend only on Lean's three standard axioms
 `Lean.trustCompiler`), and no axiom of our own.
 -/
 import AesCtr.Theorems
-import AesCtr.Proof.CtrBlocks2
-import AesCtr.Proof.CtrBlocks4
-import AesCtr.Proof.CtrBlocks8
 
 /-- info: 'AesCtr.ctrBlocksBulkAsm_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
@@ -33,17 +30,14 @@ import AesCtr.Proof.CtrBlocks8
 #guard_msgs in
 #print axioms AesCtr.kat_fips197_c3
 
--- The fixed-size functions the arm64 build no longer calls (still in the
--- assembly, unchanged from master).
-
-/-- info: 'AesCtr.Base.ctrBlocks2_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'AesCtr.ctrBlocks2Asm_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
-#print axioms AesCtr.Base.ctrBlocks2_correct
+#print axioms AesCtr.ctrBlocks2Asm_correct
 
-/-- info: 'AesCtr.Base.ctrBlocks4_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'AesCtr.ctrBlocks4Asm_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
-#print axioms AesCtr.Base.ctrBlocks4_correct
+#print axioms AesCtr.ctrBlocks4Asm_correct
 
-/-- info: 'AesCtr.Base.ctrBlocks8_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'AesCtr.ctrBlocks8Asm_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
-#print axioms AesCtr.Base.ctrBlocks8_correct
+#print axioms AesCtr.ctrBlocks8Asm_correct
