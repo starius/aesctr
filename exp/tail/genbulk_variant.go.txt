@@ -1,0 +1,180 @@
+// genBulk writes
+//
+//	func name(nr int, xk *[60]uint32, dst, src *byte, n, r int, ivlo, ivhi uint64)
+//
+// (Experiment version: tail mode and early exit are set by bulkTail and
+// bulkExit.)
+func genBulk(w io.Writer, name string, eor3 bool) {
+	p := func(format string, args ...any) { fmt.Fprintf(w, format+"\n", args...) }
+	v := func(i int) string { return fmt.Sprintf("V%d.B16", i) }
+	key := func(nr, k int) int { return bulkKeyEnd - nr + k }
+	regList := func(first, n int) string {
+		var r []string
+		for i := range n {
+			r = append(r, v(first+i))
+		}
+		return strings.Join(r, ", ")
+	}
+
+	counters := func(b int) {
+		if b < 3 {
+			for i := range b {
+				p("\tVREV64 V%d.B16, %s", bulkCtr, v(i))
+				p("\tVADD V%d.D2, V%d.D2, V%d.D2", bulkOne, bulkCtr, bulkCtr)
+			}
+			return
+		}
+		p("\tVADD V%d.D2, V%d.D2, V1.D2", bulkOne, bulkCtr)
+		p("\tVADD V%d.D2, V%d.D2, V2.D2", bulkTwo, bulkCtr)
+		p("\tVREV64 V%d.B16, V0.B16", bulkCtr)
+		for k := 3; k < b; k++ {
+			p("\tVADD V%d.D2, V%d.D2, V%d.D2", bulkTwo, k-2, k)
+		}
+		p("\tVADD V%d.D2, V%d.D2, V%d.D2", bulkTwo, b-2, bulkCtr)
+		for k := 1; k < b; k++ {
+			p("\tVREV64 %s, %s", v(k), v(k))
+		}
+	}
+	rounds := func(nr, b int) {
+		for k := range nr - 1 {
+			for i := range b {
+				p("\tAESE %s, %s", v(key(nr, k)), v(i))
+				p("\tAESMC %s, %s", v(i), v(i))
+			}
+		}
+		for i := range b {
+			p("\tAESE %s, %s", v(key(nr, nr-1)), v(i))
+		}
+	}
+	final := func(nr, i, s int) {
+		last := key(nr, nr)
+		if eor3 {
+			p("\tVEOR3 %s, %s, %s, %s", v(last), v(s), v(i), v(i))
+		} else {
+			p("\tVEOR %s, %s, %s", v(i), v(last), v(i))
+			p("\tVEOR %s, %s, %s", v(i), v(s), v(i))
+		}
+	}
+	blocksPairs := func(nr, b int) {
+		rounds(nr, b)
+		var pending []int
+		for g := 0; g < b; g += 2 {
+			n := min(2, b-g)
+			p("\tVLD1.P %d(SRC), [%s]", 16*n, regList(bulkStage, n))
+			for j := range n {
+				final(nr, g+j, bulkStage+j)
+				pending = append(pending, g+j)
+			}
+			for len(pending) >= 4 || (g+n == b && len(pending) > 0) {
+				k := min(4, len(pending))
+				p("\tVST1.P [%s], %d(DST)", regList(pending[0], k), 16*k)
+				pending = pending[k:]
+			}
+		}
+	}
+	blocksLd4 := func(nr, b int) {
+		rounds(nr, b)
+		for g := 0; g < b; g += 4 {
+			n := min(4, b-g)
+			p("\tVLD1.P %d(SRC), [%s]", 16*n, regList(b, n))
+			for j := range n {
+				final(nr, g+j, b+j)
+			}
+			p("\tVST1.P [%s], %d(DST)", regList(g, n), 16*n)
+		}
+	}
+	blocksPre := func(nr, b int) {
+		last := key(nr, nr)
+		n0 := min(4, b)
+		p("\tVLD1.P %d(SRC), [%s]", 16*n0, regList(b, n0))
+		if !eor3 {
+			for j := range n0 {
+				p("\tVEOR %s, %s, %s", v(b+j), v(last), v(b+j))
+			}
+		}
+		rounds(nr, b)
+		for j := range n0 {
+			if eor3 {
+				p("\tVEOR3 %s, %s, %s, %s", v(last), v(b+j), v(j), v(j))
+			} else {
+				p("\tVEOR %s, %s, %s", v(j), v(b+j), v(j))
+			}
+		}
+		p("\tVST1.P [%s], %d(DST)", regList(0, n0), 16*n0)
+		for g := n0; g < b; g += 4 {
+			n := min(4, b-g)
+			p("\tVLD1.P %d(SRC), [%s]", 16*n, regList(b, n))
+			for j := range n {
+				final(nr, g+j, b+j)
+			}
+			p("\tVST1.P [%s], %d(DST)", regList(g, n), 16*n)
+		}
+	}
+
+	p("")
+	p("// func %s(nr int, xk *[60]uint32, dst, src *byte, n, r int, ivlo, ivhi uint64)", name)
+	p("TEXT ·%s(SB), NOSPLIT, $0", name)
+	p("\tMOVD nr+0(FP), NR")
+	p("\tMOVD xk+8(FP), XK")
+	p("\tMOVD dst+16(FP), DST")
+	p("\tMOVD src+24(FP), SRC")
+	p("\tMOVD n+32(FP), R13")
+	p("\tMOVD r+40(FP), R15")
+	p("\tMOVD ivlo+48(FP), IV_LOW_LE")
+	p("\tMOVD ivhi+56(FP), IV_HIGH_LE")
+	p("\tVMOV IV_HIGH_LE, V%d.D[0]", bulkCtr)
+	p("\tVMOV IV_LOW_LE, V%d.D[1]", bulkCtr)
+	p("\tVEOR V%d.B16, V%d.B16, V%d.B16", bulkOne, bulkOne, bulkOne)
+	p("\tMOVD $1, R14")
+	p("\tVMOV R14, V%d.D[1]", bulkOne)
+	p("\tVADD V%d.D2, V%d.D2, V%d.D2", bulkOne, bulkOne, bulkTwo)
+	p("\tCMP $12, NR")
+	p("\tBLT Lnr10")
+	p("\tBEQ Lnr12")
+	for _, nr := range []int{14, 12, 10} {
+		p("Lnr%d:", nr)
+		regs := make([]int, 0, nr+1)
+		for k := range nr + 1 {
+			regs = append(regs, key(nr, k))
+		}
+		for len(regs) > 0 {
+			k := min(4, len(regs))
+			var names []string
+			for _, r := range regs[:k] {
+				names = append(names, v(r))
+			}
+			p("\tVLD1.P %d(XK), [%s]", 16*k, strings.Join(names, ", "))
+			regs = regs[k:]
+		}
+		p("\tCBZ R13, Ltail%d", nr)
+		p("Lloop%d:", nr)
+		counters(bulkBlocks)
+		blocksPairs(nr, bulkBlocks)
+		p("\tSUB $1, R13, R13")
+		p("\tCBNZ R13, Lloop%d", nr)
+		p("Ltail%d:", nr)
+		if bulkExit {
+			p("\tCBZ R15, Lret%d", nr)
+		}
+		for _, b := range []int{8, 4, 2, 1} {
+			p("\tAND $%d, R15, R16", b)
+			p("\tCBZ R16, Lskip%d_%d", nr, b)
+			counters(b)
+			switch bulkTail {
+			case "pairs":
+				blocksPairs(nr, b)
+			case "ld4":
+				blocksLd4(nr, b)
+			case "pre":
+				blocksPre(nr, b)
+			}
+			if bulkExit && b > 1 {
+				p("\tAND $%d, R15, R16", b-1)
+				p("\tCBZ R16, Lret%d", nr)
+			}
+			p("Lskip%d_%d:", nr, b)
+		}
+		p("Lret%d:", nr)
+		p("\tRET")
+	}
+}

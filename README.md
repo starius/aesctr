@@ -56,6 +56,26 @@ passes to one fixed-size function, change in throughput by -7.7% to +7.8%; the
 other whole-block sizes gain 5.8% to 44.3%. `tools/blocks_table.py` makes the
 table of these in the description of the Go change.
 
+The change (`exp/aes6/`) has lower throughput than master for some short
+messages. The experiments below compare the assembly and the Go code that
+calls it, to look for the cause:
+
+- `results/x1-*`: the assembly called directly in a loop (`exp/tail/`,
+  `tools/asm_table.py`), master's fixed-size functions against the bulk
+  functions and variants of their tail, in place, out of place and
+  alternating two buffers. Called this way, the bulk EOR3 function is
+  comparable to master's fixed-size functions or faster on Neoverse-V2 and
+  N3, with a few small regressions; the three buffer arrangements give
+  similar results.
+- `results/x2-*`: Go-only variants of the call path, end to end
+  (`scripts/make-call-variants.py`, `tools/median_cmp.py`). Calling
+  master's fixed-size functions for those sizes does not help; calling the
+  assembly from `xorKeyStreamAt` with no Go function in between does.
+- `results/x3-*` (stopped after 2 or 3 of 8 rounds): the bulk call with
+  master's loop in an `else` branch, or before it, and three tail variants
+  (`scripts/make-else-variants.py`). The `else` form is best; the tail
+  variants make no clear difference.
+
 `results/final-*` and `results/r6-*` are earlier measurements of the change,
 with the benchmarks of `exp/cipher/ctr_extra_test.go`; `results/r1-*` and
 `results/r*-summary.txt` are from the experiments.
