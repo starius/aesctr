@@ -5,6 +5,5 @@ import AesCtr.Proof.CtrBlocks2
 import AesCtr.Proof.CtrBlocks4
 import AesCtr.Proof.CtrBlocks8
 import AesCtr.Final.CtrBlocks1Proof
-import AesCtr.Compose
-import AesCtr.Bulk.Plain
-import AesCtr.Bulk.Eor3
+import AesCtr.Bulk.PlainMain
+import AesCtr.Bulk.Eor3Main

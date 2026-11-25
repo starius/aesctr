@@ -3,3 +3,6 @@
 
 # LNSym, copied by scripts/setup-vendor.sh
 /vendor/
+
+# build logs
+/out/
