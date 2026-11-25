@@ -1,2 +1,5 @@
 # cache and other artifacts produced by Lean's Lake build tool
 .lake/
+
+# LNSym, copied by scripts/setup-vendor.sh
+/vendor/
