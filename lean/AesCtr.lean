@@ -1,9 +1,3 @@
 import AesCtr.Spec
-import AesCtr.KAT
-import AesCtr.Proof.CtrBlocks1
-import AesCtr.Proof.CtrBlocks2
-import AesCtr.Proof.CtrBlocks4
-import AesCtr.Proof.CtrBlocks8
-import AesCtr.Final.CtrBlocks1Proof
-import AesCtr.Bulk.PlainMain
-import AesCtr.Bulk.Eor3Main
+import AesCtr.Theorems
+import AesCtr.Audit
