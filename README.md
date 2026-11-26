@@ -1,9 +1,10 @@
 # aesctr
 
-Lean 4 proofs that Go's arm64 AES-CTR assembly (`crypto/internal/fips140/aes`)
-computes AES-CTR, about the exact instruction words in the linked binary, run
-in [LNSym](https://github.com/leanprover/LNSym) (a Lean model of AArch64).
-Context: golang/go#76061.
+Lean 4 proofs that Go's AES-CTR assembly (`crypto/internal/fips140/aes`)
+computes AES-CTR, about the code in the linked binary: for arm64 in
+[LNSym](https://github.com/leanprover/LNSym) (a Lean model of AArch64), for
+amd64 in [Kraken](https://github.com/ctiller/kraken) (a Lean model of x86-64;
+see [amd64](#amd64)). Context: golang/go#76061.
 
 ## What is proved
 
@@ -134,6 +135,100 @@ AES-NI, 8 blocks per iteration. Master's fixed-size functions stay for a
 partial block and for messages within which the low 64 bits of the counter
 wrap.
 
+### What is proved on amd64
+
+`x86/AesCtrX86/Theorems.lean` has one theorem per assembly function of
+`ctr_amd64.s`:
+
+- `ctrBlocksBulkAsm_correct`: all full blocks of a message, any `n >= 1`, on
+  the VAES path and on the AES-NI path, provided the low 64 bits of the
+  counter do not wrap (the Go caller checks that).
+- `ctrBlocks1Asm_correct`, `ctrBlocks2Asm_correct`, `ctrBlocks4Asm_correct`,
+  `ctrBlocks8Asm_correct`: master's fixed-size functions, which the change
+  leaves as they were. Their counter may wrap: they step all 128 bits of it.
+
+Each says: started at the function's entry with the call as the contract says
+(`Pre` in `Contract.lean`, `PreF` in `FLemmas.lean`) and any values in the
+other registers and flags, every run returns to the caller in a state that
+satisfies `Post` (`NIState.lean`): `dst` holds `src` XOR the keystream, no
+other memory changed, and RBP, R14 and R15 are unchanged. "Every run" is
+Kraken's omnisemantics (`Reaches`, `Reach.lean`): it holds for any values of
+what the instructions leave undefined, and a run that faults or meets an
+instruction Kraken does not model does not count as returning. The spec (`Spec.lean`) is the one of the arm64 proofs,
+with LNSym's round functions copied; `KAT.lean` checks its AES against
+FIPS-197 C.1, C.2 and C.3, and `x86/Audit.lean` checks that the theorems use
+only Lean's standard axioms (no `sorry`, `native_decide` or `bv_decide`).
+
+### amd64 layout
+
+- `x86/asm/*.S`: the five functions as AT&T assembly, from the disassembly of
+  the test binary (`x86/tools/dis2kraken.py`).
+- `x86/AesCtrX86/Layout.lean`, `Blocks.lean` (written by `tools/gen_lean.py`):
+  the functions as Kraken parses them, laid out at their addresses in the
+  binary with the data they read (`layout_prog`), and for every block the
+  directives that run from its address and the address of every label,
+  checked by the kernel.
+- `Contract.lean` and `FLemmas.lean`: the contract. `Defs.lean`: the call
+  (`Call`), what each block of `dst` must hold (`Call.out`) and the memory
+  invariant `MemInv`. `NIState.lean`: `Post` and the state of the AES-NI
+  path between groups of blocks (`NIRegs`); `VState.lean`: that of the VAES
+  path (`VRegs`).
+- `NIGroups.lean`, `VGroups.lean` (written by `tools/gen_groups.py`): one
+  lemma per group of blocks of each path and key size; `NIEnds.lean`,
+  `VEnds.lean`: the entry and the return; `NIBulk.lean`, `VBulk.lean`: the
+  composition, by induction over the loop, then the tail.
+- `FRuns.lean` (written by `tools/gen_fixed.py`) and `FCorrect.lean`: master's
+  functions, one run from the entry to RET per function, key size and path.
+- The other files are the lemmas the proofs use: `Round.lean` and `Final.lean`
+  (AESENC, AESENCLAST and PSHUFB against the spec), `MemLib.lean` and
+  `VLemmas.lean` (memory, and 256-bit values as two blocks), `Tactic.lean`
+  (`xstep`, the `simp` set that steps through Kraken's semantics).
+- `EvalMain.lean` runs `ctrBlocksBulkAsm` in Kraken's evaluator and compares
+  what it writes with the spec (a test, not a proof); `PrintMain.lean` prints
+  a function as Kraken parsed it.
+
+### amd64 build
+
+In `x86/` (Lake fetches Kraken at the pinned commit):
+
+    lake build
+
+About 20 minutes on 16 cores from a fresh clone, at most about 8 GB of
+memory. `tools/check.sh <aes.test>` checks the proofs against a test binary
+of the package built from the Go change (`go test -c -o aes.test
+crypto/internal/fips140/aes`): it converts the five functions again and
+checks that GNU as turns the text back into the bytes of the binary,
+regenerates the generated files and compares them, builds, checks that the
+programs Kraken parsed, printed by Kraken, assemble to the same bytes, and
+runs the audit and the evaluator.
+
+The addresses in the proofs are those of the test binary of the Go change on
+master f9d574dc87. If the linker moves all five functions by the same
+amount, with the same sizes and the data where it was, `tools/relocate.py`
+moves the addresses written in the generators and in the other proof files
+accordingly.
+
+### amd64: trusted, and not proved
+
+Trusted: that the spec is AES-CTR (its AES is checked against FIPS-197);
+Kraken's semantics of the instructions the code uses (SSE, AES-NI, AVX2 and
+VAES forms, flags, control flow, byte memory); Kraken's parser and printer;
+the extraction and layout tools (`tools/`) and GNU binutils, which connect the
+parsed program to the linked bytes (the byte comparisons are external checks,
+not a verified x86 decoder); and Lean's kernel and the compiled files it
+imports. Applying the result to hardware assumes the CPU has the features the
+path uses, the memory is mapped as the contract says, and the code does not
+change while it runs: the model accepts every memory access (no page
+permissions) and has no interrupts or concurrency. The proofs are about the
+code at its addresses in the test binary; in another binary the displacements
+of the operands that read `bswapMask` and `ctrOffsets` differ, and
+`tools/check.sh` proves that binary only after the files are regenerated for
+it.
+
+Not proved: Go's key expansion, the Go code around the assembly (`ctr.go`,
+`ctr_amd64.go`: which function to call, which the Go tests cover),
+constant-time execution, and performance.
+
 ### amd64 performance
 
 `results/x86jd-<cpu>/benchstat.txt`: benchstat of master (d695060f5b) against
@@ -180,6 +275,9 @@ run of the same name without `d`):
 ## License
 
 MIT (`LICENSE`). Files copied or adapted from the Go project (the Go code in
-`exp/`, and the machine code of Go's assembly in the Lean program files) are
-distributed under the terms in `LICENSE-Go`; the copied Go files keep their Go
-Authors copyright notices.
+`exp/`, the machine code of Go's assembly in the Lean program files, and the
+assembly of Go's functions in `x86/asm/` and in the Lean files generated from
+it) are distributed under the terms in `LICENSE-Go`; the copied Go files keep
+their Go Authors copyright notices. The LNSym definitions copied into
+`x86/AesCtrX86/Spec.lean` are distributed under Apache-2.0; see
+`LICENSE-LNSym`.

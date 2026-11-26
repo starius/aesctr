@@ -1,0 +1,24 @@
+name = "AesCtrX86"
+defaultTargets = ["AesCtrX86", "aesctr_eval", "aesctr_print"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+# Kraken with the x86-64 instruction set of Craig Tiller's fork (branch
+# x64-isa-final), at the commit the proofs were checked with.
+[[require]]
+name = "Kraken"
+git = "https://github.com/ctiller/kraken"
+rev = "d3e72d7016cfe88ead70a482854c5f46201c6471"
+
+[[lean_lib]]
+name = "AesCtrX86"
+
+[[lean_exe]]
+name = "aesctr_eval"
+root = "EvalMain"
+
+[[lean_exe]]
+name = "aesctr_print"
+root = "PrintMain"

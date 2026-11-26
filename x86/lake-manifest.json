@@ -1,0 +1,16 @@
+{"version": "1.3.0",
+ "packagesDir": ".lake/packages",
+ "packages":
+ [{"url": "https://github.com/ctiller/kraken",
+   "type": "git",
+   "subDir": null,
+   "scope": "",
+   "rev": "d3e72d7016cfe88ead70a482854c5f46201c6471",
+   "name": "Kraken",
+   "manifestFile": "lake-manifest.json",
+   "inputRev": "d3e72d7016cfe88ead70a482854c5f46201c6471",
+   "inherited": false,
+   "configFile": "lakefile.toml"}],
+ "name": "AesCtrX86",
+ "lakeDir": ".lake",
+ "fixedToolchain": false}
