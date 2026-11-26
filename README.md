@@ -123,6 +123,60 @@ given), the Go code around the assembly (`ctr.go`, `ctr_arm64.go`: the choice
 between the bulk and the fixed-size functions, `n/12` and `n%12`, which the Go
 tests cover), constant-time execution, and performance.
 
+## amd64
+
+On amd64, the change replaces the calls of master's `ctrBlocks8Asm` for every
+8 blocks (then `ctrBlocks4Asm`, `ctrBlocks2Asm` and `ctrBlocks1Asm` for the
+rest) with one assembly call for all full blocks, `ctrBlocksBulkAsm`,
+generated with avo. On CPUs with VAES and AVX2 it encrypts two blocks per
+instruction in YMM registers, 16 blocks per loop iteration; otherwise it uses
+AES-NI, 8 blocks per iteration. Master's fixed-size functions stay for a
+partial block and for messages within which the low 64 bits of the counter
+wrap.
+
+### amd64 performance
+
+`results/x86jd-<cpu>/benchstat.txt`: benchstat of master (d695060f5b) against
+the change on top of it, 10 rounds of 1 s that run the test binaries in turn
+(`scripts/amd64/run-final.sh`, `scripts/amd64/bench.sh`), pinned to one core,
+on GCP n2d (AMD Zen 2, `zen2`), n2 (Intel Cascade Lake, `clx`), t2d (AMD Zen
+3, `zen3`), c3d (AMD Zen 4, `zen4`), n2 (Intel Ice Lake, `icx`) and c3
+(Intel Sapphire Rapids, `spr`). The first two have no VAES and use the AES-NI
+path. Geomean B/s of `BenchmarkAESCTR`: +10.7%, +17.2%, +58.9%, +54.0%,
++83.2% and +58.3%. Messages of exactly 1, 2, 4 or 8 blocks, which master
+passed to one fixed-size function, change in throughput by +0.2% to +7.1% on
+Zen 2, -5.7% to +5.2% on Cascade Lake, -0.6% to +18.0% on Zen 3, -1.5% to
++25.1% on Zen 4, +1.4% to +31.3% on Ice Lake and +0.8% to +26.4% on Sapphire
+Rapids; the other whole-block sizes measured change by -1.3% to +62.2%. The
+raw outputs are in `results/x86j-<cpu>/` (`x86-base.txt` is master,
+`x86-h1.txt` the change); the tables in the description of the Go change come
+from these.
+
+The rounds before it (the `d` directories hold the benchstat tables of the
+run of the same name without `d`):
+
+- `results/x86a-summary.txt`: the first variants, written into a Go tree by
+  `scripts/amd64/make_exp.py` (the generator and the glue are in
+  `exp/amd64/variants/`): AES-NI with 8 blocks per iteration, with and
+  without the source folded into the last round key (`xmm8f`, `xmm8`); VAES
+  on YMM registers with 4, 6 or 8 registers per iteration (`ymm4f`, `ymm6f`,
+  `ymm8f`, `ymm8`); VAES on ZMM registers (`zmm*`) and on EVEX-encoded YMM
+  registers (`ey*`), which need AVX-512. `master-` is master's loop in the
+  experiment's tree. The change uses `xmm8f` and `ymm8f`: the AVX-512
+  variants were faster for 8 KiB messages, but slower for one or two blocks
+  on Ice Lake.
+- `results/x86f-*`: the first full version of the change against master.
+- `results/x86g-*`, `x86gd-*`: version g (`exp/amd64/g/`), which made short
+  messages faster, against f and master.
+- `results/x86h-*`, `x86hd-*` (`scripts/amd64/build-h.sh`, `run-h.sh`): g;
+  d1, which is g leaving messages of fewer than 8 blocks to master's
+  functions on CPUs without VAES; h1 (`exp/amd64/h1/`), in which each group
+  of the tail adds its counter step from `ctrOffsets` and advances the
+  pointers only when another group follows; and h2, h1 with the tail before
+  the loop. h1 is the change. `results/jcc-*.txt` mark the branch layouts of g,
+  h1, h2 and master's functions that Intel's JCC erratum may affect
+  (`scripts/amd64/jcc.py`).
+
 ## License
 
 MIT (`LICENSE`). Files copied or adapted from the Go project (the Go code in

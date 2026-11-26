@@ -1,0 +1,16 @@
+goos: linux
+goarch: amd64
+pkg: crypto/cipher
+cpu: AMD EPYC 9B14
+              │    master    │                  new                   │
+              │     B/s      │      B/s       vs base                 │
+AESCTR/128/50   1.301Gi ± 0%    1.369Gi ± 0%    +5.21% (p=0.000 n=10)
+AESCTR/128/1K   6.713Gi ± 0%   11.673Gi ± 0%   +73.88% (p=0.000 n=10)
+AESCTR/128/8K   8.381Gi ± 0%   16.647Gi ± 0%   +98.64% (p=0.000 n=10)
+AESCTR/192/50   1.214Gi ± 4%    1.292Gi ± 0%    +6.47% (p=0.000 n=10)
+AESCTR/192/1K   5.953Gi ± 0%   10.092Gi ± 1%   +69.54% (p=0.000 n=10)
+AESCTR/192/8K   7.199Gi ± 1%   14.253Gi ± 1%   +97.98% (p=0.000 n=10)
+AESCTR/256/50   1.131Gi ± 0%    1.216Gi ± 5%    +7.52% (p=0.000 n=10)
+AESCTR/256/1K   5.178Gi ± 2%    8.912Gi ± 0%   +72.13% (p=0.000 n=10)
+AESCTR/256/8K   6.185Gi ± 0%   12.506Gi ± 0%  +102.20% (p=0.000 n=10)
+geomean         3.724Gi         5.734Gi        +53.96%

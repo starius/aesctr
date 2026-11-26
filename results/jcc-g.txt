@@ -1,0 +1,885 @@
+TEXT crypto/internal/fips140/aes.ctrBlocksBulkAsm.abi0(SB) /root/aesctr/go-amd64g/src/crypto/internal/fips140/aes/ctr_amd64.s
+  526 0x667100  5 MOVQ 0x8(SP), AX                        
+  527 0x667105  5 MOVQ 0x10(SP), BX                       
+  528 0x66710a  5 MOVQ 0x18(SP), DX                       
+  529 0x66710f  5 MOVQ 0x20(SP), SI                       
+  530 0x667114  5 MOVQ 0x28(SP), DI                       
+  531 0x667119  5 MOVQ 0x30(SP), R8                       
+  532 0x66711e  5 MOVQ 0x38(SP), R9                       
+  533 0x667123  5 MOVB 0x40(SP), R10                      
+  534 0x667128  3 TESTL R10, R10                          
+  535 0x66712b  6 JNE 0x667ab9                            
+  536 0x667131  5 MOVQ R8, X9                             
+  537 0x667136  7 PINSRQ $0x1, R9, X9                     
+  538 0x66713d  9 MOVDQU bswapMask(SB), X10               
+  539 0x667146  9 MOVDQU ctrOffsets+16(SB), X14           
+  540 0x66714f  4 CMPQ DI, $0x8                           
+  541 0x667153  6 JB 0x6675b6                             
+  542 0x667159  9 MOVDQU ctrOffsets+128(SB), X11          
+  545 0x667162  5 MOVDQA X9, X0                           
+  546 0x667167  4 MOVDQA X0, X1                           
+  547 0x66716b  5 PADDQ X14, X1                           
+  548 0x667170  4 MOVDQA X1, X2                           
+  549 0x667174  5 PADDQ X14, X2                           
+  550 0x667179  4 MOVDQA X2, X3                           
+  551 0x66717d  5 PADDQ X14, X3                           
+  552 0x667182  4 MOVDQA X3, X4                           
+  553 0x667186  5 PADDQ X14, X4                           
+  554 0x66718b  4 MOVDQA X4, X5                           
+  555 0x66718f  5 PADDQ X14, X5                           
+  556 0x667194  4 MOVDQA X5, X6                           
+  557 0x667198  5 PADDQ X14, X6                           
+  558 0x66719d  4 MOVDQA X6, X7                           
+  559 0x6671a1  5 PADDQ X14, X7                           
+  560 0x6671a6  6 PSHUFB X10, X0                          
+  561 0x6671ac  6 PSHUFB X10, X1                          
+  562 0x6671b2  6 PSHUFB X10, X2                          
+  563 0x6671b8  6 PSHUFB X10, X3                          
+  564 0x6671be  6 PSHUFB X10, X4                          
+  565 0x6671c4  6 PSHUFB X10, X5                          
+  566 0x6671ca  6 PSHUFB X10, X6                          
+  567 0x6671d0  6 PSHUFB X10, X7                          
+  568 0x6671d6  5 MOVDQU 0(BX), X8                        
+  569 0x6671db  5 PXOR X8, X0                             
+  570 0x6671e0  5 PXOR X8, X1                             
+  571 0x6671e5  5 PXOR X8, X2                             
+  572 0x6671ea  5 PXOR X8, X3                             
+  573 0x6671ef  5 PXOR X8, X4                             
+  574 0x6671f4  5 PXOR X8, X5                             
+  575 0x6671f9  5 PXOR X8, X6                             
+  576 0x6671fe  5 PXOR X8, X7                             
+  577 0x667203  3 MOVQ BX, CX                             
+  578 0x667206  4 CMPQ AX, $0xc                           
+  579 0x66720a  6 JB 0x6672f2                             
+  580 0x667210  2 JE 0x667282                             
+  581 0x667212  6 MOVDQU 0x10(CX), X8                     
+  582 0x667218  6 AESENC X8, X0                           
+  583 0x66721e  6 AESENC X8, X1                           
+  584 0x667224  6 AESENC X8, X2                           
+  585 0x66722a  6 AESENC X8, X3                           
+  586 0x667230  6 AESENC X8, X4                           
+  587 0x667236  6 AESENC X8, X5                           
+  588 0x66723c  6 AESENC X8, X6                           
+  589 0x667242  6 AESENC X8, X7                           
+  590 0x667248  6 MOVDQU 0x20(CX), X8                     
+  591 0x66724e  6 AESENC X8, X0                           
+  592 0x667254  6 AESENC X8, X1                           
+  593 0x66725a  6 AESENC X8, X2                           
+  594 0x667260  6 AESENC X8, X3                           
+  595 0x667266  6 AESENC X8, X4                           
+  596 0x66726c  6 AESENC X8, X5                           
+  597 0x667272  6 AESENC X8, X6                           
+  598 0x667278  6 AESENC X8, X7                           
+  599 0x66727e  4 ADDQ $0x20, CX                          
+  602 0x667282  6 MOVDQU 0x10(CX), X8                     
+  603 0x667288  6 AESENC X8, X0                           
+  604 0x66728e  6 AESENC X8, X1                           
+  605 0x667294  6 AESENC X8, X2                           
+  606 0x66729a  6 AESENC X8, X3                           
+  607 0x6672a0  6 AESENC X8, X4                           
+  608 0x6672a6  6 AESENC X8, X5                           
+  609 0x6672ac  6 AESENC X8, X6                           
+  610 0x6672b2  6 AESENC X8, X7                           
+  611 0x6672b8  6 MOVDQU 0x20(CX), X8                     
+  612 0x6672be  6 AESENC X8, X0                           
+  613 0x6672c4  6 AESENC X8, X1                           
+  614 0x6672ca  6 AESENC X8, X2                           
+  615 0x6672d0  6 AESENC X8, X3                           
+  616 0x6672d6  6 AESENC X8, X4                           
+  617 0x6672dc  6 AESENC X8, X5                           
+  618 0x6672e2  6 AESENC X8, X6                           
+  619 0x6672e8  6 AESENC X8, X7                           
+  620 0x6672ee  4 ADDQ $0x20, CX                          
+  623 0x6672f2  6 MOVDQU 0x10(CX), X8                     
+  624 0x6672f8  6 AESENC X8, X0                           
+  625 0x6672fe  6 AESENC X8, X1                           
+  626 0x667304  6 AESENC X8, X2                           
+  627 0x66730a  6 AESENC X8, X3                           
+  628 0x667310  6 AESENC X8, X4                           
+  629 0x667316  6 AESENC X8, X5                           
+  630 0x66731c  6 AESENC X8, X6                           
+  631 0x667322  6 AESENC X8, X7                           
+  632 0x667328  6 MOVDQU 0x20(CX), X8                     
+  633 0x66732e  6 AESENC X8, X0                           
+  634 0x667334  6 AESENC X8, X1                           
+  635 0x66733a  6 AESENC X8, X2                           
+  636 0x667340  6 AESENC X8, X3                           
+  637 0x667346  6 AESENC X8, X4                           
+  638 0x66734c  6 AESENC X8, X5                           
+  639 0x667352  6 AESENC X8, X6                           
+  640 0x667358  6 AESENC X8, X7                           
+  641 0x66735e  6 MOVDQU 0x30(CX), X8                     
+  642 0x667364  6 AESENC X8, X0                           
+  643 0x66736a  6 AESENC X8, X1                           
+  644 0x667370  6 AESENC X8, X2                           
+  645 0x667376  6 AESENC X8, X3                           
+  646 0x66737c  6 AESENC X8, X4                           
+  647 0x667382  6 AESENC X8, X5                           
+  648 0x667388  6 AESENC X8, X6                           
+  649 0x66738e  6 AESENC X8, X7                           
+  650 0x667394  6 MOVDQU 0x40(CX), X8                     
+  651 0x66739a  6 AESENC X8, X0                           
+  652 0x6673a0  6 AESENC X8, X1                           
+  653 0x6673a6  6 AESENC X8, X2                           
+  654 0x6673ac  6 AESENC X8, X3                           
+  655 0x6673b2  6 AESENC X8, X4                           
+  656 0x6673b8  6 AESENC X8, X5                           
+  657 0x6673be  6 AESENC X8, X6                           
+  658 0x6673c4  6 AESENC X8, X7                           
+  659 0x6673ca  6 MOVDQU 0x50(CX), X8                     
+  660 0x6673d0  6 AESENC X8, X0                           
+  661 0x6673d6  6 AESENC X8, X1                           
+  662 0x6673dc  6 AESENC X8, X2                           
+  663 0x6673e2  6 AESENC X8, X3                           
+  664 0x6673e8  6 AESENC X8, X4                           
+  665 0x6673ee  6 AESENC X8, X5                           
+  666 0x6673f4  6 AESENC X8, X6                           
+  667 0x6673fa  6 AESENC X8, X7                           
+  668 0x667400  6 MOVDQU 0x60(CX), X8                     
+  669 0x667406  6 AESENC X8, X0                           
+  670 0x66740c  6 AESENC X8, X1                           
+  671 0x667412  6 AESENC X8, X2                           
+  672 0x667418  6 AESENC X8, X3                           
+  673 0x66741e  6 AESENC X8, X4                           
+  674 0x667424  6 AESENC X8, X5                           
+  675 0x66742a  6 AESENC X8, X6                           
+  676 0x667430  6 AESENC X8, X7                           
+  677 0x667436  6 MOVDQU 0x70(CX), X8                     
+  678 0x66743c  6 AESENC X8, X0                           
+  679 0x667442  6 AESENC X8, X1                           
+  680 0x667448  6 AESENC X8, X2                           
+  681 0x66744e  6 AESENC X8, X3                           
+  682 0x667454  6 AESENC X8, X4                           
+  683 0x66745a  6 AESENC X8, X5                           
+  684 0x667460  6 AESENC X8, X6                           
+  685 0x667466  6 AESENC X8, X7                           
+  686 0x66746c  9 MOVDQU 0x80(CX), X8                     
+  687 0x667475  6 AESENC X8, X0                           
+  688 0x66747b  6 AESENC X8, X1                           
+  689 0x667481  6 AESENC X8, X2                           
+  690 0x667487  6 AESENC X8, X3                           
+  691 0x66748d  6 AESENC X8, X4                           
+  692 0x667493  6 AESENC X8, X5                           
+  693 0x667499  6 AESENC X8, X6                           
+  694 0x66749f  6 AESENC X8, X7                           
+  695 0x6674a5  9 MOVDQU 0x90(CX), X8                     
+  696 0x6674ae  6 AESENC X8, X0                           
+  697 0x6674b4  6 AESENC X8, X1                           
+  698 0x6674ba  6 AESENC X8, X2                           
+  699 0x6674c0  6 AESENC X8, X3                           
+  700 0x6674c6  6 AESENC X8, X4                           
+  701 0x6674cc  6 AESENC X8, X5                           
+  702 0x6674d2  6 AESENC X8, X6                           
+  703 0x6674d8  6 AESENC X8, X7                           
+  704 0x6674de  9 MOVDQU 0xa0(CX), X8                     
+  705 0x6674e7  5 MOVDQU 0(SI), X12                       
+  706 0x6674ec  5 PXOR X8, X12                            
+  707 0x6674f1  6 AESENCLAST X12, X0                      
+  708 0x6674f7  4 MOVDQU X0, 0(DX)                        
+  709 0x6674fb  6 MOVDQU 0x10(SI), X12                    
+  710 0x667501  5 PXOR X8, X12                            
+  711 0x667506  6 AESENCLAST X12, X1                      
+  712 0x66750c  5 MOVDQU X1, 0x10(DX)                     
+  713 0x667511  6 MOVDQU 0x20(SI), X12                    
+  714 0x667517  5 PXOR X8, X12                            
+  715 0x66751c  6 AESENCLAST X12, X2                      
+  716 0x667522  5 MOVDQU X2, 0x20(DX)                     
+  717 0x667527  6 MOVDQU 0x30(SI), X12                    
+  718 0x66752d  5 PXOR X8, X12                            
+  719 0x667532  6 AESENCLAST X12, X3                      
+  720 0x667538  5 MOVDQU X3, 0x30(DX)                     
+  721 0x66753d  6 MOVDQU 0x40(SI), X12                    
+  722 0x667543  5 PXOR X8, X12                            
+  723 0x667548  6 AESENCLAST X12, X4                      
+  724 0x66754e  5 MOVDQU X4, 0x40(DX)                     
+  725 0x667553  6 MOVDQU 0x50(SI), X12                    
+  726 0x667559  5 PXOR X8, X12                            
+  727 0x66755e  6 AESENCLAST X12, X5                      
+  728 0x667564  5 MOVDQU X5, 0x50(DX)                     
+  729 0x667569  6 MOVDQU 0x60(SI), X12                    
+  730 0x66756f  5 PXOR X8, X12                            
+  731 0x667574  6 AESENCLAST X12, X6                      
+  732 0x66757a  5 MOVDQU X6, 0x60(DX)                     
+  733 0x66757f  6 MOVDQU 0x70(SI), X12                    
+  734 0x667585  5 PXOR X8, X12                            
+  735 0x66758a  6 AESENCLAST X12, X7                      
+  736 0x667590  5 MOVDQU X7, 0x70(DX)                     
+  737 0x667595  7 ADDQ $0x80, SI                          
+  738 0x66759c  7 ADDQ $0x80, DX                          
+  739 0x6675a3  5 PADDQ X11, X9                           
+  740 0x6675a8  4 SUBQ $0x8, DI                           
+  741 0x6675ac  4 CMPQ DI, $0x8                           
+  742 0x6675b0  6 JAE 0x667162                            
+  745 0x6675b6  7 TESTQ $0x4, DI                          
+  746 0x6675bd  6 JE 0x66782c                               <== JCC erratum (start 0x6675b6 end 0x6675c3)
+  747 0x6675c3  5 MOVDQA X9, X0                           
+  748 0x6675c8  4 MOVDQA X0, X1                           
+  749 0x6675cc  5 PADDQ X14, X1                           
+  750 0x6675d1  4 MOVDQA X1, X2                           
+  751 0x6675d5  5 PADDQ X14, X2                           
+  752 0x6675da  4 MOVDQA X2, X3                           
+  753 0x6675de  5 PADDQ X14, X3                           
+  754 0x6675e3  6 PSHUFB X10, X0                          
+  755 0x6675e9  6 PSHUFB X10, X1                          
+  756 0x6675ef  6 PSHUFB X10, X2                          
+  757 0x6675f5  6 PSHUFB X10, X3                          
+  758 0x6675fb  5 MOVDQU 0(BX), X8                        
+  759 0x667600  5 PXOR X8, X0                             
+  760 0x667605  5 PXOR X8, X1                             
+  761 0x66760a  5 PXOR X8, X2                             
+  762 0x66760f  5 PXOR X8, X3                             
+  763 0x667614  3 MOVQ BX, CX                             
+  764 0x667617  4 CMPQ AX, $0xc                           
+  765 0x66761b  6 JB 0x6676a3                               <== JCC erratum (start 0x667617 end 0x667621)
+  766 0x667621  2 JE 0x667663                             
+  767 0x667623  6 MOVDQU 0x10(CX), X8                     
+  768 0x667629  6 AESENC X8, X0                           
+  769 0x66762f  6 AESENC X8, X1                           
+  770 0x667635  6 AESENC X8, X2                           
+  771 0x66763b  6 AESENC X8, X3                           
+  772 0x667641  6 MOVDQU 0x20(CX), X8                     
+  773 0x667647  6 AESENC X8, X0                           
+  774 0x66764d  6 AESENC X8, X1                           
+  775 0x667653  6 AESENC X8, X2                           
+  776 0x667659  6 AESENC X8, X3                           
+  777 0x66765f  4 ADDQ $0x20, CX                          
+  780 0x667663  6 MOVDQU 0x10(CX), X8                     
+  781 0x667669  6 AESENC X8, X0                           
+  782 0x66766f  6 AESENC X8, X1                           
+  783 0x667675  6 AESENC X8, X2                           
+  784 0x66767b  6 AESENC X8, X3                           
+  785 0x667681  6 MOVDQU 0x20(CX), X8                     
+  786 0x667687  6 AESENC X8, X0                           
+  787 0x66768d  6 AESENC X8, X1                           
+  788 0x667693  6 AESENC X8, X2                           
+  789 0x667699  6 AESENC X8, X3                           
+  790 0x66769f  4 ADDQ $0x20, CX                          
+  793 0x6676a3  6 MOVDQU 0x10(CX), X8                     
+  794 0x6676a9  6 AESENC X8, X0                           
+  795 0x6676af  6 AESENC X8, X1                           
+  796 0x6676b5  6 AESENC X8, X2                           
+  797 0x6676bb  6 AESENC X8, X3                           
+  798 0x6676c1  6 MOVDQU 0x20(CX), X8                     
+  799 0x6676c7  6 AESENC X8, X0                           
+  800 0x6676cd  6 AESENC X8, X1                           
+  801 0x6676d3  6 AESENC X8, X2                           
+  802 0x6676d9  6 AESENC X8, X3                           
+  803 0x6676df  6 MOVDQU 0x30(CX), X8                     
+  804 0x6676e5  6 AESENC X8, X0                           
+  805 0x6676eb  6 AESENC X8, X1                           
+  806 0x6676f1  6 AESENC X8, X2                           
+  807 0x6676f7  6 AESENC X8, X3                           
+  808 0x6676fd  6 MOVDQU 0x40(CX), X8                     
+  809 0x667703  6 AESENC X8, X0                           
+  810 0x667709  6 AESENC X8, X1                           
+  811 0x66770f  6 AESENC X8, X2                           
+  812 0x667715  6 AESENC X8, X3                           
+  813 0x66771b  6 MOVDQU 0x50(CX), X8                     
+  814 0x667721  6 AESENC X8, X0                           
+  815 0x667727  6 AESENC X8, X1                           
+  816 0x66772d  6 AESENC X8, X2                           
+  817 0x667733  6 AESENC X8, X3                           
+  818 0x667739  6 MOVDQU 0x60(CX), X8                     
+  819 0x66773f  6 AESENC X8, X0                           
+  820 0x667745  6 AESENC X8, X1                           
+  821 0x66774b  6 AESENC X8, X2                           
+  822 0x667751  6 AESENC X8, X3                           
+  823 0x667757  6 MOVDQU 0x70(CX), X8                     
+  824 0x66775d  6 AESENC X8, X0                           
+  825 0x667763  6 AESENC X8, X1                           
+  826 0x667769  6 AESENC X8, X2                           
+  827 0x66776f  6 AESENC X8, X3                           
+  828 0x667775  9 MOVDQU 0x80(CX), X8                     
+  829 0x66777e  6 AESENC X8, X0                           
+  830 0x667784  6 AESENC X8, X1                           
+  831 0x66778a  6 AESENC X8, X2                           
+  832 0x667790  6 AESENC X8, X3                           
+  833 0x667796  9 MOVDQU 0x90(CX), X8                     
+  834 0x66779f  6 AESENC X8, X0                           
+  835 0x6677a5  6 AESENC X8, X1                           
+  836 0x6677ab  6 AESENC X8, X2                           
+  837 0x6677b1  6 AESENC X8, X3                           
+  838 0x6677b7  9 MOVDQU 0xa0(CX), X8                     
+  839 0x6677c0  5 MOVDQU 0(SI), X12                       
+  840 0x6677c5  5 PXOR X8, X12                            
+  841 0x6677ca  6 AESENCLAST X12, X0                      
+  842 0x6677d0  4 MOVDQU X0, 0(DX)                        
+  843 0x6677d4  6 MOVDQU 0x10(SI), X12                    
+  844 0x6677da  5 PXOR X8, X12                            
+  845 0x6677df  6 AESENCLAST X12, X1                      
+  846 0x6677e5  5 MOVDQU X1, 0x10(DX)                     
+  847 0x6677ea  6 MOVDQU 0x20(SI), X12                    
+  848 0x6677f0  5 PXOR X8, X12                            
+  849 0x6677f5  6 AESENCLAST X12, X2                      
+  850 0x6677fb  5 MOVDQU X2, 0x20(DX)                     
+  851 0x667800  6 MOVDQU 0x30(SI), X12                    
+  852 0x667806  5 PXOR X8, X12                            
+  853 0x66780b  6 AESENCLAST X12, X3                      
+  854 0x667811  5 MOVDQU X3, 0x30(DX)                     
+  855 0x667816  4 ADDQ $0x40, SI                          
+  856 0x66781a  4 ADDQ $0x40, DX                          
+  857 0x66781e  9 MOVDQU ctrOffsets+64(SB), X13           
+  858 0x667827  5 PADDQ X13, X9                           
+  861 0x66782c  7 TESTQ $0x2, DI                          
+  862 0x667833  6 JE 0x6679ae                             
+  863 0x667839  5 MOVDQA X9, X0                           
+  864 0x66783e  4 MOVDQA X0, X1                           
+  865 0x667842  5 PADDQ X14, X1                           
+  866 0x667847  6 PSHUFB X10, X0                          
+  867 0x66784d  6 PSHUFB X10, X1                          
+  868 0x667853  5 MOVDQU 0(BX), X8                        
+  869 0x667858  5 PXOR X8, X0                             
+  870 0x66785d  5 PXOR X8, X1                             
+  871 0x667862  3 MOVQ BX, CX                             
+  872 0x667865  4 CMPQ AX, $0xc                           
+  873 0x667869  2 JB 0x6678bd                             
+  874 0x66786b  2 JE 0x667895                             
+  875 0x66786d  6 MOVDQU 0x10(CX), X8                     
+  876 0x667873  6 AESENC X8, X0                           
+  877 0x667879  6 AESENC X8, X1                           
+  878 0x66787f  6 MOVDQU 0x20(CX), X8                     
+  879 0x667885  6 AESENC X8, X0                           
+  880 0x66788b  6 AESENC X8, X1                           
+  881 0x667891  4 ADDQ $0x20, CX                          
+  884 0x667895  6 MOVDQU 0x10(CX), X8                     
+  885 0x66789b  6 AESENC X8, X0                           
+  886 0x6678a1  6 AESENC X8, X1                           
+  887 0x6678a7  6 MOVDQU 0x20(CX), X8                     
+  888 0x6678ad  6 AESENC X8, X0                           
+  889 0x6678b3  6 AESENC X8, X1                           
+  890 0x6678b9  4 ADDQ $0x20, CX                          
+  893 0x6678bd  6 MOVDQU 0x10(CX), X8                     
+  894 0x6678c3  6 AESENC X8, X0                           
+  895 0x6678c9  6 AESENC X8, X1                           
+  896 0x6678cf  6 MOVDQU 0x20(CX), X8                     
+  897 0x6678d5  6 AESENC X8, X0                           
+  898 0x6678db  6 AESENC X8, X1                           
+  899 0x6678e1  6 MOVDQU 0x30(CX), X8                     
+  900 0x6678e7  6 AESENC X8, X0                           
+  901 0x6678ed  6 AESENC X8, X1                           
+  902 0x6678f3  6 MOVDQU 0x40(CX), X8                     
+  903 0x6678f9  6 AESENC X8, X0                           
+  904 0x6678ff  6 AESENC X8, X1                           
+  905 0x667905  6 MOVDQU 0x50(CX), X8                     
+  906 0x66790b  6 AESENC X8, X0                           
+  907 0x667911  6 AESENC X8, X1                           
+  908 0x667917  6 MOVDQU 0x60(CX), X8                     
+  909 0x66791d  6 AESENC X8, X0                           
+  910 0x667923  6 AESENC X8, X1                           
+  911 0x667929  6 MOVDQU 0x70(CX), X8                     
+  912 0x66792f  6 AESENC X8, X0                           
+  913 0x667935  6 AESENC X8, X1                           
+  914 0x66793b  9 MOVDQU 0x80(CX), X8                     
+  915 0x667944  6 AESENC X8, X0                           
+  916 0x66794a  6 AESENC X8, X1                           
+  917 0x667950  9 MOVDQU 0x90(CX), X8                     
+  918 0x667959  6 AESENC X8, X0                           
+  919 0x66795f  6 AESENC X8, X1                           
+  920 0x667965  9 MOVDQU 0xa0(CX), X8                     
+  921 0x66796e  5 MOVDQU 0(SI), X12                       
+  922 0x667973  5 PXOR X8, X12                            
+  923 0x667978  6 AESENCLAST X12, X0                      
+  924 0x66797e  4 MOVDQU X0, 0(DX)                        
+  925 0x667982  6 MOVDQU 0x10(SI), X12                    
+  926 0x667988  5 PXOR X8, X12                            
+  927 0x66798d  6 AESENCLAST X12, X1                      
+  928 0x667993  5 MOVDQU X1, 0x10(DX)                     
+  929 0x667998  4 ADDQ $0x20, SI                          
+  930 0x66799c  4 ADDQ $0x20, DX                          
+  931 0x6679a0  9 MOVDQU ctrOffsets+32(SB), X13           
+  932 0x6679a9  5 PADDQ X13, X9                           
+  935 0x6679ae  7 TESTQ $0x1, DI                          
+  936 0x6679b5  6 JE 0x667ab8                             
+  937 0x6679bb  5 MOVDQA X9, X0                           
+  938 0x6679c0  6 PSHUFB X10, X0                          
+  939 0x6679c6  5 MOVDQU 0(BX), X8                        
+  940 0x6679cb  5 PXOR X8, X0                             
+  941 0x6679d0  3 MOVQ BX, CX                             
+  942 0x6679d3  4 CMPQ AX, $0xc                           
+  943 0x6679d7  2 JB 0x667a13                             
+  944 0x6679d9  2 JE 0x6679f7                             
+  945 0x6679db  6 MOVDQU 0x10(CX), X8                     
+  946 0x6679e1  6 AESENC X8, X0                           
+  947 0x6679e7  6 MOVDQU 0x20(CX), X8                     
+  948 0x6679ed  6 AESENC X8, X0                           
+  949 0x6679f3  4 ADDQ $0x20, CX                          
+  952 0x6679f7  6 MOVDQU 0x10(CX), X8                     
+  953 0x6679fd  6 AESENC X8, X0                           
+  954 0x667a03  6 MOVDQU 0x20(CX), X8                     
+  955 0x667a09  6 AESENC X8, X0                           
+  956 0x667a0f  4 ADDQ $0x20, CX                          
+  959 0x667a13  6 MOVDQU 0x10(CX), X8                     
+  960 0x667a19  6 AESENC X8, X0                           
+  961 0x667a1f  6 MOVDQU 0x20(CX), X8                     
+  962 0x667a25  6 AESENC X8, X0                           
+  963 0x667a2b  6 MOVDQU 0x30(CX), X8                     
+  964 0x667a31  6 AESENC X8, X0                           
+  965 0x667a37  6 MOVDQU 0x40(CX), X8                     
+  966 0x667a3d  6 AESENC X8, X0                           
+  967 0x667a43  6 MOVDQU 0x50(CX), X8                     
+  968 0x667a49  6 AESENC X8, X0                           
+  969 0x667a4f  6 MOVDQU 0x60(CX), X8                     
+  970 0x667a55  6 AESENC X8, X0                           
+  971 0x667a5b  6 MOVDQU 0x70(CX), X8                     
+  972 0x667a61  6 AESENC X8, X0                           
+  973 0x667a67  9 MOVDQU 0x80(CX), X8                     
+  974 0x667a70  6 AESENC X8, X0                           
+  975 0x667a76  9 MOVDQU 0x90(CX), X8                     
+  976 0x667a7f  6 AESENC X8, X0                           
+  977 0x667a85  9 MOVDQU 0xa0(CX), X8                     
+  978 0x667a8e  5 MOVDQU 0(SI), X12                       
+  979 0x667a93  5 PXOR X8, X12                            
+  980 0x667a98  6 AESENCLAST X12, X0                      
+  981 0x667a9e  4 MOVDQU X0, 0(DX)                        
+  982 0x667aa2  4 ADDQ $0x10, SI                          
+  983 0x667aa6  4 ADDQ $0x10, DX                          
+  984 0x667aaa  9 MOVDQU ctrOffsets+16(SB), X13           
+  985 0x667ab3  5 PADDQ X13, X9                           
+  988 0x667ab8  1 RET                                     
+  991 0x667ab9  5 VMOVQ R8, X9                            
+  992 0x667abe  6 VPINSRQ $0x1, R9, X9, X9                
+  993 0x667ac4  6 VINSERTI128 $0x1, X9, Y9, Y9            
+  994 0x667aca  9 VBROADCASTI128 0x331fd, Y10             
+  995 0x667ad3  4 CMPQ DI, $0x10                          
+  996 0x667ad7  6 JB 0x667ea6                             
+  997 0x667add  9 VBROADCASTI128 0x334ba, Y11             
+ 1000 0x667ae6  8 VPADDQ 0x333b2, Y9, Y0                  
+ 1001 0x667aee  5 VPSHUFB Y10, Y0, Y0                     
+ 1002 0x667af3  8 VPADDQ 0x333c5, Y9, Y1                  
+ 1003 0x667afb  5 VPSHUFB Y10, Y1, Y1                     
+ 1004 0x667b00  8 VPADDQ 0x333d8, Y9, Y2                  
+ 1005 0x667b08  5 VPSHUFB Y10, Y2, Y2                     
+ 1006 0x667b0d  8 VPADDQ 0x333eb, Y9, Y3                  
+ 1007 0x667b15  5 VPSHUFB Y10, Y3, Y3                     
+ 1008 0x667b1a  8 VPADDQ 0x333fe, Y9, Y4                  
+ 1009 0x667b22  5 VPSHUFB Y10, Y4, Y4                     
+ 1010 0x667b27  8 VPADDQ 0x33411, Y9, Y5                  
+ 1011 0x667b2f  5 VPSHUFB Y10, Y5, Y5                     
+ 1012 0x667b34  8 VPADDQ 0x33424, Y9, Y6                  
+ 1013 0x667b3c  5 VPSHUFB Y10, Y6, Y6                     
+ 1014 0x667b41  8 VPADDQ 0x33437, Y9, Y7                  
+ 1015 0x667b49  5 VPSHUFB Y10, Y7, Y7                     
+ 1016 0x667b4e  5 VBROADCASTI128 0(BX), Y8                
+ 1017 0x667b53  5 VPXOR Y8, Y0, Y0                        
+ 1018 0x667b58  5 VPXOR Y8, Y1, Y1                        
+ 1019 0x667b5d  5 VPXOR Y8, Y2, Y2                        
+ 1020 0x667b62  5 VPXOR Y8, Y3, Y3                        
+ 1021 0x667b67  5 VPXOR Y8, Y4, Y4                        
+ 1022 0x667b6c  5 VPXOR Y8, Y5, Y5                        
+ 1023 0x667b71  5 VPXOR Y8, Y6, Y6                        
+ 1024 0x667b76  5 VPXOR Y8, Y7, Y7                        
+ 1025 0x667b7b  3 MOVQ BX, CX                             
+ 1026 0x667b7e  4 CMPQ AX, $0xc                           
+ 1027 0x667b82  6 JB 0x667c4a                               <== JCC erratum (start 0x667b7e end 0x667b88)
+ 1028 0x667b88  2 JE 0x667bea                             
+ 1029 0x667b8a  6 VBROADCASTI128 0x10(CX), Y8             
+ 1030 0x667b90  5 VAESENC Y8, Y0, Y0                      
+ 1031 0x667b95  5 VAESENC Y8, Y1, Y1                      
+ 1032 0x667b9a  5 VAESENC Y8, Y2, Y2                      
+ 1033 0x667b9f  5 VAESENC Y8, Y3, Y3                      
+ 1034 0x667ba4  5 VAESENC Y8, Y4, Y4                      
+ 1035 0x667ba9  5 VAESENC Y8, Y5, Y5                      
+ 1036 0x667bae  5 VAESENC Y8, Y6, Y6                      
+ 1037 0x667bb3  5 VAESENC Y8, Y7, Y7                      
+ 1038 0x667bb8  6 VBROADCASTI128 0x20(CX), Y8             
+ 1039 0x667bbe  5 VAESENC Y8, Y0, Y0                      
+ 1040 0x667bc3  5 VAESENC Y8, Y1, Y1                      
+ 1041 0x667bc8  5 VAESENC Y8, Y2, Y2                      
+ 1042 0x667bcd  5 VAESENC Y8, Y3, Y3                      
+ 1043 0x667bd2  5 VAESENC Y8, Y4, Y4                      
+ 1044 0x667bd7  5 VAESENC Y8, Y5, Y5                      
+ 1045 0x667bdc  5 VAESENC Y8, Y6, Y6                      
+ 1046 0x667be1  5 VAESENC Y8, Y7, Y7                      
+ 1047 0x667be6  4 ADDQ $0x20, CX                          
+ 1050 0x667bea  6 VBROADCASTI128 0x10(CX), Y8             
+ 1051 0x667bf0  5 VAESENC Y8, Y0, Y0                      
+ 1052 0x667bf5  5 VAESENC Y8, Y1, Y1                      
+ 1053 0x667bfa  5 VAESENC Y8, Y2, Y2                      
+ 1054 0x667bff  5 VAESENC Y8, Y3, Y3                      
+ 1055 0x667c04  5 VAESENC Y8, Y4, Y4                      
+ 1056 0x667c09  5 VAESENC Y8, Y5, Y5                      
+ 1057 0x667c0e  5 VAESENC Y8, Y6, Y6                      
+ 1058 0x667c13  5 VAESENC Y8, Y7, Y7                      
+ 1059 0x667c18  6 VBROADCASTI128 0x20(CX), Y8             
+ 1060 0x667c1e  5 VAESENC Y8, Y0, Y0                      
+ 1061 0x667c23  5 VAESENC Y8, Y1, Y1                      
+ 1062 0x667c28  5 VAESENC Y8, Y2, Y2                      
+ 1063 0x667c2d  5 VAESENC Y8, Y3, Y3                      
+ 1064 0x667c32  5 VAESENC Y8, Y4, Y4                      
+ 1065 0x667c37  5 VAESENC Y8, Y5, Y5                      
+ 1066 0x667c3c  5 VAESENC Y8, Y6, Y6                      
+ 1067 0x667c41  5 VAESENC Y8, Y7, Y7                      
+ 1068 0x667c46  4 ADDQ $0x20, CX                          
+ 1071 0x667c4a  6 VBROADCASTI128 0x10(CX), Y8             
+ 1072 0x667c50  5 VAESENC Y8, Y0, Y0                      
+ 1073 0x667c55  5 VAESENC Y8, Y1, Y1                      
+ 1074 0x667c5a  5 VAESENC Y8, Y2, Y2                      
+ 1075 0x667c5f  5 VAESENC Y8, Y3, Y3                      
+ 1076 0x667c64  5 VAESENC Y8, Y4, Y4                      
+ 1077 0x667c69  5 VAESENC Y8, Y5, Y5                      
+ 1078 0x667c6e  5 VAESENC Y8, Y6, Y6                      
+ 1079 0x667c73  5 VAESENC Y8, Y7, Y7                      
+ 1080 0x667c78  6 VBROADCASTI128 0x20(CX), Y8             
+ 1081 0x667c7e  5 VAESENC Y8, Y0, Y0                      
+ 1082 0x667c83  5 VAESENC Y8, Y1, Y1                      
+ 1083 0x667c88  5 VAESENC Y8, Y2, Y2                      
+ 1084 0x667c8d  5 VAESENC Y8, Y3, Y3                      
+ 1085 0x667c92  5 VAESENC Y8, Y4, Y4                      
+ 1086 0x667c97  5 VAESENC Y8, Y5, Y5                      
+ 1087 0x667c9c  5 VAESENC Y8, Y6, Y6                      
+ 1088 0x667ca1  5 VAESENC Y8, Y7, Y7                      
+ 1089 0x667ca6  6 VBROADCASTI128 0x30(CX), Y8             
+ 1090 0x667cac  5 VAESENC Y8, Y0, Y0                      
+ 1091 0x667cb1  5 VAESENC Y8, Y1, Y1                      
+ 1092 0x667cb6  5 VAESENC Y8, Y2, Y2                      
+ 1093 0x667cbb  5 VAESENC Y8, Y3, Y3                      
+ 1094 0x667cc0  5 VAESENC Y8, Y4, Y4                      
+ 1095 0x667cc5  5 VAESENC Y8, Y5, Y5                      
+ 1096 0x667cca  5 VAESENC Y8, Y6, Y6                      
+ 1097 0x667ccf  5 VAESENC Y8, Y7, Y7                      
+ 1098 0x667cd4  6 VBROADCASTI128 0x40(CX), Y8             
+ 1099 0x667cda  5 VAESENC Y8, Y0, Y0                      
+ 1100 0x667cdf  5 VAESENC Y8, Y1, Y1                      
+ 1101 0x667ce4  5 VAESENC Y8, Y2, Y2                      
+ 1102 0x667ce9  5 VAESENC Y8, Y3, Y3                      
+ 1103 0x667cee  5 VAESENC Y8, Y4, Y4                      
+ 1104 0x667cf3  5 VAESENC Y8, Y5, Y5                      
+ 1105 0x667cf8  5 VAESENC Y8, Y6, Y6                      
+ 1106 0x667cfd  5 VAESENC Y8, Y7, Y7                      
+ 1107 0x667d02  6 VBROADCASTI128 0x50(CX), Y8             
+ 1108 0x667d08  5 VAESENC Y8, Y0, Y0                      
+ 1109 0x667d0d  5 VAESENC Y8, Y1, Y1                      
+ 1110 0x667d12  5 VAESENC Y8, Y2, Y2                      
+ 1111 0x667d17  5 VAESENC Y8, Y3, Y3                      
+ 1112 0x667d1c  5 VAESENC Y8, Y4, Y4                      
+ 1113 0x667d21  5 VAESENC Y8, Y5, Y5                      
+ 1114 0x667d26  5 VAESENC Y8, Y6, Y6                      
+ 1115 0x667d2b  5 VAESENC Y8, Y7, Y7                      
+ 1116 0x667d30  6 VBROADCASTI128 0x60(CX), Y8             
+ 1117 0x667d36  5 VAESENC Y8, Y0, Y0                      
+ 1118 0x667d3b  5 VAESENC Y8, Y1, Y1                      
+ 1119 0x667d40  5 VAESENC Y8, Y2, Y2                      
+ 1120 0x667d45  5 VAESENC Y8, Y3, Y3                      
+ 1121 0x667d4a  5 VAESENC Y8, Y4, Y4                      
+ 1122 0x667d4f  5 VAESENC Y8, Y5, Y5                      
+ 1123 0x667d54  5 VAESENC Y8, Y6, Y6                      
+ 1124 0x667d59  5 VAESENC Y8, Y7, Y7                      
+ 1125 0x667d5e  6 VBROADCASTI128 0x70(CX), Y8             
+ 1126 0x667d64  5 VAESENC Y8, Y0, Y0                      
+ 1127 0x667d69  5 VAESENC Y8, Y1, Y1                      
+ 1128 0x667d6e  5 VAESENC Y8, Y2, Y2                      
+ 1129 0x667d73  5 VAESENC Y8, Y3, Y3                      
+ 1130 0x667d78  5 VAESENC Y8, Y4, Y4                      
+ 1131 0x667d7d  5 VAESENC Y8, Y5, Y5                      
+ 1132 0x667d82  5 VAESENC Y8, Y6, Y6                      
+ 1133 0x667d87  5 VAESENC Y8, Y7, Y7                      
+ 1134 0x667d8c  9 VBROADCASTI128 0x80(CX), Y8             
+ 1135 0x667d95  5 VAESENC Y8, Y0, Y0                      
+ 1136 0x667d9a  5 VAESENC Y8, Y1, Y1                      
+ 1137 0x667d9f  5 VAESENC Y8, Y2, Y2                      
+ 1138 0x667da4  5 VAESENC Y8, Y3, Y3                      
+ 1139 0x667da9  5 VAESENC Y8, Y4, Y4                      
+ 1140 0x667dae  5 VAESENC Y8, Y5, Y5                      
+ 1141 0x667db3  5 VAESENC Y8, Y6, Y6                      
+ 1142 0x667db8  5 VAESENC Y8, Y7, Y7                      
+ 1143 0x667dbd  9 VBROADCASTI128 0x90(CX), Y8             
+ 1144 0x667dc6  5 VAESENC Y8, Y0, Y0                      
+ 1145 0x667dcb  5 VAESENC Y8, Y1, Y1                      
+ 1146 0x667dd0  5 VAESENC Y8, Y2, Y2                      
+ 1147 0x667dd5  5 VAESENC Y8, Y3, Y3                      
+ 1148 0x667dda  5 VAESENC Y8, Y4, Y4                      
+ 1149 0x667ddf  5 VAESENC Y8, Y5, Y5                      
+ 1150 0x667de4  5 VAESENC Y8, Y6, Y6                      
+ 1151 0x667de9  5 VAESENC Y8, Y7, Y7                      
+ 1152 0x667dee  9 VBROADCASTI128 0xa0(CX), Y8             
+ 1153 0x667df7  4 VPXOR 0(SI), Y8, Y12                    
+ 1154 0x667dfb  5 VAESENCLAST Y12, Y0, Y0                 
+ 1155 0x667e00  4 VMOVDQU Y0, 0(DX)                       
+ 1156 0x667e04  5 VPXOR 0x20(SI), Y8, Y12                 
+ 1157 0x667e09  5 VAESENCLAST Y12, Y1, Y1                 
+ 1158 0x667e0e  5 VMOVDQU Y1, 0x20(DX)                    
+ 1159 0x667e13  5 VPXOR 0x40(SI), Y8, Y12                 
+ 1160 0x667e18  5 VAESENCLAST Y12, Y2, Y2                 
+ 1161 0x667e1d  5 VMOVDQU Y2, 0x40(DX)                    
+ 1162 0x667e22  5 VPXOR 0x60(SI), Y8, Y12                 
+ 1163 0x667e27  5 VAESENCLAST Y12, Y3, Y3                 
+ 1164 0x667e2c  5 VMOVDQU Y3, 0x60(DX)                    
+ 1165 0x667e31  8 VPXOR 0x80(SI), Y8, Y12                 
+ 1166 0x667e39  5 VAESENCLAST Y12, Y4, Y4                 
+ 1167 0x667e3e  8 VMOVDQU Y4, 0x80(DX)                    
+ 1168 0x667e46  8 VPXOR 0xa0(SI), Y8, Y12                 
+ 1169 0x667e4e  5 VAESENCLAST Y12, Y5, Y5                 
+ 1170 0x667e53  8 VMOVDQU Y5, 0xa0(DX)                    
+ 1171 0x667e5b  8 VPXOR 0xc0(SI), Y8, Y12                 
+ 1172 0x667e63  5 VAESENCLAST Y12, Y6, Y6                 
+ 1173 0x667e68  8 VMOVDQU Y6, 0xc0(DX)                    
+ 1174 0x667e70  8 VPXOR 0xe0(SI), Y8, Y12                 
+ 1175 0x667e78  5 VAESENCLAST Y12, Y7, Y7                 
+ 1176 0x667e7d  8 VMOVDQU Y7, 0xe0(DX)                    
+ 1177 0x667e85  7 ADDQ $0x100, SI                         
+ 1178 0x667e8c  7 ADDQ $0x100, DX                         
+ 1179 0x667e93  5 VPADDQ Y11, Y9, Y9                      
+ 1180 0x667e98  4 SUBQ $0x10, DI                          
+ 1181 0x667e9c  4 CMPQ DI, $0x10                          
+ 1182 0x667ea0  6 JAE 0x667ae6                              <== JCC erratum (start 0x667e9c end 0x667ea6)
+ 1185 0x667ea6  7 TESTQ $0x8, DI                          
+ 1186 0x667ead  6 JE 0x6680ca                             
+ 1187 0x667eb3  8 VPADDQ 0x32fe5, Y9, Y0                  
+ 1188 0x667ebb  5 VPSHUFB Y10, Y0, Y0                     
+ 1189 0x667ec0  8 VPADDQ 0x32ff8, Y9, Y1                  
+ 1190 0x667ec8  5 VPSHUFB Y10, Y1, Y1                     
+ 1191 0x667ecd  8 VPADDQ 0x3300b, Y9, Y2                  
+ 1192 0x667ed5  5 VPSHUFB Y10, Y2, Y2                     
+ 1193 0x667eda  8 VPADDQ 0x3301e, Y9, Y3                  
+ 1194 0x667ee2  5 VPSHUFB Y10, Y3, Y3                     
+ 1195 0x667ee7  5 VBROADCASTI128 0(BX), Y8                
+ 1196 0x667eec  5 VPXOR Y8, Y0, Y0                        
+ 1197 0x667ef1  5 VPXOR Y8, Y1, Y1                        
+ 1198 0x667ef6  5 VPXOR Y8, Y2, Y2                        
+ 1199 0x667efb  5 VPXOR Y8, Y3, Y3                        
+ 1200 0x667f00  3 MOVQ BX, CX                             
+ 1201 0x667f03  4 CMPQ AX, $0xc                           
+ 1202 0x667f07  2 JB 0x667f7b                             
+ 1203 0x667f09  2 JE 0x667f43                             
+ 1204 0x667f0b  6 VBROADCASTI128 0x10(CX), Y8             
+ 1205 0x667f11  5 VAESENC Y8, Y0, Y0                      
+ 1206 0x667f16  5 VAESENC Y8, Y1, Y1                      
+ 1207 0x667f1b  5 VAESENC Y8, Y2, Y2                      
+ 1208 0x667f20  5 VAESENC Y8, Y3, Y3                      
+ 1209 0x667f25  6 VBROADCASTI128 0x20(CX), Y8             
+ 1210 0x667f2b  5 VAESENC Y8, Y0, Y0                      
+ 1211 0x667f30  5 VAESENC Y8, Y1, Y1                      
+ 1212 0x667f35  5 VAESENC Y8, Y2, Y2                      
+ 1213 0x667f3a  5 VAESENC Y8, Y3, Y3                      
+ 1214 0x667f3f  4 ADDQ $0x20, CX                          
+ 1217 0x667f43  6 VBROADCASTI128 0x10(CX), Y8             
+ 1218 0x667f49  5 VAESENC Y8, Y0, Y0                      
+ 1219 0x667f4e  5 VAESENC Y8, Y1, Y1                      
+ 1220 0x667f53  5 VAESENC Y8, Y2, Y2                      
+ 1221 0x667f58  5 VAESENC Y8, Y3, Y3                      
+ 1222 0x667f5d  6 VBROADCASTI128 0x20(CX), Y8             
+ 1223 0x667f63  5 VAESENC Y8, Y0, Y0                      
+ 1224 0x667f68  5 VAESENC Y8, Y1, Y1                      
+ 1225 0x667f6d  5 VAESENC Y8, Y2, Y2                      
+ 1226 0x667f72  5 VAESENC Y8, Y3, Y3                      
+ 1227 0x667f77  4 ADDQ $0x20, CX                          
+ 1230 0x667f7b  6 VBROADCASTI128 0x10(CX), Y8             
+ 1231 0x667f81  5 VAESENC Y8, Y0, Y0                      
+ 1232 0x667f86  5 VAESENC Y8, Y1, Y1                      
+ 1233 0x667f8b  5 VAESENC Y8, Y2, Y2                      
+ 1234 0x667f90  5 VAESENC Y8, Y3, Y3                      
+ 1235 0x667f95  6 VBROADCASTI128 0x20(CX), Y8             
+ 1236 0x667f9b  5 VAESENC Y8, Y0, Y0                      
+ 1237 0x667fa0  5 VAESENC Y8, Y1, Y1                      
+ 1238 0x667fa5  5 VAESENC Y8, Y2, Y2                      
+ 1239 0x667faa  5 VAESENC Y8, Y3, Y3                      
+ 1240 0x667faf  6 VBROADCASTI128 0x30(CX), Y8             
+ 1241 0x667fb5  5 VAESENC Y8, Y0, Y0                      
+ 1242 0x667fba  5 VAESENC Y8, Y1, Y1                      
+ 1243 0x667fbf  5 VAESENC Y8, Y2, Y2                      
+ 1244 0x667fc4  5 VAESENC Y8, Y3, Y3                      
+ 1245 0x667fc9  6 VBROADCASTI128 0x40(CX), Y8             
+ 1246 0x667fcf  5 VAESENC Y8, Y0, Y0                      
+ 1247 0x667fd4  5 VAESENC Y8, Y1, Y1                      
+ 1248 0x667fd9  5 VAESENC Y8, Y2, Y2                      
+ 1249 0x667fde  5 VAESENC Y8, Y3, Y3                      
+ 1250 0x667fe3  6 VBROADCASTI128 0x50(CX), Y8             
+ 1251 0x667fe9  5 VAESENC Y8, Y0, Y0                      
+ 1252 0x667fee  5 VAESENC Y8, Y1, Y1                      
+ 1253 0x667ff3  5 VAESENC Y8, Y2, Y2                      
+ 1254 0x667ff8  5 VAESENC Y8, Y3, Y3                      
+ 1255 0x667ffd  6 VBROADCASTI128 0x60(CX), Y8             
+ 1256 0x668003  5 VAESENC Y8, Y0, Y0                      
+ 1257 0x668008  5 VAESENC Y8, Y1, Y1                      
+ 1258 0x66800d  5 VAESENC Y8, Y2, Y2                      
+ 1259 0x668012  5 VAESENC Y8, Y3, Y3                      
+ 1260 0x668017  6 VBROADCASTI128 0x70(CX), Y8             
+ 1261 0x66801d  5 VAESENC Y8, Y0, Y0                      
+ 1262 0x668022  5 VAESENC Y8, Y1, Y1                      
+ 1263 0x668027  5 VAESENC Y8, Y2, Y2                      
+ 1264 0x66802c  5 VAESENC Y8, Y3, Y3                      
+ 1265 0x668031  9 VBROADCASTI128 0x80(CX), Y8             
+ 1266 0x66803a  5 VAESENC Y8, Y0, Y0                      
+ 1267 0x66803f  5 VAESENC Y8, Y1, Y1                      
+ 1268 0x668044  5 VAESENC Y8, Y2, Y2                      
+ 1269 0x668049  5 VAESENC Y8, Y3, Y3                      
+ 1270 0x66804e  9 VBROADCASTI128 0x90(CX), Y8             
+ 1271 0x668057  5 VAESENC Y8, Y0, Y0                      
+ 1272 0x66805c  5 VAESENC Y8, Y1, Y1                      
+ 1273 0x668061  5 VAESENC Y8, Y2, Y2                      
+ 1274 0x668066  5 VAESENC Y8, Y3, Y3                      
+ 1275 0x66806b  9 VBROADCASTI128 0xa0(CX), Y8             
+ 1276 0x668074  4 VPXOR 0(SI), Y8, Y12                    
+ 1277 0x668078  5 VAESENCLAST Y12, Y0, Y0                 
+ 1278 0x66807d  4 VMOVDQU Y0, 0(DX)                       
+ 1279 0x668081  5 VPXOR 0x20(SI), Y8, Y12                 
+ 1280 0x668086  5 VAESENCLAST Y12, Y1, Y1                 
+ 1281 0x66808b  5 VMOVDQU Y1, 0x20(DX)                    
+ 1282 0x668090  5 VPXOR 0x40(SI), Y8, Y12                 
+ 1283 0x668095  5 VAESENCLAST Y12, Y2, Y2                 
+ 1284 0x66809a  5 VMOVDQU Y2, 0x40(DX)                    
+ 1285 0x66809f  5 VPXOR 0x60(SI), Y8, Y12                 
+ 1286 0x6680a4  5 VAESENCLAST Y12, Y3, Y3                 
+ 1287 0x6680a9  5 VMOVDQU Y3, 0x60(DX)                    
+ 1288 0x6680ae  7 ADDQ $0x80, SI                          
+ 1289 0x6680b5  7 ADDQ $0x80, DX                          
+ 1290 0x6680bc  9 VBROADCASTI128 0x32e5b, Y13             
+ 1291 0x6680c5  5 VPADDQ Y13, Y9, Y9                      
+ 1294 0x6680ca  7 TESTQ $0x4, DI                          
+ 1295 0x6680d1  6 JE 0x668224                             
+ 1296 0x6680d7  8 VPADDQ 0x32dc1, Y9, Y0                  
+ 1297 0x6680df  5 VPSHUFB Y10, Y0, Y0                     
+ 1298 0x6680e4  8 VPADDQ 0x32dd4, Y9, Y1                  
+ 1299 0x6680ec  5 VPSHUFB Y10, Y1, Y1                     
+ 1300 0x6680f1  5 VBROADCASTI128 0(BX), Y8                
+ 1301 0x6680f6  5 VPXOR Y8, Y0, Y0                        
+ 1302 0x6680fb  5 VPXOR Y8, Y1, Y1                        
+ 1303 0x668100  3 MOVQ BX, CX                             
+ 1304 0x668103  4 CMPQ AX, $0xc                           
+ 1305 0x668107  2 JB 0x668153                             
+ 1306 0x668109  2 JE 0x66812f                             
+ 1307 0x66810b  6 VBROADCASTI128 0x10(CX), Y8             
+ 1308 0x668111  5 VAESENC Y8, Y0, Y0                      
+ 1309 0x668116  5 VAESENC Y8, Y1, Y1                      
+ 1310 0x66811b  6 VBROADCASTI128 0x20(CX), Y8             
+ 1311 0x668121  5 VAESENC Y8, Y0, Y0                      
+ 1312 0x668126  5 VAESENC Y8, Y1, Y1                      
+ 1313 0x66812b  4 ADDQ $0x20, CX                          
+ 1316 0x66812f  6 VBROADCASTI128 0x10(CX), Y8             
+ 1317 0x668135  5 VAESENC Y8, Y0, Y0                      
+ 1318 0x66813a  5 VAESENC Y8, Y1, Y1                      
+ 1319 0x66813f  6 VBROADCASTI128 0x20(CX), Y8             
+ 1320 0x668145  5 VAESENC Y8, Y0, Y0                      
+ 1321 0x66814a  5 VAESENC Y8, Y1, Y1                      
+ 1322 0x66814f  4 ADDQ $0x20, CX                          
+ 1325 0x668153  6 VBROADCASTI128 0x10(CX), Y8             
+ 1326 0x668159  5 VAESENC Y8, Y0, Y0                      
+ 1327 0x66815e  5 VAESENC Y8, Y1, Y1                      
+ 1328 0x668163  6 VBROADCASTI128 0x20(CX), Y8             
+ 1329 0x668169  5 VAESENC Y8, Y0, Y0                      
+ 1330 0x66816e  5 VAESENC Y8, Y1, Y1                      
+ 1331 0x668173  6 VBROADCASTI128 0x30(CX), Y8             
+ 1332 0x668179  5 VAESENC Y8, Y0, Y0                      
+ 1333 0x66817e  5 VAESENC Y8, Y1, Y1                      
+ 1334 0x668183  6 VBROADCASTI128 0x40(CX), Y8             
+ 1335 0x668189  5 VAESENC Y8, Y0, Y0                      
+ 1336 0x66818e  5 VAESENC Y8, Y1, Y1                      
+ 1337 0x668193  6 VBROADCASTI128 0x50(CX), Y8             
+ 1338 0x668199  5 VAESENC Y8, Y0, Y0                      
+ 1339 0x66819e  5 VAESENC Y8, Y1, Y1                      
+ 1340 0x6681a3  6 VBROADCASTI128 0x60(CX), Y8             
+ 1341 0x6681a9  5 VAESENC Y8, Y0, Y0                      
+ 1342 0x6681ae  5 VAESENC Y8, Y1, Y1                      
+ 1343 0x6681b3  6 VBROADCASTI128 0x70(CX), Y8             
+ 1344 0x6681b9  5 VAESENC Y8, Y0, Y0                      
+ 1345 0x6681be  5 VAESENC Y8, Y1, Y1                      
+ 1346 0x6681c3  9 VBROADCASTI128 0x80(CX), Y8             
+ 1347 0x6681cc  5 VAESENC Y8, Y0, Y0                      
+ 1348 0x6681d1  5 VAESENC Y8, Y1, Y1                      
+ 1349 0x6681d6  9 VBROADCASTI128 0x90(CX), Y8             
+ 1350 0x6681df  5 VAESENC Y8, Y0, Y0                      
+ 1351 0x6681e4  5 VAESENC Y8, Y1, Y1                      
+ 1352 0x6681e9  9 VBROADCASTI128 0xa0(CX), Y8             
+ 1353 0x6681f2  4 VPXOR 0(SI), Y8, Y12                    
+ 1354 0x6681f6  5 VAESENCLAST Y12, Y0, Y0                 
+ 1355 0x6681fb  4 VMOVDQU Y0, 0(DX)                       
+ 1356 0x6681ff  5 VPXOR 0x20(SI), Y8, Y12                 
+ 1357 0x668204  5 VAESENCLAST Y12, Y1, Y1                 
+ 1358 0x668209  5 VMOVDQU Y1, 0x20(DX)                    
+ 1359 0x66820e  4 ADDQ $0x40, SI                          
+ 1360 0x668212  4 ADDQ $0x40, DX                          
+ 1361 0x668216  9 VBROADCASTI128 0x32cc1, Y13             
+ 1362 0x66821f  5 VPADDQ Y13, Y9, Y9                      
+ 1365 0x668224  7 TESTQ $0x2, DI                          
+ 1366 0x66822b  6 JE 0x66831c                             
+ 1367 0x668231  8 VPADDQ 0x32c67, Y9, Y0                  
+ 1368 0x668239  5 VPSHUFB Y10, Y0, Y0                     
+ 1369 0x66823e  5 VBROADCASTI128 0(BX), Y8                
+ 1370 0x668243  5 VPXOR Y8, Y0, Y0                        
+ 1371 0x668248  3 MOVQ BX, CX                             
+ 1372 0x66824b  4 CMPQ AX, $0xc                           
+ 1373 0x66824f  2 JB 0x668287                             
+ 1374 0x668251  2 JE 0x66826d                             
+ 1375 0x668253  6 VBROADCASTI128 0x10(CX), Y8             
+ 1376 0x668259  5 VAESENC Y8, Y0, Y0                      
+ 1377 0x66825e  6 VBROADCASTI128 0x20(CX), Y8             
+ 1378 0x668264  5 VAESENC Y8, Y0, Y0                      
+ 1379 0x668269  4 ADDQ $0x20, CX                          
+ 1382 0x66826d  6 VBROADCASTI128 0x10(CX), Y8             
+ 1383 0x668273  5 VAESENC Y8, Y0, Y0                      
+ 1384 0x668278  6 VBROADCASTI128 0x20(CX), Y8             
+ 1385 0x66827e  5 VAESENC Y8, Y0, Y0                      
+ 1386 0x668283  4 ADDQ $0x20, CX                          
+ 1389 0x668287  6 VBROADCASTI128 0x10(CX), Y8             
+ 1390 0x66828d  5 VAESENC Y8, Y0, Y0                      
+ 1391 0x668292  6 VBROADCASTI128 0x20(CX), Y8             
+ 1392 0x668298  5 VAESENC Y8, Y0, Y0                      
+ 1393 0x66829d  6 VBROADCASTI128 0x30(CX), Y8             
+ 1394 0x6682a3  5 VAESENC Y8, Y0, Y0                      
+ 1395 0x6682a8  6 VBROADCASTI128 0x40(CX), Y8             
+ 1396 0x6682ae  5 VAESENC Y8, Y0, Y0                      
+ 1397 0x6682b3  6 VBROADCASTI128 0x50(CX), Y8             
+ 1398 0x6682b9  5 VAESENC Y8, Y0, Y0                      
+ 1399 0x6682be  6 VBROADCASTI128 0x60(CX), Y8             
+ 1400 0x6682c4  5 VAESENC Y8, Y0, Y0                      
+ 1401 0x6682c9  6 VBROADCASTI128 0x70(CX), Y8             
+ 1402 0x6682cf  5 VAESENC Y8, Y0, Y0                      
+ 1403 0x6682d4  9 VBROADCASTI128 0x80(CX), Y8             
+ 1404 0x6682dd  5 VAESENC Y8, Y0, Y0                      
+ 1405 0x6682e2  9 VBROADCASTI128 0x90(CX), Y8             
+ 1406 0x6682eb  5 VAESENC Y8, Y0, Y0                      
+ 1407 0x6682f0  9 VBROADCASTI128 0xa0(CX), Y8             
+ 1408 0x6682f9  4 VPXOR 0(SI), Y8, Y12                    
+ 1409 0x6682fd  5 VAESENCLAST Y12, Y0, Y0                 
+ 1410 0x668302  4 VMOVDQU Y0, 0(DX)                       
+ 1411 0x668306  4 ADDQ $0x20, SI                          
+ 1412 0x66830a  4 ADDQ $0x20, DX                          
+ 1413 0x66830e  9 VBROADCASTI128 0x32ba9, Y13             
+ 1414 0x668317  5 VPADDQ Y13, Y9, Y9                      
+ 1417 0x66831c  7 TESTQ $0x1, DI                          
+ 1418 0x668323  6 JE 0x668405                               <== JCC erratum (start 0x66831c end 0x668329)
+ 1419 0x668329  8 VPADDQ 0x32b6f, X9, X0                  
+ 1420 0x668331  5 VPSHUFB X10, X0, X0                     
+ 1421 0x668336  4 VMOVDQU 0(BX), X8                       
+ 1422 0x66833a  5 VPXOR X8, X0, X0                        
+ 1423 0x66833f  3 MOVQ BX, CX                             
+ 1424 0x668342  4 CMPQ AX, $0xc                           
+ 1425 0x668346  2 JB 0x66837a                             
+ 1426 0x668348  2 JE 0x668362                             
+ 1427 0x66834a  5 VMOVDQU 0x10(CX), X8                    
+ 1428 0x66834f  5 VAESENC X8, X0, X0                      
+ 1429 0x668354  5 VMOVDQU 0x20(CX), X8                    
+ 1430 0x668359  5 VAESENC X8, X0, X0                      
+ 1431 0x66835e  4 ADDQ $0x20, CX                          
+ 1434 0x668362  5 VMOVDQU 0x10(CX), X8                    
+ 1435 0x668367  5 VAESENC X8, X0, X0                      
+ 1436 0x66836c  5 VMOVDQU 0x20(CX), X8                    
+ 1437 0x668371  5 VAESENC X8, X0, X0                      
+ 1438 0x668376  4 ADDQ $0x20, CX                          
+ 1441 0x66837a  5 VMOVDQU 0x10(CX), X8                    
+ 1442 0x66837f  5 VAESENC X8, X0, X0                      
+ 1443 0x668384  5 VMOVDQU 0x20(CX), X8                    
+ 1444 0x668389  5 VAESENC X8, X0, X0                      
+ 1445 0x66838e  5 VMOVDQU 0x30(CX), X8                    
+ 1446 0x668393  5 VAESENC X8, X0, X0                      
+ 1447 0x668398  5 VMOVDQU 0x40(CX), X8                    
+ 1448 0x66839d  5 VAESENC X8, X0, X0                      
+ 1449 0x6683a2  5 VMOVDQU 0x50(CX), X8                    
+ 1450 0x6683a7  5 VAESENC X8, X0, X0                      
+ 1451 0x6683ac  5 VMOVDQU 0x60(CX), X8                    
+ 1452 0x6683b1  5 VAESENC X8, X0, X0                      
+ 1453 0x6683b6  5 VMOVDQU 0x70(CX), X8                    
+ 1454 0x6683bb  5 VAESENC X8, X0, X0                      
+ 1455 0x6683c0  8 VMOVDQU 0x80(CX), X8                    
+ 1456 0x6683c8  5 VAESENC X8, X0, X0                      
+ 1457 0x6683cd  8 VMOVDQU 0x90(CX), X8                    
+ 1458 0x6683d5  5 VAESENC X8, X0, X0                      
+ 1459 0x6683da  8 VMOVDQU 0xa0(CX), X8                    
+ 1460 0x6683e2  4 VPXOR 0(SI), X8, X12                    
+ 1461 0x6683e6  5 VAESENCLAST X12, X0, X0                 
+ 1462 0x6683eb  4 VMOVDQU X0, 0(DX)                       
+ 1463 0x6683ef  4 ADDQ $0x10, SI                          
+ 1464 0x6683f3  4 ADDQ $0x10, DX                          
+ 1465 0x6683f7  9 VBROADCASTI128 0x32ab0, Y13             
+ 1466 0x668400  5 VPADDQ Y13, Y9, Y9                      
+ 1469 0x668405  4 VZEROUPPER                              

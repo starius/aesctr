@@ -1,0 +1,16 @@
+goos: linux
+goarch: amd64
+pkg: crypto/cipher
+cpu: Intel(R) Xeon(R) Platinum 8481C CPU @ 2.70GHz
+              │    master    │                  new                  │
+              │     B/s      │      B/s       vs base                │
+AESCTR/128/50   1.312Gi ± 0%    1.384Gi ± 0%    +5.48% (p=0.000 n=8)
+AESCTR/128/1K   6.376Gi ± 0%   11.284Gi ± 0%   +76.98% (p=0.000 n=8)
+AESCTR/128/8K   7.616Gi ± 0%   16.134Gi ± 0%  +111.84% (p=0.000 n=8)
+AESCTR/192/50   1.288Gi ± 0%    1.352Gi ± 0%    +4.99% (p=0.000 n=8)
+AESCTR/192/1K   5.671Gi ± 0%   10.290Gi ± 0%   +81.46% (p=0.000 n=8)
+AESCTR/192/8K   6.561Gi ± 0%   13.780Gi ± 0%  +110.04% (p=0.000 n=8)
+AESCTR/256/50   1.257Gi ± 0%    1.333Gi ± 0%    +6.10% (p=0.000 n=8)
+AESCTR/256/1K   5.057Gi ± 0%    9.173Gi ± 0%   +81.42% (p=0.000 n=8)
+AESCTR/256/8K   5.735Gi ± 0%   11.651Gi ± 2%  +103.16% (p=0.000 n=8)
+geomean         3.637Gi         5.751Gi        +58.15%
