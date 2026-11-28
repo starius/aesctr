@@ -15,10 +15,10 @@ import sys
 
 # name, blocks, entry, R192 label, R128 label, [slow label, join label].
 FUNCS = [
-    ("1", 1, 0x5421a0, 0x5421ff, 0x542214, None, None),
-    ("2", 2, 0x542280, 0x542306, 0x542325, None, None),
-    ("4", 4, 0x5423e0, 0x5424b4, 0x5424e7, None, None),
-    ("8", 8, 0x542620, 0x5427fb, 0x542858, 0x5426ba, 0x542746),
+    ("1", 1, 0x542180, 0x5421df, 0x5421f4, None, None),
+    ("2", 2, 0x542260, 0x5422e6, 0x542305, None, None),
+    ("4", 4, 0x5423c0, 0x542494, 0x5424c7, None, None),
+    ("8", 8, 0x542600, 0x5427db, 0x542838, 0x54269a, 0x542726),
 ]
 TWO64 = 2 ** 64
 

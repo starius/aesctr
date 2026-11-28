@@ -16,31 +16,31 @@ namespace AesCtrX86
 def code_ctr1 : Program := parseFile("asm/ctr1.S")
 
 /-- The address of `ctrBlocks1Asm` in the binary. -/
-def entry_ctr1 : Int64 := 0x5421a0
+def entry_ctr1 : Int64 := 0x542180
 
 /-- `ctrBlocks2Asm`, from the disassembly of the linked binary. -/
 def code_ctr2 : Program := parseFile("asm/ctr2.S")
 
 /-- The address of `ctrBlocks2Asm` in the binary. -/
-def entry_ctr2 : Int64 := 0x542280
+def entry_ctr2 : Int64 := 0x542260
 
 /-- `ctrBlocks4Asm`, from the disassembly of the linked binary. -/
 def code_ctr4 : Program := parseFile("asm/ctr4.S")
 
 /-- The address of `ctrBlocks4Asm` in the binary. -/
-def entry_ctr4 : Int64 := 0x5423e0
+def entry_ctr4 : Int64 := 0x5423c0
 
 /-- `ctrBlocks8Asm`, from the disassembly of the linked binary. -/
 def code_ctr8 : Program := parseFile("asm/ctr8.S")
 
 /-- The address of `ctrBlocks8Asm` in the binary. -/
-def entry_ctr8 : Int64 := 0x542620
+def entry_ctr8 : Int64 := 0x542600
 
 /-- `ctrBlocksBulkAsm`, from the disassembly of the linked binary. -/
 def code_bulk : Program := parseFile("asm/bulk.S")
 
 /-- The address of `ctrBlocksBulkAsm` in the binary. -/
-def entry_bulk : Int64 := 0x542a80
+def entry_bulk : Int64 := 0x542a60
 
 /-- The data the functions read: `bswapMask` and the entries of `ctrOffsets`,
 with the empty directives that pad the layout up to their addresses. -/
@@ -4286,7 +4286,7 @@ def size (i : Nat) : Nat :=
                       if i < 1394 then
                         1
                       else
-                        101146
+                        101178
                   else
                     if i < 1396 then
                       0
@@ -4397,7 +4397,7 @@ def size (i : Nat) : Nat :=
                         16
 
 /-- The address of the first function in the binary. -/
-def start : Int64 := 0x5421a0
+def start : Int64 := 0x542180
 
 instance layout : Layout := { start := start, size := size }
 
@@ -4406,14 +4406,14 @@ instance layout : Layout := { start := start, size := size }
 and at the start of every function), each directive paired with its size.
 The last block of a function before another one ends with the padding. -/
 
-def blk_5421a0 : List (Directive × Nat) := List.zip (parse("
+def blk_542180 : List (Directive × Nat) := List.zip (parse("
   mov 0x8(%rsp),%rax
   mov 0x10(%rsp),%rcx
   mov 0x18(%rsp),%rdx
   mov 0x20(%rsp),%rbx
   mov 0x28(%rsp),%rsi
   mov 0x30(%rsp),%rdi
-  movdqu 0x1a6ca(%rip),%xmm0
+  movdqu 0x1a6ea(%rip),%xmm0
   movq %rsi,%xmm1
   pinsrq $0x1,%rdi,%xmm1
   pshufb %xmm0,%xmm1
@@ -4421,24 +4421,24 @@ def blk_5421a0 : List (Directive × Nat) := List.zip (parse("
   pxor %xmm0,%xmm1
   add $0x10,%rcx
   sub $0xc,%rax
-  je L5421ff
-  jb L542214
+  je L5421df
+  jb L5421f4
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   movups 0x10(%rcx),%xmm0
   aesenc %xmm0,%xmm1
   add $0x20,%rcx")) [5, 5, 5, 5, 5, 5, 8, 5, 7, 5, 3, 4, 4, 4, 2, 2, 3, 5, 4, 5, 4]
 
-def blk_5421ff : List (Directive × Nat) := List.zip (parse("
-L5421ff:
+def blk_5421df : List (Directive × Nat) := List.zip (parse("
+L5421df:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   movups 0x10(%rcx),%xmm0
   aesenc %xmm0,%xmm1
   add $0x20,%rcx")) [0, 3, 5, 4, 5, 4]
 
-def blk_542214 : List (Directive × Nat) := List.zip (parse("
-L542214:
+def blk_5421f4 : List (Directive × Nat) := List.zip (parse("
+L5421f4:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   movups 0x10(%rcx),%xmm0
@@ -4464,14 +4464,14 @@ L542214:
   movups %xmm0,(%rdx)
   ret")) [0, 3, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 7, 5, 7, 5, 3, 4, 3, 1] ++ [(.byteArray ⟨#[]⟩, 2)]
 
-def blk_542280 : List (Directive × Nat) := List.zip (parse("
+def blk_542260 : List (Directive × Nat) := List.zip (parse("
   mov 0x8(%rsp),%rax
   mov 0x10(%rsp),%rcx
   mov 0x18(%rsp),%rdx
   mov 0x20(%rsp),%rbx
   mov 0x28(%rsp),%rsi
   mov 0x30(%rsp),%rdi
-  movdqu 0x1a5ea(%rip),%xmm0
+  movdqu 0x1a60a(%rip),%xmm0
   movq %rsi,%xmm1
   pinsrq $0x1,%rdi,%xmm1
   pshufb %xmm0,%xmm1
@@ -4485,8 +4485,8 @@ def blk_542280 : List (Directive × Nat) := List.zip (parse("
   pxor %xmm0,%xmm2
   add $0x10,%rcx
   sub $0xc,%rax
-  je L542306
-  jb L542325
+  je L5422e6
+  jb L542305
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -4495,8 +4495,8 @@ def blk_542280 : List (Directive × Nat) := List.zip (parse("
   aesenc %xmm0,%xmm2
   add $0x20,%rcx")) [5, 5, 5, 5, 5, 5, 8, 5, 7, 5, 4, 4, 5, 7, 5, 3, 4, 4, 4, 4, 2, 2, 3, 5, 5, 4, 5, 5, 4]
 
-def blk_542306 : List (Directive × Nat) := List.zip (parse("
-L542306:
+def blk_5422e6 : List (Directive × Nat) := List.zip (parse("
+L5422e6:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -4505,8 +4505,8 @@ L542306:
   aesenc %xmm0,%xmm2
   add $0x20,%rcx")) [0, 3, 5, 5, 4, 5, 5, 4]
 
-def blk_542325 : List (Directive × Nat) := List.zip (parse("
-L542325:
+def blk_542305 : List (Directive × Nat) := List.zip (parse("
+L542305:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -4545,14 +4545,14 @@ L542325:
   movups %xmm0,0x10(%rdx)
   ret")) [0, 3, 5, 5, 4, 5, 5, 4, 5, 5, 4, 5, 5, 4, 5, 5, 4, 5, 5, 4, 5, 5, 4, 5, 5, 7, 5, 5, 7, 5, 5, 3, 4, 3, 4, 4, 4, 1] ++ [(.byteArray ⟨#[]⟩, 19)]
 
-def blk_5423e0 : List (Directive × Nat) := List.zip (parse("
+def blk_5423c0 : List (Directive × Nat) := List.zip (parse("
   mov 0x8(%rsp),%rax
   mov 0x10(%rsp),%rcx
   mov 0x18(%rsp),%rdx
   mov 0x20(%rsp),%rbx
   mov 0x28(%rsp),%rsi
   mov 0x30(%rsp),%rdi
-  movdqu 0x1a48a(%rip),%xmm0
+  movdqu 0x1a4aa(%rip),%xmm0
   movq %rsi,%xmm1
   pinsrq $0x1,%rdi,%xmm1
   pshufb %xmm0,%xmm1
@@ -4578,8 +4578,8 @@ def blk_5423e0 : List (Directive × Nat) := List.zip (parse("
   pxor %xmm0,%xmm4
   add $0x10,%rcx
   sub $0xc,%rax
-  je L5424b4
-  jb L5424e7
+  je L542494
+  jb L5424c7
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -4592,8 +4592,8 @@ def blk_5423e0 : List (Directive × Nat) := List.zip (parse("
   aesenc %xmm0,%xmm4
   add $0x20,%rcx")) [5, 5, 5, 5, 5, 5, 8, 5, 7, 5, 4, 4, 5, 7, 5, 4, 4, 5, 7, 5, 4, 4, 5, 7, 5, 3, 4, 4, 4, 4, 4, 4, 2, 2, 3, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4]
 
-def blk_5424b4 : List (Directive × Nat) := List.zip (parse("
-L5424b4:
+def blk_542494 : List (Directive × Nat) := List.zip (parse("
+L542494:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -4606,8 +4606,8 @@ L5424b4:
   aesenc %xmm0,%xmm4
   add $0x20,%rcx")) [0, 3, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4]
 
-def blk_5424e7 : List (Directive × Nat) := List.zip (parse("
-L5424e7:
+def blk_5424c7 : List (Directive × Nat) := List.zip (parse("
+L5424c7:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -4672,21 +4672,21 @@ L5424e7:
   movups %xmm0,0x30(%rdx)
   ret")) [0, 3, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 7, 5, 5, 5, 5, 7, 5, 5, 5, 5, 3, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1] ++ [(.byteArray ⟨#[]⟩, 21)]
 
-def blk_542620 : List (Directive × Nat) := List.zip (parse("
+def blk_542600 : List (Directive × Nat) := List.zip (parse("
   mov 0x8(%rsp),%rax
   mov 0x10(%rsp),%rcx
   mov 0x18(%rsp),%rdx
   mov 0x20(%rsp),%rbx
   mov 0x28(%rsp),%rsi
   mov 0x30(%rsp),%rdi
-  movdqu 0x1a24a(%rip),%xmm0
+  movdqu 0x1a26a(%rip),%xmm0
   movq %rsi,%xmm1
   pinsrq $0x1,%rdi,%xmm1
   movaps %xmm1,%xmm8
   pshufb %xmm0,%xmm1
   mov %rsi,%r8
   add $0x7,%r8
-  jb L5426ba
+  jb L54269a
   xor %r8,%r8
   inc %r8
   pxor %xmm9,%xmm9
@@ -4705,10 +4705,10 @@ def blk_542620 : List (Directive × Nat) := List.zip (parse("
   movaps %xmm8,%xmm7
   paddq %xmm9,%xmm8
   movaps %xmm8,%xmm8
-  jmp L542746")) [5, 5, 5, 5, 5, 5, 8, 5, 7, 4, 5, 3, 4, 2, 3, 3, 5, 7, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5]
+  jmp L542726")) [5, 5, 5, 5, 5, 5, 8, 5, 7, 4, 5, 3, 4, 2, 3, 3, 5, 7, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5]
 
-def blk_5426ba : List (Directive × Nat) := List.zip (parse("
-L5426ba:
+def blk_54269a : List (Directive × Nat) := List.zip (parse("
+L54269a:
   add $0x1,%rsi
   adc $0x0,%rdi
   movq %rsi,%xmm2
@@ -4738,8 +4738,8 @@ L5426ba:
   movq %rsi,%xmm8
   pinsrq $0x1,%rdi,%xmm8")) [0, 4, 4, 5, 7, 4, 4, 5, 7, 4, 4, 5, 7, 4, 4, 5, 7, 4, 4, 5, 7, 4, 4, 5, 7, 4, 4, 5, 7]
 
-def blk_542746 : List (Directive × Nat) := List.zip (parse("
-L542746:
+def blk_542726 : List (Directive × Nat) := List.zip (parse("
+L542726:
   pshufb %xmm0,%xmm2
   pshufb %xmm0,%xmm3
   pshufb %xmm0,%xmm4
@@ -4758,8 +4758,8 @@ L542746:
   pxor %xmm0,%xmm8
   add $0x10,%rcx
   sub $0xc,%rax
-  je L5427fb
-  jb L542858
+  je L5427db
+  jb L542838
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -4780,8 +4780,8 @@ L542746:
   aesenc %xmm0,%xmm8
   add $0x20,%rcx")) [0, 5, 5, 5, 5, 5, 5, 6, 3, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 2, 6, 3, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 6, 4]
 
-def blk_5427fb : List (Directive × Nat) := List.zip (parse("
-L5427fb:
+def blk_5427db : List (Directive × Nat) := List.zip (parse("
+L5427db:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -4802,8 +4802,8 @@ L5427fb:
   aesenc %xmm0,%xmm8
   add $0x20,%rcx")) [0, 3, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 6, 4]
 
-def blk_542858 : List (Directive × Nat) := List.zip (parse("
-L542858:
+def blk_542838 : List (Directive × Nat) := List.zip (parse("
+L542838:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -4920,7 +4920,7 @@ L542858:
   movups %xmm0,0x70(%rdx)
   ret")) [0, 3, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 6, 7, 5, 5, 5, 5, 5, 5, 5, 6, 7, 5, 5, 5, 5, 5, 5, 5, 6, 3, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 1] ++ [(.byteArray ⟨#[]⟩, 1)]
 
-def blk_542a80 : List (Directive × Nat) := List.zip (parse("
+def blk_542a60 : List (Directive × Nat) := List.zip (parse("
   mov 0x8(%rsp),%rax
   mov 0x10(%rsp),%rbx
   mov 0x18(%rsp),%rdx
@@ -4930,38 +4930,38 @@ def blk_542a80 : List (Directive × Nat) := List.zip (parse("
   mov 0x38(%rsp),%r9
   mov 0x40(%rsp),%r10b
   test %r10b,%r10b
-  jne L54343c
+  jne L54341c
   movq %r8,%xmm9
   pinsrq $0x1,%r9,%xmm9
-  movdqu 0x19dca(%rip),%xmm10
+  movdqu 0x19dea(%rip),%xmm10
   cmp $0x8,%rdi
-  jb L542f49
-  movdqu 0x19ee7(%rip),%xmm11")) [5, 5, 5, 5, 5, 5, 5, 5, 3, 6, 5, 7, 9, 4, 6, 9]
+  jb L542f29
+  movdqu 0x19f07(%rip),%xmm11")) [5, 5, 5, 5, 5, 5, 5, 5, 3, 6, 5, 7, 9, 4, 6, 9]
 
-def blk_542ad9 : List (Directive × Nat) := List.zip (parse("
-L542ad9:
+def blk_542ab9 : List (Directive × Nat) := List.zip (parse("
+L542ab9:
   movdqa %xmm9,%xmm0
   pshufb %xmm10,%xmm0
   movdqa %xmm9,%xmm1
-  paddq 0x19e5f(%rip),%xmm1
+  paddq 0x19e7f(%rip),%xmm1
   pshufb %xmm10,%xmm1
   movdqa %xmm9,%xmm2
-  paddq 0x19e5c(%rip),%xmm2
+  paddq 0x19e7c(%rip),%xmm2
   pshufb %xmm10,%xmm2
   movdqa %xmm9,%xmm3
-  paddq 0x19e59(%rip),%xmm3
+  paddq 0x19e79(%rip),%xmm3
   pshufb %xmm10,%xmm3
   movdqa %xmm9,%xmm4
-  paddq 0x19e56(%rip),%xmm4
+  paddq 0x19e76(%rip),%xmm4
   pshufb %xmm10,%xmm4
   movdqa %xmm9,%xmm5
-  paddq 0x19e53(%rip),%xmm5
+  paddq 0x19e73(%rip),%xmm5
   pshufb %xmm10,%xmm5
   movdqa %xmm9,%xmm6
-  paddq 0x19e50(%rip),%xmm6
+  paddq 0x19e70(%rip),%xmm6
   pshufb %xmm10,%xmm6
   movdqa %xmm9,%xmm7
-  paddq 0x19e4d(%rip),%xmm7
+  paddq 0x19e6d(%rip),%xmm7
   pshufb %xmm10,%xmm7
   movdqu (%rbx),%xmm8
   pxor %xmm8,%xmm0
@@ -4974,8 +4974,8 @@ L542ad9:
   pxor %xmm8,%xmm7
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L542c85
-  je L542c15
+  jb L542c65
+  je L542bf5
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -4996,8 +4996,8 @@ L542ad9:
   aesenc %xmm8,%xmm7
   add $0x20,%rcx")) [0, 5, 6, 5, 8, 6, 5, 8, 6, 5, 8, 6, 5, 8, 6, 5, 8, 6, 5, 8, 6, 5, 8, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 4, 6, 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 4]
 
-def blk_542c15 : List (Directive × Nat) := List.zip (parse("
-L542c15:
+def blk_542bf5 : List (Directive × Nat) := List.zip (parse("
+L542bf5:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -5018,8 +5018,8 @@ L542c15:
   aesenc %xmm8,%xmm7
   add $0x20,%rcx")) [0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 4]
 
-def blk_542c85 : List (Directive × Nat) := List.zip (parse("
-L542c85:
+def blk_542c65 : List (Directive × Nat) := List.zip (parse("
+L542c65:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -5139,22 +5139,22 @@ L542c85:
   paddq %xmm11,%xmm9
   sub $0x8,%rdi
   cmp $0x8,%rdi
-  jae L542ad9")) [0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 9, 6, 6, 6, 6, 6, 6, 6, 6, 9, 6, 6, 6, 6, 6, 6, 6, 6, 9, 5, 5, 6, 4, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 7, 7, 5, 4, 4, 6]
+  jae L542ab9")) [0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 9, 6, 6, 6, 6, 6, 6, 6, 6, 9, 6, 6, 6, 6, 6, 6, 6, 6, 9, 5, 5, 6, 4, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 7, 7, 5, 4, 4, 6]
 
-def blk_542f49 : List (Directive × Nat) := List.zip (parse("
-L542f49:
+def blk_542f29 : List (Directive × Nat) := List.zip (parse("
+L542f29:
   test $0x4,%rdi
-  je L5431c6
+  je L5431a6
   movdqa %xmm9,%xmm0
   pshufb %xmm10,%xmm0
   movdqa %xmm9,%xmm1
-  paddq 0x199e2(%rip),%xmm1
+  paddq 0x19a02(%rip),%xmm1
   pshufb %xmm10,%xmm1
   movdqa %xmm9,%xmm2
-  paddq 0x199df(%rip),%xmm2
+  paddq 0x199ff(%rip),%xmm2
   pshufb %xmm10,%xmm2
   movdqa %xmm9,%xmm3
-  paddq 0x199dc(%rip),%xmm3
+  paddq 0x199fc(%rip),%xmm3
   pshufb %xmm10,%xmm3
   movdqu (%rbx),%xmm8
   pxor %xmm8,%xmm0
@@ -5163,8 +5163,8 @@ L542f49:
   pxor %xmm8,%xmm3
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L543042
-  je L543002
+  jb L543022
+  je L542fe2
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -5177,8 +5177,8 @@ L542f49:
   aesenc %xmm8,%xmm3
   add $0x20,%rcx")) [0, 7, 6, 5, 6, 5, 8, 6, 5, 8, 6, 5, 8, 6, 5, 5, 5, 5, 5, 3, 4, 6, 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 4]
 
-def blk_543002 : List (Directive × Nat) := List.zip (parse("
-L543002:
+def blk_542fe2 : List (Directive × Nat) := List.zip (parse("
+L542fe2:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -5191,8 +5191,8 @@ L543002:
   aesenc %xmm8,%xmm3
   add $0x20,%rcx")) [0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 4]
 
-def blk_543042 : List (Directive × Nat) := List.zip (parse("
-L543042:
+def blk_543022 : List (Directive × Nat) := List.zip (parse("
+L543022:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -5257,24 +5257,24 @@ L543042:
   movdqu %xmm3,0x30(%rdx)
   add $0x40,%rsi
   add $0x40,%rdx
-  paddq 0x197ba(%rip),%xmm9")) [0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 9, 6, 6, 6, 6, 9, 6, 6, 6, 6, 9, 5, 5, 6, 4, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 4, 4, 9]
+  paddq 0x197da(%rip),%xmm9")) [0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 9, 6, 6, 6, 6, 9, 6, 6, 6, 6, 9, 5, 5, 6, 4, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 4, 4, 9]
 
-def blk_5431c6 : List (Directive × Nat) := List.zip (parse("
-L5431c6:
+def blk_5431a6 : List (Directive × Nat) := List.zip (parse("
+L5431a6:
   test $0x2,%rdi
-  je L543347
+  je L543327
   movdqa %xmm9,%xmm0
   pshufb %xmm10,%xmm0
   movdqa %xmm9,%xmm1
-  paddq 0x19765(%rip),%xmm1
+  paddq 0x19785(%rip),%xmm1
   pshufb %xmm10,%xmm1
   movdqu (%rbx),%xmm8
   pxor %xmm8,%xmm0
   pxor %xmm8,%xmm1
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L54325b
-  je L543233
+  jb L54323b
+  je L543213
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -5283,8 +5283,8 @@ L5431c6:
   aesenc %xmm8,%xmm1
   add $0x20,%rcx")) [0, 7, 6, 5, 6, 5, 8, 6, 5, 5, 5, 3, 4, 2, 2, 6, 6, 6, 6, 6, 6, 4]
 
-def blk_543233 : List (Directive × Nat) := List.zip (parse("
-L543233:
+def blk_543213 : List (Directive × Nat) := List.zip (parse("
+L543213:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -5293,8 +5293,8 @@ L543233:
   aesenc %xmm8,%xmm1
   add $0x20,%rcx")) [0, 6, 6, 6, 6, 6, 6, 4]
 
-def blk_54325b : List (Directive × Nat) := List.zip (parse("
-L54325b:
+def blk_54323b : List (Directive × Nat) := List.zip (parse("
+L54323b:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -5333,36 +5333,36 @@ L54325b:
   movdqu %xmm1,0x10(%rdx)
   add $0x20,%rsi
   add $0x20,%rdx
-  paddq 0x19619(%rip),%xmm9")) [0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 9, 6, 6, 9, 6, 6, 9, 5, 5, 6, 4, 6, 5, 6, 5, 4, 4, 9]
+  paddq 0x19639(%rip),%xmm9")) [0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 9, 6, 6, 9, 6, 6, 9, 5, 5, 6, 4, 6, 5, 6, 5, 4, 4, 9]
 
-def blk_543347 : List (Directive × Nat) := List.zip (parse("
-L543347:
+def blk_543327 : List (Directive × Nat) := List.zip (parse("
+L543327:
   test $0x1,%rdi
-  je L54343b
+  je L54341b
   movdqa %xmm9,%xmm0
   pshufb %xmm10,%xmm0
   movdqu (%rbx),%xmm8
   pxor %xmm8,%xmm0
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L5433ac
-  je L543390
+  jb L54338c
+  je L543370
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   movdqu 0x20(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   add $0x20,%rcx")) [0, 7, 6, 5, 6, 5, 5, 3, 4, 2, 2, 6, 6, 6, 6, 4]
 
-def blk_543390 : List (Directive × Nat) := List.zip (parse("
-L543390:
+def blk_543370 : List (Directive × Nat) := List.zip (parse("
+L543370:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   movdqu 0x20(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   add $0x20,%rcx")) [0, 6, 6, 6, 6, 4]
 
-def blk_5433ac : List (Directive × Nat) := List.zip (parse("
-L5433ac:
+def blk_54338c : List (Directive × Nat) := List.zip (parse("
+L54338c:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   movdqu 0x20(%rcx),%xmm8
@@ -5387,37 +5387,37 @@ L5433ac:
   aesenclast %xmm12,%xmm0
   movdqu %xmm0,(%rdx)")) [0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 9, 6, 9, 6, 9, 5, 5, 6, 4]
 
-def blk_54343b : List (Directive × Nat) := List.zip (parse("
-L54343b:
+def blk_54341b : List (Directive × Nat) := List.zip (parse("
+L54341b:
   ret")) [0, 1]
 
-def blk_54343c : List (Directive × Nat) := List.zip (parse("
-L54343c:
+def blk_54341c : List (Directive × Nat) := List.zip (parse("
+L54341c:
   vmovq %r8,%xmm9
   vpinsrq $0x1,%r9,%xmm9,%xmm9
   vinserti128 $0x1,%xmm9,%ymm9,%ymm9
-  vbroadcasti128 0x1943a(%rip),%ymm10
+  vbroadcasti128 0x1945a(%rip),%ymm10
   cmp $0x10,%rdi
-  jb L543829
-  vbroadcasti128 0x195d7(%rip),%ymm11")) [0, 5, 6, 6, 9, 4, 6, 9]
+  jb L543809
+  vbroadcasti128 0x195f7(%rip),%ymm11")) [0, 5, 6, 6, 9, 4, 6, 9]
 
-def blk_543469 : List (Directive × Nat) := List.zip (parse("
-L543469:
-  vpaddq 0x194cf(%rip),%ymm9,%ymm0
+def blk_543449 : List (Directive × Nat) := List.zip (parse("
+L543449:
+  vpaddq 0x194ef(%rip),%ymm9,%ymm0
   vpshufb %ymm10,%ymm0,%ymm0
-  vpaddq 0x194e2(%rip),%ymm9,%ymm1
+  vpaddq 0x19502(%rip),%ymm9,%ymm1
   vpshufb %ymm10,%ymm1,%ymm1
-  vpaddq 0x194f5(%rip),%ymm9,%ymm2
+  vpaddq 0x19515(%rip),%ymm9,%ymm2
   vpshufb %ymm10,%ymm2,%ymm2
-  vpaddq 0x19508(%rip),%ymm9,%ymm3
+  vpaddq 0x19528(%rip),%ymm9,%ymm3
   vpshufb %ymm10,%ymm3,%ymm3
-  vpaddq 0x1951b(%rip),%ymm9,%ymm4
+  vpaddq 0x1953b(%rip),%ymm9,%ymm4
   vpshufb %ymm10,%ymm4,%ymm4
-  vpaddq 0x1952e(%rip),%ymm9,%ymm5
+  vpaddq 0x1954e(%rip),%ymm9,%ymm5
   vpshufb %ymm10,%ymm5,%ymm5
-  vpaddq 0x19541(%rip),%ymm9,%ymm6
+  vpaddq 0x19561(%rip),%ymm9,%ymm6
   vpshufb %ymm10,%ymm6,%ymm6
-  vpaddq 0x19554(%rip),%ymm9,%ymm7
+  vpaddq 0x19574(%rip),%ymm9,%ymm7
   vpshufb %ymm10,%ymm7,%ymm7
   vbroadcasti128 (%rbx),%ymm8
   vpxor %ymm8,%ymm0,%ymm0
@@ -5430,8 +5430,8 @@ L543469:
   vpxor %ymm8,%ymm7,%ymm7
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L5435cd
-  je L54356d
+  jb L5435ad
+  je L54354d
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -5452,8 +5452,8 @@ L543469:
   vaesenc %ymm8,%ymm7,%ymm7
   add $0x20,%rcx")) [0, 8, 5, 8, 5, 8, 5, 8, 5, 8, 5, 8, 5, 8, 5, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 4, 6, 2, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 4]
 
-def blk_54356d : List (Directive × Nat) := List.zip (parse("
-L54356d:
+def blk_54354d : List (Directive × Nat) := List.zip (parse("
+L54354d:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -5474,8 +5474,8 @@ L54356d:
   vaesenc %ymm8,%ymm7,%ymm7
   add $0x20,%rcx")) [0, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 4]
 
-def blk_5435cd : List (Directive × Nat) := List.zip (parse("
-L5435cd:
+def blk_5435ad : List (Directive × Nat) := List.zip (parse("
+L5435ad:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -5587,19 +5587,19 @@ L5435cd:
   vpaddq %ymm11,%ymm9,%ymm9
   sub $0x10,%rdi
   cmp $0x10,%rdi
-  jae L543469")) [0, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 9, 5, 5, 5, 5, 5, 5, 5, 5, 9, 5, 5, 5, 5, 5, 5, 5, 5, 9, 4, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 8, 5, 8, 8, 5, 8, 8, 5, 8, 8, 5, 8, 7, 7, 5, 4, 4, 6]
+  jae L543449")) [0, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 9, 5, 5, 5, 5, 5, 5, 5, 5, 9, 5, 5, 5, 5, 5, 5, 5, 5, 9, 4, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 8, 5, 8, 8, 5, 8, 8, 5, 8, 8, 5, 8, 7, 7, 5, 4, 4, 6]
 
-def blk_543829 : List (Directive × Nat) := List.zip (parse("
-L543829:
+def blk_543809 : List (Directive × Nat) := List.zip (parse("
+L543809:
   test $0x8,%rdi
-  je L543a4d
-  vpaddq 0x19102(%rip),%ymm9,%ymm0
+  je L543a2d
+  vpaddq 0x19122(%rip),%ymm9,%ymm0
   vpshufb %ymm10,%ymm0,%ymm0
-  vpaddq 0x19115(%rip),%ymm9,%ymm1
+  vpaddq 0x19135(%rip),%ymm9,%ymm1
   vpshufb %ymm10,%ymm1,%ymm1
-  vpaddq 0x19128(%rip),%ymm9,%ymm2
+  vpaddq 0x19148(%rip),%ymm9,%ymm2
   vpshufb %ymm10,%ymm2,%ymm2
-  vpaddq 0x1913b(%rip),%ymm9,%ymm3
+  vpaddq 0x1915b(%rip),%ymm9,%ymm3
   vpshufb %ymm10,%ymm3,%ymm3
   vbroadcasti128 (%rbx),%ymm8
   vpxor %ymm8,%ymm0,%ymm0
@@ -5608,8 +5608,8 @@ L543829:
   vpxor %ymm8,%ymm3,%ymm3
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L5438fe
-  je L5438c6
+  jb L5438de
+  je L5438a6
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -5622,8 +5622,8 @@ L543829:
   vaesenc %ymm8,%ymm3,%ymm3
   add $0x20,%rcx")) [0, 7, 6, 8, 5, 8, 5, 8, 5, 8, 5, 5, 5, 5, 5, 5, 3, 4, 2, 2, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 4]
 
-def blk_5438c6 : List (Directive × Nat) := List.zip (parse("
-L5438c6:
+def blk_5438a6 : List (Directive × Nat) := List.zip (parse("
+L5438a6:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -5636,8 +5636,8 @@ L5438c6:
   vaesenc %ymm8,%ymm3,%ymm3
   add $0x20,%rcx")) [0, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 4]
 
-def blk_5438fe : List (Directive × Nat) := List.zip (parse("
-L5438fe:
+def blk_5438de : List (Directive × Nat) := List.zip (parse("
+L5438de:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -5698,24 +5698,24 @@ L5438fe:
   vmovdqu %ymm3,0x60(%rdx)
   add $0x80,%rsi
   add $0x80,%rdx
-  vbroadcasti128 0x18f78(%rip),%ymm13
+  vbroadcasti128 0x18f98(%rip),%ymm13
   vpaddq %ymm13,%ymm9,%ymm9")) [0, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 9, 5, 5, 5, 5, 9, 5, 5, 5, 5, 9, 4, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7, 7, 9, 5]
 
-def blk_543a4d : List (Directive × Nat) := List.zip (parse("
-L543a4d:
+def blk_543a2d : List (Directive × Nat) := List.zip (parse("
+L543a2d:
   test $0x4,%rdi
-  je L543ba7
-  vpaddq 0x18ede(%rip),%ymm9,%ymm0
+  je L543b87
+  vpaddq 0x18efe(%rip),%ymm9,%ymm0
   vpshufb %ymm10,%ymm0,%ymm0
-  vpaddq 0x18ef1(%rip),%ymm9,%ymm1
+  vpaddq 0x18f11(%rip),%ymm9,%ymm1
   vpshufb %ymm10,%ymm1,%ymm1
   vbroadcasti128 (%rbx),%ymm8
   vpxor %ymm8,%ymm0,%ymm0
   vpxor %ymm8,%ymm1,%ymm1
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L543ad6
-  je L543ab2
+  jb L543ab6
+  je L543a92
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -5724,8 +5724,8 @@ L543a4d:
   vaesenc %ymm8,%ymm1,%ymm1
   add $0x20,%rcx")) [0, 7, 6, 8, 5, 8, 5, 5, 5, 5, 3, 4, 2, 2, 6, 5, 5, 6, 5, 5, 4]
 
-def blk_543ab2 : List (Directive × Nat) := List.zip (parse("
-L543ab2:
+def blk_543a92 : List (Directive × Nat) := List.zip (parse("
+L543a92:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -5734,8 +5734,8 @@ L543ab2:
   vaesenc %ymm8,%ymm1,%ymm1
   add $0x20,%rcx")) [0, 6, 5, 5, 6, 5, 5, 4]
 
-def blk_543ad6 : List (Directive × Nat) := List.zip (parse("
-L543ad6:
+def blk_543ab6 : List (Directive × Nat) := List.zip (parse("
+L543ab6:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -5772,37 +5772,37 @@ L543ad6:
   vmovdqu %ymm1,0x20(%rdx)
   add $0x40,%rsi
   add $0x40,%rdx
-  vbroadcasti128 0x18dde(%rip),%ymm13
+  vbroadcasti128 0x18dfe(%rip),%ymm13
   vpaddq %ymm13,%ymm9,%ymm9")) [0, 6, 5, 5, 6, 5, 5, 6, 5, 5, 6, 5, 5, 6, 5, 5, 6, 5, 5, 6, 5, 5, 9, 5, 5, 9, 5, 5, 9, 4, 5, 4, 5, 5, 5, 4, 4, 9, 5]
 
-def blk_543ba7 : List (Directive × Nat) := List.zip (parse("
-L543ba7:
+def blk_543b87 : List (Directive × Nat) := List.zip (parse("
+L543b87:
   test $0x2,%rdi
-  je L543c9f
-  vpaddq 0x18d84(%rip),%ymm9,%ymm0
+  je L543c7f
+  vpaddq 0x18da4(%rip),%ymm9,%ymm0
   vpshufb %ymm10,%ymm0,%ymm0
   vbroadcasti128 (%rbx),%ymm8
   vpxor %ymm8,%ymm0,%ymm0
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L543c0a
-  je L543bf0
+  jb L543bea
+  je L543bd0
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vbroadcasti128 0x20(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   add $0x20,%rcx")) [0, 7, 6, 8, 5, 5, 5, 3, 4, 2, 2, 6, 5, 6, 5, 4]
 
-def blk_543bf0 : List (Directive × Nat) := List.zip (parse("
-L543bf0:
+def blk_543bd0 : List (Directive × Nat) := List.zip (parse("
+L543bd0:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vbroadcasti128 0x20(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   add $0x20,%rcx")) [0, 6, 5, 6, 5, 4]
 
-def blk_543c0a : List (Directive × Nat) := List.zip (parse("
-L543c0a:
+def blk_543bea : List (Directive × Nat) := List.zip (parse("
+L543bea:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vbroadcasti128 0x20(%rcx),%ymm8
@@ -5827,37 +5827,37 @@ L543c0a:
   vmovdqu %ymm0,(%rdx)
   add $0x20,%rsi
   add $0x20,%rdx
-  vbroadcasti128 0x18cc6(%rip),%ymm13
+  vbroadcasti128 0x18ce6(%rip),%ymm13
   vpaddq %ymm13,%ymm9,%ymm9")) [0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 9, 5, 9, 5, 9, 4, 5, 4, 4, 4, 9, 5]
 
-def blk_543c9f : List (Directive × Nat) := List.zip (parse("
-L543c9f:
+def blk_543c7f : List (Directive × Nat) := List.zip (parse("
+L543c7f:
   test $0x1,%rdi
-  je L543d72
-  vpaddq 0x18c8c(%rip),%xmm9,%xmm0
+  je L543d52
+  vpaddq 0x18cac(%rip),%xmm9,%xmm0
   vpshufb %xmm10,%xmm0,%xmm0
   vmovdqu (%rbx),%xmm8
   vpxor %xmm8,%xmm0,%xmm0
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L543cfd
-  je L543ce5
+  jb L543cdd
+  je L543cc5
   vmovdqu 0x10(%rcx),%xmm8
   vaesenc %xmm8,%xmm0,%xmm0
   vmovdqu 0x20(%rcx),%xmm8
   vaesenc %xmm8,%xmm0,%xmm0
   add $0x20,%rcx")) [0, 7, 6, 8, 5, 4, 5, 3, 4, 2, 2, 5, 5, 5, 5, 4]
 
-def blk_543ce5 : List (Directive × Nat) := List.zip (parse("
-L543ce5:
+def blk_543cc5 : List (Directive × Nat) := List.zip (parse("
+L543cc5:
   vmovdqu 0x10(%rcx),%xmm8
   vaesenc %xmm8,%xmm0,%xmm0
   vmovdqu 0x20(%rcx),%xmm8
   vaesenc %xmm8,%xmm0,%xmm0
   add $0x20,%rcx")) [0, 5, 5, 5, 5, 4]
 
-def blk_543cfd : List (Directive × Nat) := List.zip (parse("
-L543cfd:
+def blk_543cdd : List (Directive × Nat) := List.zip (parse("
+L543cdd:
   vmovdqu 0x10(%rcx),%xmm8
   vaesenc %xmm8,%xmm0,%xmm0
   vmovdqu 0x20(%rcx),%xmm8
@@ -5881,16 +5881,16 @@ L543cfd:
   vaesenclast %xmm12,%xmm0,%xmm0
   vmovdqu %xmm0,(%rdx)")) [0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 8, 5, 8, 5, 8, 4, 5, 4]
 
-def blk_543d72 : List (Directive × Nat) := List.zip (parse("
-L543d72:
+def blk_543d52 : List (Directive × Nat) := List.zip (parse("
+L543d52:
   vzeroupper
   ret")) [0, 3, 1]
 
-def blkData : List (Directive × Nat) := List.zip data [101146, 0, 16, 160, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16]
+def blkData : List (Directive × Nat) := List.zip data [101178, 0, 16, 160, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16]
 
 /-- The executable: the directives of `prog` with their sizes, from `start`. -/
 def exe : Executable :=
-  (start, blk_5421a0 ++ blk_5421ff ++ blk_542214 ++ blk_542280 ++ blk_542306 ++ blk_542325 ++ blk_5423e0 ++ blk_5424b4 ++ blk_5424e7 ++ blk_542620 ++ blk_5426ba ++ blk_542746 ++ blk_5427fb ++ blk_542858 ++ blk_542a80 ++ blk_542ad9 ++ blk_542c15 ++ blk_542c85 ++ blk_542f49 ++ blk_543002 ++ blk_543042 ++ blk_5431c6 ++ blk_543233 ++ blk_54325b ++ blk_543347 ++ blk_543390 ++ blk_5433ac ++ blk_54343b ++ blk_54343c ++ blk_543469 ++ blk_54356d ++ blk_5435cd ++ blk_543829 ++ blk_5438c6 ++ blk_5438fe ++ blk_543a4d ++ blk_543ab2 ++ blk_543ad6 ++ blk_543ba7 ++ blk_543bf0 ++ blk_543c0a ++ blk_543c9f ++ blk_543ce5 ++ blk_543cfd ++ blk_543d72 ++ blkData)
+  (start, blk_542180 ++ blk_5421df ++ blk_5421f4 ++ blk_542260 ++ blk_5422e6 ++ blk_542305 ++ blk_5423c0 ++ blk_542494 ++ blk_5424c7 ++ blk_542600 ++ blk_54269a ++ blk_542726 ++ blk_5427db ++ blk_542838 ++ blk_542a60 ++ blk_542ab9 ++ blk_542bf5 ++ blk_542c65 ++ blk_542f29 ++ blk_542fe2 ++ blk_543022 ++ blk_5431a6 ++ blk_543213 ++ blk_54323b ++ blk_543327 ++ blk_543370 ++ blk_54338c ++ blk_54341b ++ blk_54341c ++ blk_543449 ++ blk_54354d ++ blk_5435ad ++ blk_543809 ++ blk_5438a6 ++ blk_5438de ++ blk_543a2d ++ blk_543a92 ++ blk_543ab6 ++ blk_543b87 ++ blk_543bd0 ++ blk_543bea ++ blk_543c7f ++ blk_543cc5 ++ blk_543cdd ++ blk_543d52 ++ blkData)
 
 /-- `exe` is `prog`, laid out as in the binary. -/
 theorem layout_prog : layout prog = exe := by

@@ -17,7 +17,7 @@ set_option maxRecDepth 200000
 of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f1_10 (c : Call) (hc : PreF c) (hn : c.n = 1) (hnr : c.nr = 10)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x5421a0) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542180) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -51,13 +51,13 @@ theorem f1_10 (c : Call) (hc : PreF c) (hn : c.n = 1) (hnr : c.nr = 10)
     (dst_fact hc.toBufs hinv 0 (by omega) (by omega) [] (by simp; try omega)).trans hz0
   have hra : ∀ v0 : Int, Mem.loadInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 => ra_fact hc [(0, v0)] (by simp; omega)
-  rw [runs_def, next_5421a0]
-  simp only [blk_5421a0]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, hra, next_5421ff, blk_5421ff, label_5421ff, next_542214, blk_542214, label_542214]
+  rw [runs_def, next_542180]
+  simp only [blk_542180]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, hra, next_5421df, blk_5421df, label_5421df, next_5421f4, blk_5421f4, label_5421f4]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, hra, next_5421ff, blk_5421ff, label_5421ff, next_542214, blk_542214, label_542214]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, hra, next_5421df, blk_5421df, label_5421df, next_5421f4, blk_5421f4, label_5421f4]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -71,7 +71,7 @@ theorem f1_10 (c : Call) (hc : PreF c) (hn : c.n = 1) (hnr : c.nr = 10)
 of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f1_12 (c : Call) (hc : PreF c) (hn : c.n = 1) (hnr : c.nr = 12)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x5421a0) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542180) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -109,13 +109,13 @@ theorem f1_12 (c : Call) (hc : PreF c) (hn : c.n = 1) (hnr : c.nr = 12)
     (dst_fact hc.toBufs hinv 0 (by omega) (by omega) [] (by simp; try omega)).trans hz0
   have hra : ∀ v0 : Int, Mem.loadInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 => ra_fact hc [(0, v0)] (by simp; omega)
-  rw [runs_def, next_5421a0]
-  simp only [blk_5421a0]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, hra, next_5421ff, blk_5421ff, label_5421ff, next_542214, blk_542214, label_542214]
+  rw [runs_def, next_542180]
+  simp only [blk_542180]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, hra, next_5421df, blk_5421df, label_5421df, next_5421f4, blk_5421f4, label_5421f4]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, hra, next_5421ff, blk_5421ff, label_5421ff, next_542214, blk_542214, label_542214]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, hra, next_5421df, blk_5421df, label_5421df, next_5421f4, blk_5421f4, label_5421f4]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -129,7 +129,7 @@ theorem f1_12 (c : Call) (hc : PreF c) (hn : c.n = 1) (hnr : c.nr = 12)
 of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f1_14 (c : Call) (hc : PreF c) (hn : c.n = 1) (hnr : c.nr = 14)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x5421a0) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542180) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -171,9 +171,9 @@ theorem f1_14 (c : Call) (hc : PreF c) (hn : c.n = 1) (hnr : c.nr = 14)
     (dst_fact hc.toBufs hinv 0 (by omega) (by omega) [] (by simp; try omega)).trans hz0
   have hra : ∀ v0 : Int, Mem.loadInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 => ra_fact hc [(0, v0)] (by simp; omega)
-  rw [runs_def, next_5421a0]
-  simp only [blk_5421a0]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, hra, next_5421ff, blk_5421ff, label_5421ff, next_542214, blk_542214, label_542214]
+  rw [runs_def, next_542180]
+  simp only [blk_542180]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, hra, next_5421df, blk_5421df, label_5421df, next_5421f4, blk_5421f4, label_5421f4]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -187,7 +187,7 @@ theorem f1_14 (c : Call) (hc : PreF c) (hn : c.n = 1) (hnr : c.nr = 14)
 of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f2_10 (c : Call) (hc : PreF c) (hn : c.n = 2) (hnr : c.nr = 10)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542280) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542260) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -227,13 +227,13 @@ theorem f2_10 (c : Call) (hc : PreF c) (hn : c.n = 2) (hnr : c.nr = 10)
     fun v0 => (dst_fact hc.toBufs hinv 1 (by omega) (by omega) [(0, v0)] (by simp; try omega)).trans hz1
   have hra : ∀ v0 v1 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 => ra_fact hc [(0, v0), (1, v1)] (by simp; omega)
-  rw [runs_def, next_542280]
-  simp only [blk_542280]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, hra, next_542306, blk_542306, label_542306, next_542325, blk_542325, label_542325]
+  rw [runs_def, next_542260]
+  simp only [blk_542260]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, hra, next_5422e6, blk_5422e6, label_5422e6, next_542305, blk_542305, label_542305]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, hra, next_542306, blk_542306, label_542306, next_542325, blk_542325, label_542325]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, hra, next_5422e6, blk_5422e6, label_5422e6, next_542305, blk_542305, label_542305]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -251,7 +251,7 @@ theorem f2_10 (c : Call) (hc : PreF c) (hn : c.n = 2) (hnr : c.nr = 10)
 of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f2_12 (c : Call) (hc : PreF c) (hn : c.n = 2) (hnr : c.nr = 12)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542280) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542260) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -295,13 +295,13 @@ theorem f2_12 (c : Call) (hc : PreF c) (hn : c.n = 2) (hnr : c.nr = 12)
     fun v0 => (dst_fact hc.toBufs hinv 1 (by omega) (by omega) [(0, v0)] (by simp; try omega)).trans hz1
   have hra : ∀ v0 v1 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 => ra_fact hc [(0, v0), (1, v1)] (by simp; omega)
-  rw [runs_def, next_542280]
-  simp only [blk_542280]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, hra, next_542306, blk_542306, label_542306, next_542325, blk_542325, label_542325]
+  rw [runs_def, next_542260]
+  simp only [blk_542260]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, hra, next_5422e6, blk_5422e6, label_5422e6, next_542305, blk_542305, label_542305]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, hra, next_542306, blk_542306, label_542306, next_542325, blk_542325, label_542325]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, hra, next_5422e6, blk_5422e6, label_5422e6, next_542305, blk_542305, label_542305]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -319,7 +319,7 @@ theorem f2_12 (c : Call) (hc : PreF c) (hn : c.n = 2) (hnr : c.nr = 12)
 of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f2_14 (c : Call) (hc : PreF c) (hn : c.n = 2) (hnr : c.nr = 14)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542280) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542260) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -367,9 +367,9 @@ theorem f2_14 (c : Call) (hc : PreF c) (hn : c.n = 2) (hnr : c.nr = 14)
     fun v0 => (dst_fact hc.toBufs hinv 1 (by omega) (by omega) [(0, v0)] (by simp; try omega)).trans hz1
   have hra : ∀ v0 v1 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 => ra_fact hc [(0, v0), (1, v1)] (by simp; omega)
-  rw [runs_def, next_542280]
-  simp only [blk_542280]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, hra, next_542306, blk_542306, label_542306, next_542325, blk_542325, label_542325]
+  rw [runs_def, next_542260]
+  simp only [blk_542260]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, hra, next_5422e6, blk_5422e6, label_5422e6, next_542305, blk_542305, label_542305]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -387,7 +387,7 @@ theorem f2_14 (c : Call) (hc : PreF c) (hn : c.n = 2) (hnr : c.nr = 14)
 of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f4_10 (c : Call) (hc : PreF c) (hn : c.n = 4) (hnr : c.nr = 10)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x5423e0) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x5423c0) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -439,13 +439,13 @@ theorem f4_10 (c : Call) (hc : PreF c) (hn : c.n = 4) (hnr : c.nr = 10)
     fun v0 v1 v2 => (dst_fact hc.toBufs hinv 3 (by omega) (by omega) [(0, v0), (1, v1), (2, v2)] (by simp; try omega)).trans hz3
   have hra : ∀ v0 v1 v2 v3 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) (blockAddr c.dst 2) 16 v2) (blockAddr c.dst 3) 16 v3) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 v2 v3 => ra_fact hc [(0, v0), (1, v1), (2, v2), (3, v3)] (by simp; omega)
-  rw [runs_def, next_5423e0]
-  simp only [blk_5423e0]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, hra, next_5424b4, blk_5424b4, label_5424b4, next_5424e7, blk_5424e7, label_5424e7]
+  rw [runs_def, next_5423c0]
+  simp only [blk_5423c0]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, hra, next_542494, blk_542494, label_542494, next_5424c7, blk_5424c7, label_5424c7]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, hra, next_5424b4, blk_5424b4, label_5424b4, next_5424e7, blk_5424e7, label_5424e7]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, hra, next_542494, blk_542494, label_542494, next_5424c7, blk_5424c7, label_5424c7]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -471,7 +471,7 @@ theorem f4_10 (c : Call) (hc : PreF c) (hn : c.n = 4) (hnr : c.nr = 10)
 of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f4_12 (c : Call) (hc : PreF c) (hn : c.n = 4) (hnr : c.nr = 12)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x5423e0) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x5423c0) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -527,13 +527,13 @@ theorem f4_12 (c : Call) (hc : PreF c) (hn : c.n = 4) (hnr : c.nr = 12)
     fun v0 v1 v2 => (dst_fact hc.toBufs hinv 3 (by omega) (by omega) [(0, v0), (1, v1), (2, v2)] (by simp; try omega)).trans hz3
   have hra : ∀ v0 v1 v2 v3 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) (blockAddr c.dst 2) 16 v2) (blockAddr c.dst 3) 16 v3) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 v2 v3 => ra_fact hc [(0, v0), (1, v1), (2, v2), (3, v3)] (by simp; omega)
-  rw [runs_def, next_5423e0]
-  simp only [blk_5423e0]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, hra, next_5424b4, blk_5424b4, label_5424b4, next_5424e7, blk_5424e7, label_5424e7]
+  rw [runs_def, next_5423c0]
+  simp only [blk_5423c0]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, hra, next_542494, blk_542494, label_542494, next_5424c7, blk_5424c7, label_5424c7]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, hra, next_5424b4, blk_5424b4, label_5424b4, next_5424e7, blk_5424e7, label_5424e7]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, hra, next_542494, blk_542494, label_542494, next_5424c7, blk_5424c7, label_5424c7]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -559,7 +559,7 @@ theorem f4_12 (c : Call) (hc : PreF c) (hn : c.n = 4) (hnr : c.nr = 12)
 of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f4_14 (c : Call) (hc : PreF c) (hn : c.n = 4) (hnr : c.nr = 14)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x5423e0) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x5423c0) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -619,9 +619,9 @@ theorem f4_14 (c : Call) (hc : PreF c) (hn : c.n = 4) (hnr : c.nr = 14)
     fun v0 v1 v2 => (dst_fact hc.toBufs hinv 3 (by omega) (by omega) [(0, v0), (1, v1), (2, v2)] (by simp; try omega)).trans hz3
   have hra : ∀ v0 v1 v2 v3 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) (blockAddr c.dst 2) 16 v2) (blockAddr c.dst 3) 16 v3) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 v2 v3 => ra_fact hc [(0, v0), (1, v1), (2, v2), (3, v3)] (by simp; omega)
-  rw [runs_def, next_5423e0]
-  simp only [blk_5423e0]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, s2, d2, s3, d3, hra, next_5424b4, blk_5424b4, label_5424b4, next_5424e7, blk_5424e7, label_5424e7]
+  rw [runs_def, next_5423c0]
+  simp only [blk_5423c0]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, s2, d2, s3, d3, hra, next_542494, blk_542494, label_542494, next_5424c7, blk_5424c7, label_5424c7]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -649,7 +649,7 @@ of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f8_10_fast (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 10)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags)
     (hw : ¬ 18446744073709551616 ≤ 7 + (lo64 (c.ivhi ++ c.ivlo)).toNat) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542620) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542600) := by
   have hlo : c.ivlo.toNat + 7 < 2 ^ 64 := by
     have h := hw
     rw [lo64_append] at h
@@ -729,17 +729,17 @@ theorem f8_10_fast (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 10)
     fun v0 v1 v2 v3 v4 v5 v6 => (dst_fact hc.toBufs hinv 7 (by omega) (by omega) [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6)] (by simp; try omega)).trans hz7
   have hra : ∀ v0 v1 v2 v3 v4 v5 v6 v7 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) (blockAddr c.dst 2) 16 v2) (blockAddr c.dst 3) 16 v3) (blockAddr c.dst 4) 16 v4) (blockAddr c.dst 5) 16 v5) (blockAddr c.dst 6) 16 v6) (blockAddr c.dst 7) 16 v7) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 v2 v3 v4 v5 v6 v7 => ra_fact hc [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6), (7, v7)] (by simp; omega)
-  rw [runs_def, next_542620]
-  simp only [blk_542620]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  rw [runs_def, next_542600]
+  simp only [blk_542600]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -783,7 +783,7 @@ of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f8_12_fast (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 12)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags)
     (hw : ¬ 18446744073709551616 ≤ 7 + (lo64 (c.ivhi ++ c.ivlo)).toNat) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542620) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542600) := by
   have hlo : c.ivlo.toNat + 7 < 2 ^ 64 := by
     have h := hw
     rw [lo64_append] at h
@@ -867,17 +867,17 @@ theorem f8_12_fast (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 12)
     fun v0 v1 v2 v3 v4 v5 v6 => (dst_fact hc.toBufs hinv 7 (by omega) (by omega) [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6)] (by simp; try omega)).trans hz7
   have hra : ∀ v0 v1 v2 v3 v4 v5 v6 v7 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) (blockAddr c.dst 2) 16 v2) (blockAddr c.dst 3) 16 v3) (blockAddr c.dst 4) 16 v4) (blockAddr c.dst 5) 16 v5) (blockAddr c.dst 6) 16 v6) (blockAddr c.dst 7) 16 v7) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 v2 v3 v4 v5 v6 v7 => ra_fact hc [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6), (7, v7)] (by simp; omega)
-  rw [runs_def, next_542620]
-  simp only [blk_542620]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  rw [runs_def, next_542600]
+  simp only [blk_542600]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -921,7 +921,7 @@ of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f8_14_fast (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 14)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags)
     (hw : ¬ 18446744073709551616 ≤ 7 + (lo64 (c.ivhi ++ c.ivlo)).toNat) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542620) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542600) := by
   have hlo : c.ivlo.toNat + 7 < 2 ^ 64 := by
     have h := hw
     rw [lo64_append] at h
@@ -1009,13 +1009,13 @@ theorem f8_14_fast (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 14)
     fun v0 v1 v2 v3 v4 v5 v6 => (dst_fact hc.toBufs hinv 7 (by omega) (by omega) [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6)] (by simp; try omega)).trans hz7
   have hra : ∀ v0 v1 v2 v3 v4 v5 v6 v7 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) (blockAddr c.dst 2) 16 v2) (blockAddr c.dst 3) 16 v3) (blockAddr c.dst 4) 16 v4) (blockAddr c.dst 5) 16 v5) (blockAddr c.dst 6) 16 v6) (blockAddr c.dst 7) 16 v7) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 v2 v3 v4 v5 v6 v7 => ra_fact hc [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6), (7, v7)] (by simp; omega)
-  rw [runs_def, next_542620]
-  simp only [blk_542620]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  rw [runs_def, next_542600]
+  simp only [blk_542600]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -1059,7 +1059,7 @@ of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f8_10_slow (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 10)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags)
     (hw : 18446744073709551616 ≤ 7 + (lo64 (c.ivhi ++ c.ivlo)).toNat) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542620) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542600) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -1135,17 +1135,17 @@ theorem f8_10_slow (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 10)
     fun v0 v1 v2 v3 v4 v5 v6 => (dst_fact hc.toBufs hinv 7 (by omega) (by omega) [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6)] (by simp; try omega)).trans hz7
   have hra : ∀ v0 v1 v2 v3 v4 v5 v6 v7 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) (blockAddr c.dst 2) 16 v2) (blockAddr c.dst 3) 16 v3) (blockAddr c.dst 4) 16 v4) (blockAddr c.dst 5) 16 v5) (blockAddr c.dst 6) 16 v6) (blockAddr c.dst 7) 16 v7) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 v2 v3 v4 v5 v6 v7 => ra_fact hc [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6), (7, v7)] (by simp; omega)
-  rw [runs_def, next_542620]
-  simp only [blk_542620]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  rw [runs_def, next_542600]
+  simp only [blk_542600]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -1189,7 +1189,7 @@ of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f8_12_slow (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 12)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags)
     (hw : 18446744073709551616 ≤ 7 + (lo64 (c.ivhi ++ c.ivlo)).toNat) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542620) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542600) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -1269,17 +1269,17 @@ theorem f8_12_slow (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 12)
     fun v0 v1 v2 v3 v4 v5 v6 => (dst_fact hc.toBufs hinv 7 (by omega) (by omega) [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6)] (by simp; try omega)).trans hz7
   have hra : ∀ v0 v1 v2 v3 v4 v5 v6 v7 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) (blockAddr c.dst 2) 16 v2) (blockAddr c.dst 3) 16 v3) (blockAddr c.dst 4) 16 v4) (blockAddr c.dst 5) 16 v5) (blockAddr c.dst 6) 16 v6) (blockAddr c.dst 7) 16 v7) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 v2 v3 v4 v5 v6 v7 => ra_fact hc [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6), (7, v7)] (by simp; omega)
-  rw [runs_def, next_542620]
-  simp only [blk_542620]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  rw [runs_def, next_542600]
+  simp only [blk_542600]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]
@@ -1323,7 +1323,7 @@ of `dst` holding block `j` of `src` XOR keystream block `j`. -/
 theorem f8_14_slow (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 14)
     (hrsp : c.regs.rsp.toBitVec = c.rsp) (zmms : RegZmms) (flags : StatusFlags)
     (hw : 18446744073709551616 ≤ 7 + (lo64 (c.ivhi ++ c.ivlo)).toNat) :
-    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542620) := by
+    Runs exe (Post c) (⟨c.regs, zmms, flags, c.mem⟩, 0x542600) := by
   have hinv := memInv_zero c
   have hb0 : 0 ≤ c.n := Nat.zero_le _
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
@@ -1407,13 +1407,13 @@ theorem f8_14_slow (c : Call) (hc : PreF c) (hn : c.n = 8) (hnr : c.nr = 14)
     fun v0 v1 v2 v3 v4 v5 v6 => (dst_fact hc.toBufs hinv 7 (by omega) (by omega) [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6)] (by simp; try omega)).trans hz7
   have hra : ∀ v0 v1 v2 v3 v4 v5 v6 v7 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt c.mem (blockAddr c.dst 0) 16 v0) (blockAddr c.dst 1) 16 v1) (blockAddr c.dst 2) 16 v2) (blockAddr c.dst 3) 16 v3) (blockAddr c.dst 4) 16 v4) (blockAddr c.dst 5) 16 v5) (blockAddr c.dst 6) 16 v6) (blockAddr c.dst 7) 16 v7) c.rsp 8 = some (c.ra.toNat : Int) :=
     fun v0 v1 v2 v3 v4 v5 v6 v7 => ra_fact hc [(0, v0), (1, v1), (2, v2), (3, v3), (4, v4), (5, v5), (6, v6), (7, v7)] (by simp; omega)
-  rw [runs_def, next_542620]
-  simp only [blk_542620]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  rw [runs_def, next_542600]
+  simp only [blk_542600]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427fb, blk_5427fb, label_5427fb, next_542858, blk_542858, label_542858, next_5426ba, blk_5426ba, label_5426ba, next_542746, blk_542746, label_542746]
+  xstep [hrsp, hc.arg_nr, hc.arg_xk, arg_dst0 hc, arg_src0 hc, arg_lo hc, arg_hi hc, ctr_lanes', hnr, ofInt_natCast64, hi64_append_lo64, add_lo64, adc_hi64, add_ofNat_ofNat128, addFlags_cf7, incFlags_fst, BitVec.xor_self, pinsrq_lo, Int64.reduceSub, Int64.ofBitVec_toBitVec, RelRegOrMem.interp, ofBitVec_ofNat64, hw, hmask, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, s0, d0, s1, d1, s2, d2, s3, d3, s4, d4, s5, d5, s6, d6, s7, d7, hra, next_5427db, blk_5427db, label_5427db, next_542838, blk_542838, label_542838, next_54269a, blk_54269a, label_54269a, next_542726, blk_542726, label_542726]
   intros
   refine reaches_done ⟨by simp, by simp [hrsp], rfl, rfl, rfl, ?_⟩
   rw [hn]

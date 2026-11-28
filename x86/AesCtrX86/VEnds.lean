@@ -18,11 +18,11 @@ if `n < 16` and the loop otherwise. -/
 theorem v_entry (c : Call) (hc : Pre c true) (hrsp : c.regs.rsp.toBitVec = c.rsp)
     (Q : MachineState → Prop) (zmms : RegZmms) (flags : StatusFlags)
     (ktail : ∀ s', VRegs c 0 s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 c.n → c.n < 16 →
-      Runs exe Q (s', 0x543829))
+      Runs exe Q (s', 0x543809))
     (kloop : ∀ s', VRegs c 0 s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 (c.n - 0) →
       BitVec.setWidth 256 s'.zmms.zmm11 = 16#128 ++ 16#128 → 0 + 16 ≤ c.n →
-      Runs exe Q (s', 0x543469)) :
-    Runs exe Q (⟨c.regs, zmms, flags, c.mem⟩, 0x542a80) := by
+      Runs exe Q (s', 0x543449)) :
+    Runs exe Q (⟨c.regs, zmms, flags, c.mem⟩, 0x542a60) := by
   have hn64 : c.n < 2 ^ 64 := by have := hc.src_fit; omega
   have hmask : Mem.loadInt c.mem 5621904#64 16 = some (maskVal.toNat : Int) := hc.mask
   have hoff16 : Mem.loadInt c.mem 5622336#64 16 = some 16 := by
@@ -30,15 +30,15 @@ theorem v_entry (c : Call) (hc : Pre c true) (hrsp : c.regs.rsp.toBitVec = c.rsp
     simpa [Holds, offAddr] using this
   have hvaes := hc.arg_vaes
   simp only [↓reduceIte] at hvaes
-  rw [runs_def, next_542a80]
-  simp only [blk_542a80]
+  rw [runs_def, next_542a60]
+  simp only [blk_542a60]
   xstep [hrsp, hc.arg_nr, hc.arg_xk, hc.arg_dst, hc.arg_src, hc.arg_n, hc.arg_ivlo, hc.arg_ivhi,
-    hvaes, hn64, ofInt_natCast64, label_542f49, label_54343c]
+    hvaes, hn64, ofInt_natCast64, label_542f29, label_54341c]
   intro v
   apply reaches_of_runs
-  rw [runs_def, next_54343c]
-  simp only [blk_54343c]
-  vstep [hmask, hoff16, hn64, label_543829, BitVec.setWidth_setWidth_of_le]
+  rw [runs_def, next_54341c]
+  simp only [blk_54341c]
+  vstep [hmask, hoff16, hn64, label_543809, BitVec.setWidth_setWidth_of_le]
   by_cases hsmall : c.n < 16
   · simp only [hsmall, decide_true, ite_true, Effects.All]
     apply reaches_of_runs
@@ -58,7 +58,7 @@ theorem v_entry (c : Call) (hc : Pre c true) (hrsp : c.regs.rsp.toBitVec = c.rsp
 /-- `vzeroupper; ret` at the end of the VAES path. -/
 theorem v_ret (c : Call) (v : Bool) (hc : Pre c v) (hrsp : c.regs.rsp.toBitVec = c.rsp)
     (s : MachineData) (hs : NIFinal c c.n s) :
-    Runs exe (Post c) (s, 0x543d72) := by
+    Runs exe (Post c) (s, 0x543d52) := by
   have hra : Mem.loadInt s.dmem s.regs.rsp.toBitVec 8 = some (c.ra.toNat : Int) := by
     rw [hs.rsp, hrsp, loadInt_frame hs.mem _ 8 (fun t ht hin => by
       apply hc.sep_stack _ hin
@@ -66,8 +66,8 @@ theorem v_ret (c : Call) (v : Bool) (hc : Pre c v) (hrsp : c.regs.rsp.toBitVec =
         toNat_add_of_lt _ _ (by have := hc.rsp_fit; omega)]
       omega)]
     exact hc.ret
-  rw [runs_def, next_543d72]
-  simp only [blk_543d72]
+  rw [runs_def, next_543d52]
+  simp only [blk_543d52]
   xstep [hra]
   exact reaches_done ⟨by simp, by simp [hs.rsp, hrsp], hs.rbp, hs.r14, hs.r15, hs.mem⟩
 

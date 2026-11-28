@@ -203,10 +203,10 @@ programs Kraken parsed, printed by Kraken, assemble to the same bytes, and
 runs the audit and the evaluator.
 
 The addresses in the proofs are those of the test binary of the Go change on
-master f9d574dc87. If the linker moves all five functions by the same
-amount, with the same sizes and the data where it was, `tools/relocate.py`
-moves the addresses written in the generators and in the other proof files
-accordingly.
+master d695060f5b (https://go.dev/cl/866945, patch set 1), built with
+GOAMD64=v1. If the linker moves all five functions by the same amount, with
+the same sizes and the data where it was, `tools/relocate.py` moves the
+addresses written in the generators and in the other proof files accordingly.
 
 ### amd64: trusted, and not proved
 

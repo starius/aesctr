@@ -4,7 +4,7 @@
   mov 0x20(%rsp),%rbx
   mov 0x28(%rsp),%rsi
   mov 0x30(%rsp),%rdi
-  movdqu 0x1a48a(%rip),%xmm0
+  movdqu 0x1a4aa(%rip),%xmm0
   movq %rsi,%xmm1
   pinsrq $0x1,%rdi,%xmm1
   pshufb %xmm0,%xmm1
@@ -30,8 +30,8 @@
   pxor %xmm0,%xmm4
   add $0x10,%rcx
   sub $0xc,%rax
-  je L5424b4
-  jb L5424e7
+  je L542494
+  jb L5424c7
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -43,7 +43,7 @@
   aesenc %xmm0,%xmm3
   aesenc %xmm0,%xmm4
   add $0x20,%rcx
-L5424b4:
+L542494:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -55,7 +55,7 @@ L5424b4:
   aesenc %xmm0,%xmm3
   aesenc %xmm0,%xmm4
   add $0x20,%rcx
-L5424e7:
+L5424c7:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2

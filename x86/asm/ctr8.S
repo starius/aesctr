@@ -4,14 +4,14 @@
   mov 0x20(%rsp),%rbx
   mov 0x28(%rsp),%rsi
   mov 0x30(%rsp),%rdi
-  movdqu 0x1a24a(%rip),%xmm0
+  movdqu 0x1a26a(%rip),%xmm0
   movq %rsi,%xmm1
   pinsrq $0x1,%rdi,%xmm1
   movaps %xmm1,%xmm8
   pshufb %xmm0,%xmm1
   mov %rsi,%r8
   add $0x7,%r8
-  jb L5426ba
+  jb L54269a
   xor %r8,%r8
   inc %r8
   pxor %xmm9,%xmm9
@@ -30,8 +30,8 @@
   movaps %xmm8,%xmm7
   paddq %xmm9,%xmm8
   movaps %xmm8,%xmm8
-  jmp L542746
-L5426ba:
+  jmp L542726
+L54269a:
   add $0x1,%rsi
   adc $0x0,%rdi
   movq %rsi,%xmm2
@@ -60,7 +60,7 @@ L5426ba:
   adc $0x0,%rdi
   movq %rsi,%xmm8
   pinsrq $0x1,%rdi,%xmm8
-L542746:
+L542726:
   pshufb %xmm0,%xmm2
   pshufb %xmm0,%xmm3
   pshufb %xmm0,%xmm4
@@ -79,8 +79,8 @@ L542746:
   pxor %xmm0,%xmm8
   add $0x10,%rcx
   sub $0xc,%rax
-  je L5427fb
-  jb L542858
+  je L5427db
+  jb L542838
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -100,7 +100,7 @@ L542746:
   aesenc %xmm0,%xmm7
   aesenc %xmm0,%xmm8
   add $0x20,%rcx
-L5427fb:
+L5427db:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2
@@ -120,7 +120,7 @@ L5427fb:
   aesenc %xmm0,%xmm7
   aesenc %xmm0,%xmm8
   add $0x20,%rcx
-L542858:
+L542838:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   aesenc %xmm0,%xmm2

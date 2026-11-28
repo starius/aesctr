@@ -4,7 +4,7 @@
   mov 0x20(%rsp),%rbx
   mov 0x28(%rsp),%rsi
   mov 0x30(%rsp),%rdi
-  movdqu 0x1a6ca(%rip),%xmm0
+  movdqu 0x1a6ea(%rip),%xmm0
   movq %rsi,%xmm1
   pinsrq $0x1,%rdi,%xmm1
   pshufb %xmm0,%xmm1
@@ -12,20 +12,20 @@
   pxor %xmm0,%xmm1
   add $0x10,%rcx
   sub $0xc,%rax
-  je L5421ff
-  jb L542214
+  je L5421df
+  jb L5421f4
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   movups 0x10(%rcx),%xmm0
   aesenc %xmm0,%xmm1
   add $0x20,%rcx
-L5421ff:
+L5421df:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   movups 0x10(%rcx),%xmm0
   aesenc %xmm0,%xmm1
   add $0x20,%rcx
-L542214:
+L5421f4:
   movups (%rcx),%xmm0
   aesenc %xmm0,%xmm1
   movups 0x10(%rcx),%xmm0

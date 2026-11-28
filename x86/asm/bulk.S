@@ -7,36 +7,36 @@
   mov 0x38(%rsp),%r9
   mov 0x40(%rsp),%r10b
   test %r10b,%r10b
-  jne L54343c
+  jne L54341c
   movq %r8,%xmm9
   pinsrq $0x1,%r9,%xmm9
-  movdqu 0x19dca(%rip),%xmm10
+  movdqu 0x19dea(%rip),%xmm10
   cmp $0x8,%rdi
-  jb L542f49
-  movdqu 0x19ee7(%rip),%xmm11
-L542ad9:
+  jb L542f29
+  movdqu 0x19f07(%rip),%xmm11
+L542ab9:
   movdqa %xmm9,%xmm0
   pshufb %xmm10,%xmm0
   movdqa %xmm9,%xmm1
-  paddq 0x19e5f(%rip),%xmm1
+  paddq 0x19e7f(%rip),%xmm1
   pshufb %xmm10,%xmm1
   movdqa %xmm9,%xmm2
-  paddq 0x19e5c(%rip),%xmm2
+  paddq 0x19e7c(%rip),%xmm2
   pshufb %xmm10,%xmm2
   movdqa %xmm9,%xmm3
-  paddq 0x19e59(%rip),%xmm3
+  paddq 0x19e79(%rip),%xmm3
   pshufb %xmm10,%xmm3
   movdqa %xmm9,%xmm4
-  paddq 0x19e56(%rip),%xmm4
+  paddq 0x19e76(%rip),%xmm4
   pshufb %xmm10,%xmm4
   movdqa %xmm9,%xmm5
-  paddq 0x19e53(%rip),%xmm5
+  paddq 0x19e73(%rip),%xmm5
   pshufb %xmm10,%xmm5
   movdqa %xmm9,%xmm6
-  paddq 0x19e50(%rip),%xmm6
+  paddq 0x19e70(%rip),%xmm6
   pshufb %xmm10,%xmm6
   movdqa %xmm9,%xmm7
-  paddq 0x19e4d(%rip),%xmm7
+  paddq 0x19e6d(%rip),%xmm7
   pshufb %xmm10,%xmm7
   movdqu (%rbx),%xmm8
   pxor %xmm8,%xmm0
@@ -49,8 +49,8 @@ L542ad9:
   pxor %xmm8,%xmm7
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L542c85
-  je L542c15
+  jb L542c65
+  je L542bf5
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -70,7 +70,7 @@ L542ad9:
   aesenc %xmm8,%xmm6
   aesenc %xmm8,%xmm7
   add $0x20,%rcx
-L542c15:
+L542bf5:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -90,7 +90,7 @@ L542c15:
   aesenc %xmm8,%xmm6
   aesenc %xmm8,%xmm7
   add $0x20,%rcx
-L542c85:
+L542c65:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -210,20 +210,20 @@ L542c85:
   paddq %xmm11,%xmm9
   sub $0x8,%rdi
   cmp $0x8,%rdi
-  jae L542ad9
-L542f49:
+  jae L542ab9
+L542f29:
   test $0x4,%rdi
-  je L5431c6
+  je L5431a6
   movdqa %xmm9,%xmm0
   pshufb %xmm10,%xmm0
   movdqa %xmm9,%xmm1
-  paddq 0x199e2(%rip),%xmm1
+  paddq 0x19a02(%rip),%xmm1
   pshufb %xmm10,%xmm1
   movdqa %xmm9,%xmm2
-  paddq 0x199df(%rip),%xmm2
+  paddq 0x199ff(%rip),%xmm2
   pshufb %xmm10,%xmm2
   movdqa %xmm9,%xmm3
-  paddq 0x199dc(%rip),%xmm3
+  paddq 0x199fc(%rip),%xmm3
   pshufb %xmm10,%xmm3
   movdqu (%rbx),%xmm8
   pxor %xmm8,%xmm0
@@ -232,8 +232,8 @@ L542f49:
   pxor %xmm8,%xmm3
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L543042
-  je L543002
+  jb L543022
+  je L542fe2
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -245,7 +245,7 @@ L542f49:
   aesenc %xmm8,%xmm2
   aesenc %xmm8,%xmm3
   add $0x20,%rcx
-L543002:
+L542fe2:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -257,7 +257,7 @@ L543002:
   aesenc %xmm8,%xmm2
   aesenc %xmm8,%xmm3
   add $0x20,%rcx
-L543042:
+L543022:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -322,22 +322,22 @@ L543042:
   movdqu %xmm3,0x30(%rdx)
   add $0x40,%rsi
   add $0x40,%rdx
-  paddq 0x197ba(%rip),%xmm9
-L5431c6:
+  paddq 0x197da(%rip),%xmm9
+L5431a6:
   test $0x2,%rdi
-  je L543347
+  je L543327
   movdqa %xmm9,%xmm0
   pshufb %xmm10,%xmm0
   movdqa %xmm9,%xmm1
-  paddq 0x19765(%rip),%xmm1
+  paddq 0x19785(%rip),%xmm1
   pshufb %xmm10,%xmm1
   movdqu (%rbx),%xmm8
   pxor %xmm8,%xmm0
   pxor %xmm8,%xmm1
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L54325b
-  je L543233
+  jb L54323b
+  je L543213
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -345,7 +345,7 @@ L5431c6:
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
   add $0x20,%rcx
-L543233:
+L543213:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -353,7 +353,7 @@ L543233:
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
   add $0x20,%rcx
-L54325b:
+L54323b:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   aesenc %xmm8,%xmm1
@@ -392,30 +392,30 @@ L54325b:
   movdqu %xmm1,0x10(%rdx)
   add $0x20,%rsi
   add $0x20,%rdx
-  paddq 0x19619(%rip),%xmm9
-L543347:
+  paddq 0x19639(%rip),%xmm9
+L543327:
   test $0x1,%rdi
-  je L54343b
+  je L54341b
   movdqa %xmm9,%xmm0
   pshufb %xmm10,%xmm0
   movdqu (%rbx),%xmm8
   pxor %xmm8,%xmm0
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L5433ac
-  je L543390
+  jb L54338c
+  je L543370
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   movdqu 0x20(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   add $0x20,%rcx
-L543390:
+L543370:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   movdqu 0x20(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   add $0x20,%rcx
-L5433ac:
+L54338c:
   movdqu 0x10(%rcx),%xmm8
   aesenc %xmm8,%xmm0
   movdqu 0x20(%rcx),%xmm8
@@ -439,32 +439,32 @@ L5433ac:
   pxor %xmm8,%xmm12
   aesenclast %xmm12,%xmm0
   movdqu %xmm0,(%rdx)
-L54343b:
+L54341b:
   ret
-L54343c:
+L54341c:
   vmovq %r8,%xmm9
   vpinsrq $0x1,%r9,%xmm9,%xmm9
   vinserti128 $0x1,%xmm9,%ymm9,%ymm9
-  vbroadcasti128 0x1943a(%rip),%ymm10
+  vbroadcasti128 0x1945a(%rip),%ymm10
   cmp $0x10,%rdi
-  jb L543829
-  vbroadcasti128 0x195d7(%rip),%ymm11
-L543469:
-  vpaddq 0x194cf(%rip),%ymm9,%ymm0
+  jb L543809
+  vbroadcasti128 0x195f7(%rip),%ymm11
+L543449:
+  vpaddq 0x194ef(%rip),%ymm9,%ymm0
   vpshufb %ymm10,%ymm0,%ymm0
-  vpaddq 0x194e2(%rip),%ymm9,%ymm1
+  vpaddq 0x19502(%rip),%ymm9,%ymm1
   vpshufb %ymm10,%ymm1,%ymm1
-  vpaddq 0x194f5(%rip),%ymm9,%ymm2
+  vpaddq 0x19515(%rip),%ymm9,%ymm2
   vpshufb %ymm10,%ymm2,%ymm2
-  vpaddq 0x19508(%rip),%ymm9,%ymm3
+  vpaddq 0x19528(%rip),%ymm9,%ymm3
   vpshufb %ymm10,%ymm3,%ymm3
-  vpaddq 0x1951b(%rip),%ymm9,%ymm4
+  vpaddq 0x1953b(%rip),%ymm9,%ymm4
   vpshufb %ymm10,%ymm4,%ymm4
-  vpaddq 0x1952e(%rip),%ymm9,%ymm5
+  vpaddq 0x1954e(%rip),%ymm9,%ymm5
   vpshufb %ymm10,%ymm5,%ymm5
-  vpaddq 0x19541(%rip),%ymm9,%ymm6
+  vpaddq 0x19561(%rip),%ymm9,%ymm6
   vpshufb %ymm10,%ymm6,%ymm6
-  vpaddq 0x19554(%rip),%ymm9,%ymm7
+  vpaddq 0x19574(%rip),%ymm9,%ymm7
   vpshufb %ymm10,%ymm7,%ymm7
   vbroadcasti128 (%rbx),%ymm8
   vpxor %ymm8,%ymm0,%ymm0
@@ -477,8 +477,8 @@ L543469:
   vpxor %ymm8,%ymm7,%ymm7
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L5435cd
-  je L54356d
+  jb L5435ad
+  je L54354d
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -498,7 +498,7 @@ L543469:
   vaesenc %ymm8,%ymm6,%ymm6
   vaesenc %ymm8,%ymm7,%ymm7
   add $0x20,%rcx
-L54356d:
+L54354d:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -518,7 +518,7 @@ L54356d:
   vaesenc %ymm8,%ymm6,%ymm6
   vaesenc %ymm8,%ymm7,%ymm7
   add $0x20,%rcx
-L5435cd:
+L5435ad:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -630,17 +630,17 @@ L5435cd:
   vpaddq %ymm11,%ymm9,%ymm9
   sub $0x10,%rdi
   cmp $0x10,%rdi
-  jae L543469
-L543829:
+  jae L543449
+L543809:
   test $0x8,%rdi
-  je L543a4d
-  vpaddq 0x19102(%rip),%ymm9,%ymm0
+  je L543a2d
+  vpaddq 0x19122(%rip),%ymm9,%ymm0
   vpshufb %ymm10,%ymm0,%ymm0
-  vpaddq 0x19115(%rip),%ymm9,%ymm1
+  vpaddq 0x19135(%rip),%ymm9,%ymm1
   vpshufb %ymm10,%ymm1,%ymm1
-  vpaddq 0x19128(%rip),%ymm9,%ymm2
+  vpaddq 0x19148(%rip),%ymm9,%ymm2
   vpshufb %ymm10,%ymm2,%ymm2
-  vpaddq 0x1913b(%rip),%ymm9,%ymm3
+  vpaddq 0x1915b(%rip),%ymm9,%ymm3
   vpshufb %ymm10,%ymm3,%ymm3
   vbroadcasti128 (%rbx),%ymm8
   vpxor %ymm8,%ymm0,%ymm0
@@ -649,8 +649,8 @@ L543829:
   vpxor %ymm8,%ymm3,%ymm3
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L5438fe
-  je L5438c6
+  jb L5438de
+  je L5438a6
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -662,7 +662,7 @@ L543829:
   vaesenc %ymm8,%ymm2,%ymm2
   vaesenc %ymm8,%ymm3,%ymm3
   add $0x20,%rcx
-L5438c6:
+L5438a6:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -674,7 +674,7 @@ L5438c6:
   vaesenc %ymm8,%ymm2,%ymm2
   vaesenc %ymm8,%ymm3,%ymm3
   add $0x20,%rcx
-L5438fe:
+L5438de:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -735,22 +735,22 @@ L5438fe:
   vmovdqu %ymm3,0x60(%rdx)
   add $0x80,%rsi
   add $0x80,%rdx
-  vbroadcasti128 0x18f78(%rip),%ymm13
+  vbroadcasti128 0x18f98(%rip),%ymm13
   vpaddq %ymm13,%ymm9,%ymm9
-L543a4d:
+L543a2d:
   test $0x4,%rdi
-  je L543ba7
-  vpaddq 0x18ede(%rip),%ymm9,%ymm0
+  je L543b87
+  vpaddq 0x18efe(%rip),%ymm9,%ymm0
   vpshufb %ymm10,%ymm0,%ymm0
-  vpaddq 0x18ef1(%rip),%ymm9,%ymm1
+  vpaddq 0x18f11(%rip),%ymm9,%ymm1
   vpshufb %ymm10,%ymm1,%ymm1
   vbroadcasti128 (%rbx),%ymm8
   vpxor %ymm8,%ymm0,%ymm0
   vpxor %ymm8,%ymm1,%ymm1
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L543ad6
-  je L543ab2
+  jb L543ab6
+  je L543a92
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -758,7 +758,7 @@ L543a4d:
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
   add $0x20,%rcx
-L543ab2:
+L543a92:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -766,7 +766,7 @@ L543ab2:
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
   add $0x20,%rcx
-L543ad6:
+L543ab6:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vaesenc %ymm8,%ymm1,%ymm1
@@ -803,31 +803,31 @@ L543ad6:
   vmovdqu %ymm1,0x20(%rdx)
   add $0x40,%rsi
   add $0x40,%rdx
-  vbroadcasti128 0x18dde(%rip),%ymm13
+  vbroadcasti128 0x18dfe(%rip),%ymm13
   vpaddq %ymm13,%ymm9,%ymm9
-L543ba7:
+L543b87:
   test $0x2,%rdi
-  je L543c9f
-  vpaddq 0x18d84(%rip),%ymm9,%ymm0
+  je L543c7f
+  vpaddq 0x18da4(%rip),%ymm9,%ymm0
   vpshufb %ymm10,%ymm0,%ymm0
   vbroadcasti128 (%rbx),%ymm8
   vpxor %ymm8,%ymm0,%ymm0
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L543c0a
-  je L543bf0
+  jb L543bea
+  je L543bd0
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vbroadcasti128 0x20(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   add $0x20,%rcx
-L543bf0:
+L543bd0:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vbroadcasti128 0x20(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   add $0x20,%rcx
-L543c0a:
+L543bea:
   vbroadcasti128 0x10(%rcx),%ymm8
   vaesenc %ymm8,%ymm0,%ymm0
   vbroadcasti128 0x20(%rcx),%ymm8
@@ -852,31 +852,31 @@ L543c0a:
   vmovdqu %ymm0,(%rdx)
   add $0x20,%rsi
   add $0x20,%rdx
-  vbroadcasti128 0x18cc6(%rip),%ymm13
+  vbroadcasti128 0x18ce6(%rip),%ymm13
   vpaddq %ymm13,%ymm9,%ymm9
-L543c9f:
+L543c7f:
   test $0x1,%rdi
-  je L543d72
-  vpaddq 0x18c8c(%rip),%xmm9,%xmm0
+  je L543d52
+  vpaddq 0x18cac(%rip),%xmm9,%xmm0
   vpshufb %xmm10,%xmm0,%xmm0
   vmovdqu (%rbx),%xmm8
   vpxor %xmm8,%xmm0,%xmm0
   mov %rbx,%rcx
   cmp $0xc,%rax
-  jb L543cfd
-  je L543ce5
+  jb L543cdd
+  je L543cc5
   vmovdqu 0x10(%rcx),%xmm8
   vaesenc %xmm8,%xmm0,%xmm0
   vmovdqu 0x20(%rcx),%xmm8
   vaesenc %xmm8,%xmm0,%xmm0
   add $0x20,%rcx
-L543ce5:
+L543cc5:
   vmovdqu 0x10(%rcx),%xmm8
   vaesenc %xmm8,%xmm0,%xmm0
   vmovdqu 0x20(%rcx),%xmm8
   vaesenc %xmm8,%xmm0,%xmm0
   add $0x20,%rcx
-L543cfd:
+L543cdd:
   vmovdqu 0x10(%rcx),%xmm8
   vaesenc %xmm8,%xmm0,%xmm0
   vmovdqu 0x20(%rcx),%xmm8
@@ -899,6 +899,6 @@ L543cfd:
   vpxor (%rsi),%xmm8,%xmm12
   vaesenclast %xmm12,%xmm0,%xmm0
   vmovdqu %xmm0,(%rdx)
-L543d72:
+L543d52:
   vzeroupper
   ret

@@ -13,15 +13,15 @@ namespace AesCtrX86
 set_option maxHeartbeats 40000000
 set_option maxRecDepth 200000
 
-/-- The VAES group of 8 blocks at 543829, AES-128: if bit 8 of the
+/-- The VAES group of 8 blocks at 543809, AES-128: if bit 8 of the
 remaining count is set, it encrypts blocks `b .. b+7`, and steps the pointers and the counter. -/
 theorem v_tail8_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 16 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 8 ≤ r0 % 16 then b + 8 else b) →
-      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543a4d)) :
-    Runs exe Q (s, 0x543829) := by
+      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543a2d)) :
+    Runs exe Q (s, 0x543809) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 10 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -29,11 +29,11 @@ theorem v_tail8_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
   have hy9 := hs.y9
   have hy10 := hs.y10
   have hbit := vtest_bit_8 r0 hr0
-  rw [runs_def, next_543829]
-  simp only [blk_543829]
+  rw [runs_def, next_543809]
+  simp only [blk_543809]
   by_cases hrun : 8 ≤ r0 % 16
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543a4d]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543a2d]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _) hrdi
@@ -161,11 +161,11 @@ theorem v_tail8_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
       fun v0 v1 v2 v3 v4 v5 => loadInt_32_blk' _ _ _ _ _ (d6 v0 v1 v2 v3 v4 v5) (d7 v0 v1 v2 v3 v4 v5)
     have ostep : ∀ v0 v1 v2 v3 v4 v5 v6 v7 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) (blockAddr c.dst (b + 2)) 16 v2) (blockAddr c.dst (b + 3)) 16 v3) (blockAddr c.dst (b + 4)) 16 v4) (blockAddr c.dst (b + 5)) 16 v5) (blockAddr c.dst (b + 6)) 16 v6) (blockAddr c.dst (b + 7)) 16 v7) 5622208#64 16 = some 8 := fun v0 v1 v2 v3 v4 v5 v6 v7 => by
       simpa [stores, offAddr] using off_fact hc hinv (by omega) 8 (by omega) [(b, v0), ((b + 1), v1), ((b + 2), v2), ((b + 3), v3), ((b + 4), v4), ((b + 5), v5), ((b + 6), v6), ((b + 7), v7)] (by simp; omega)
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, o2, o3, S0, D0, S1, D1, S2, D2, S3, D3, ostep, next_5438c6, blk_5438c6, next_5438fe, blk_5438fe, label_5438fe, label_5438c6]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, o2, o3, S0, D0, S1, D1, S2, D2, S3, D3, ostep, next_5438a6, blk_5438a6, next_5438de, blk_5438de, label_5438de, label_5438a6]
     intros
     apply reaches_of_runs
     rw [runs_def]
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, o2, o3, S0, D0, S1, D1, S2, D2, S3, D3, ostep, next_5438c6, blk_5438c6, next_5438fe, blk_5438fe]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, o2, o3, S0, D0, S1, D1, S2, D2, S3, D3, ostep, next_5438a6, blk_5438a6, next_5438de, blk_5438de]
     intros
     rw [← runs_def]
     apply kont (b + 8) _ (by simp [hrun])
@@ -206,15 +206,15 @@ theorem v_tail8_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 8 blocks at 543829, AES-192: if bit 8 of the
+/-- The VAES group of 8 blocks at 543809, AES-192: if bit 8 of the
 remaining count is set, it encrypts blocks `b .. b+7`, and steps the pointers and the counter. -/
 theorem v_tail8_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 16 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 8 ≤ r0 % 16 then b + 8 else b) →
-      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543a4d)) :
-    Runs exe Q (s, 0x543829) := by
+      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543a2d)) :
+    Runs exe Q (s, 0x543809) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 12 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -222,11 +222,11 @@ theorem v_tail8_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
   have hy9 := hs.y9
   have hy10 := hs.y10
   have hbit := vtest_bit_8 r0 hr0
-  rw [runs_def, next_543829]
-  simp only [blk_543829]
+  rw [runs_def, next_543809]
+  simp only [blk_543809]
   by_cases hrun : 8 ≤ r0 % 16
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543a4d]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543a2d]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _) hrdi
@@ -358,11 +358,11 @@ theorem v_tail8_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
       fun v0 v1 v2 v3 v4 v5 => loadInt_32_blk' _ _ _ _ _ (d6 v0 v1 v2 v3 v4 v5) (d7 v0 v1 v2 v3 v4 v5)
     have ostep : ∀ v0 v1 v2 v3 v4 v5 v6 v7 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) (blockAddr c.dst (b + 2)) 16 v2) (blockAddr c.dst (b + 3)) 16 v3) (blockAddr c.dst (b + 4)) 16 v4) (blockAddr c.dst (b + 5)) 16 v5) (blockAddr c.dst (b + 6)) 16 v6) (blockAddr c.dst (b + 7)) 16 v7) 5622208#64 16 = some 8 := fun v0 v1 v2 v3 v4 v5 v6 v7 => by
       simpa [stores, offAddr] using off_fact hc hinv (by omega) 8 (by omega) [(b, v0), ((b + 1), v1), ((b + 2), v2), ((b + 3), v3), ((b + 4), v4), ((b + 5), v5), ((b + 6), v6), ((b + 7), v7)] (by simp; omega)
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, o2, o3, S0, D0, S1, D1, S2, D2, S3, D3, ostep, next_5438c6, blk_5438c6, next_5438fe, blk_5438fe, label_5438fe, label_5438c6]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, o2, o3, S0, D0, S1, D1, S2, D2, S3, D3, ostep, next_5438a6, blk_5438a6, next_5438de, blk_5438de, label_5438de, label_5438a6]
     intros
     apply reaches_of_runs
     rw [runs_def]
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, o2, o3, S0, D0, S1, D1, S2, D2, S3, D3, ostep, next_5438c6, blk_5438c6, next_5438fe, blk_5438fe]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, o2, o3, S0, D0, S1, D1, S2, D2, S3, D3, ostep, next_5438a6, blk_5438a6, next_5438de, blk_5438de]
     intros
     rw [← runs_def]
     apply kont (b + 8) _ (by simp [hrun])
@@ -403,15 +403,15 @@ theorem v_tail8_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 8 blocks at 543829, AES-256: if bit 8 of the
+/-- The VAES group of 8 blocks at 543809, AES-256: if bit 8 of the
 remaining count is set, it encrypts blocks `b .. b+7`, and steps the pointers and the counter. -/
 theorem v_tail8_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 16 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 8 ≤ r0 % 16 then b + 8 else b) →
-      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543a4d)) :
-    Runs exe Q (s, 0x543829) := by
+      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543a2d)) :
+    Runs exe Q (s, 0x543809) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 14 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -419,11 +419,11 @@ theorem v_tail8_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
   have hy9 := hs.y9
   have hy10 := hs.y10
   have hbit := vtest_bit_8 r0 hr0
-  rw [runs_def, next_543829]
-  simp only [blk_543829]
+  rw [runs_def, next_543809]
+  simp only [blk_543809]
   by_cases hrun : 8 ≤ r0 % 16
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543a4d]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543a2d]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _) hrdi
@@ -559,7 +559,7 @@ theorem v_tail8_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
       fun v0 v1 v2 v3 v4 v5 => loadInt_32_blk' _ _ _ _ _ (d6 v0 v1 v2 v3 v4 v5) (d7 v0 v1 v2 v3 v4 v5)
     have ostep : ∀ v0 v1 v2 v3 v4 v5 v6 v7 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) (blockAddr c.dst (b + 2)) 16 v2) (blockAddr c.dst (b + 3)) 16 v3) (blockAddr c.dst (b + 4)) 16 v4) (blockAddr c.dst (b + 5)) 16 v5) (blockAddr c.dst (b + 6)) 16 v6) (blockAddr c.dst (b + 7)) 16 v7) 5622208#64 16 = some 8 := fun v0 v1 v2 v3 v4 v5 v6 v7 => by
       simpa [stores, offAddr] using off_fact hc hinv (by omega) 8 (by omega) [(b, v0), ((b + 1), v1), ((b + 2), v2), ((b + 3), v3), ((b + 4), v4), ((b + 5), v5), ((b + 6), v6), ((b + 7), v7)] (by simp; omega)
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, o0, o1, o2, o3, S0, D0, S1, D1, S2, D2, S3, D3, ostep, next_5438c6, blk_5438c6, next_5438fe, blk_5438fe, label_5438fe, label_5438c6]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, o0, o1, o2, o3, S0, D0, S1, D1, S2, D2, S3, D3, ostep, next_5438a6, blk_5438a6, next_5438de, blk_5438de, label_5438de, label_5438a6]
     intros
     rw [← runs_def]
     apply kont (b + 8) _ (by simp [hrun])
@@ -600,15 +600,15 @@ theorem v_tail8_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 4 blocks at 543a4d, AES-128: if bit 4 of the
+/-- The VAES group of 4 blocks at 543a2d, AES-128: if bit 4 of the
 remaining count is set, it encrypts blocks `b .. b+3`, and steps the pointers and the counter. -/
 theorem v_tail4_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 8 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 4 ≤ r0 % 8 then b + 4 else b) →
-      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543ba7)) :
-    Runs exe Q (s, 0x543a4d) := by
+      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543b87)) :
+    Runs exe Q (s, 0x543a2d) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 10 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -616,11 +616,11 @@ theorem v_tail4_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
   have hy9 := hs.y9
   have hy10 := hs.y10
   have hbit := vtest_bit_4 r0 hr0
-  rw [runs_def, next_543a4d]
-  simp only [blk_543a4d]
+  rw [runs_def, next_543a2d]
+  simp only [blk_543a2d]
   by_cases hrun : 4 ≤ r0 % 8
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543ba7]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543b87]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _) hrdi
@@ -700,11 +700,11 @@ theorem v_tail4_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
       fun v0 v1 => loadInt_32_blk' _ _ _ _ _ (d2 v0 v1) (d3 v0 v1)
     have ostep : ∀ v0 v1 v2 v3 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) (blockAddr c.dst (b + 2)) 16 v2) (blockAddr c.dst (b + 3)) 16 v3) 5622144#64 16 = some 4 := fun v0 v1 v2 v3 => by
       simpa [stores, offAddr] using off_fact hc hinv (by omega) 4 (by omega) [(b, v0), ((b + 1), v1), ((b + 2), v2), ((b + 3), v3)] (by simp; omega)
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, S0, D0, S1, D1, ostep, next_543ab2, blk_543ab2, next_543ad6, blk_543ad6, label_543ad6, label_543ab2]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, S0, D0, S1, D1, ostep, next_543a92, blk_543a92, next_543ab6, blk_543ab6, label_543ab6, label_543a92]
     intros
     apply reaches_of_runs
     rw [runs_def]
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, S0, D0, S1, D1, ostep, next_543ab2, blk_543ab2, next_543ad6, blk_543ad6]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, S0, D0, S1, D1, ostep, next_543a92, blk_543a92, next_543ab6, blk_543ab6]
     intros
     rw [← runs_def]
     apply kont (b + 4) _ (by simp [hrun])
@@ -729,15 +729,15 @@ theorem v_tail4_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 4 blocks at 543a4d, AES-192: if bit 4 of the
+/-- The VAES group of 4 blocks at 543a2d, AES-192: if bit 4 of the
 remaining count is set, it encrypts blocks `b .. b+3`, and steps the pointers and the counter. -/
 theorem v_tail4_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 8 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 4 ≤ r0 % 8 then b + 4 else b) →
-      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543ba7)) :
-    Runs exe Q (s, 0x543a4d) := by
+      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543b87)) :
+    Runs exe Q (s, 0x543a2d) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 12 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -745,11 +745,11 @@ theorem v_tail4_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
   have hy9 := hs.y9
   have hy10 := hs.y10
   have hbit := vtest_bit_4 r0 hr0
-  rw [runs_def, next_543a4d]
-  simp only [blk_543a4d]
+  rw [runs_def, next_543a2d]
+  simp only [blk_543a2d]
   by_cases hrun : 4 ≤ r0 % 8
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543ba7]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543b87]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _) hrdi
@@ -833,11 +833,11 @@ theorem v_tail4_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
       fun v0 v1 => loadInt_32_blk' _ _ _ _ _ (d2 v0 v1) (d3 v0 v1)
     have ostep : ∀ v0 v1 v2 v3 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) (blockAddr c.dst (b + 2)) 16 v2) (blockAddr c.dst (b + 3)) 16 v3) 5622144#64 16 = some 4 := fun v0 v1 v2 v3 => by
       simpa [stores, offAddr] using off_fact hc hinv (by omega) 4 (by omega) [(b, v0), ((b + 1), v1), ((b + 2), v2), ((b + 3), v3)] (by simp; omega)
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, S0, D0, S1, D1, ostep, next_543ab2, blk_543ab2, next_543ad6, blk_543ad6, label_543ad6, label_543ab2]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, S0, D0, S1, D1, ostep, next_543a92, blk_543a92, next_543ab6, blk_543ab6, label_543ab6, label_543a92]
     intros
     apply reaches_of_runs
     rw [runs_def]
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, S0, D0, S1, D1, ostep, next_543ab2, blk_543ab2, next_543ad6, blk_543ad6]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, S0, D0, S1, D1, ostep, next_543a92, blk_543a92, next_543ab6, blk_543ab6]
     intros
     rw [← runs_def]
     apply kont (b + 4) _ (by simp [hrun])
@@ -862,15 +862,15 @@ theorem v_tail4_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 4 blocks at 543a4d, AES-256: if bit 4 of the
+/-- The VAES group of 4 blocks at 543a2d, AES-256: if bit 4 of the
 remaining count is set, it encrypts blocks `b .. b+3`, and steps the pointers and the counter. -/
 theorem v_tail4_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 8 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 4 ≤ r0 % 8 then b + 4 else b) →
-      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543ba7)) :
-    Runs exe Q (s, 0x543a4d) := by
+      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543b87)) :
+    Runs exe Q (s, 0x543a2d) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 14 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -878,11 +878,11 @@ theorem v_tail4_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
   have hy9 := hs.y9
   have hy10 := hs.y10
   have hbit := vtest_bit_4 r0 hr0
-  rw [runs_def, next_543a4d]
-  simp only [blk_543a4d]
+  rw [runs_def, next_543a2d]
+  simp only [blk_543a2d]
   by_cases hrun : 4 ≤ r0 % 8
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543ba7]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543b87]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _) hrdi
@@ -970,7 +970,7 @@ theorem v_tail4_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
       fun v0 v1 => loadInt_32_blk' _ _ _ _ _ (d2 v0 v1) (d3 v0 v1)
     have ostep : ∀ v0 v1 v2 v3 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) (blockAddr c.dst (b + 2)) 16 v2) (blockAddr c.dst (b + 3)) 16 v3) 5622144#64 16 = some 4 := fun v0 v1 v2 v3 => by
       simpa [stores, offAddr] using off_fact hc hinv (by omega) 4 (by omega) [(b, v0), ((b + 1), v1), ((b + 2), v2), ((b + 3), v3)] (by simp; omega)
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, o0, o1, S0, D0, S1, D1, ostep, next_543ab2, blk_543ab2, next_543ad6, blk_543ad6, label_543ad6, label_543ab2]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, o0, o1, S0, D0, S1, D1, ostep, next_543a92, blk_543a92, next_543ab6, blk_543ab6, label_543ab6, label_543a92]
     intros
     rw [← runs_def]
     apply kont (b + 4) _ (by simp [hrun])
@@ -995,15 +995,15 @@ theorem v_tail4_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 2 blocks at 543ba7, AES-128: if bit 2 of the
+/-- The VAES group of 2 blocks at 543b87, AES-128: if bit 2 of the
 remaining count is set, it encrypts blocks `b .. b+1`, and steps the pointers and the counter. -/
 theorem v_tail2_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 4 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 2 ≤ r0 % 4 then b + 2 else b) →
-      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543c9f)) :
-    Runs exe Q (s, 0x543ba7) := by
+      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543c7f)) :
+    Runs exe Q (s, 0x543b87) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 10 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -1011,11 +1011,11 @@ theorem v_tail2_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
   have hy9 := hs.y9
   have hy10 := hs.y10
   have hbit := vtest_bit_2 r0 hr0
-  rw [runs_def, next_543ba7]
-  simp only [blk_543ba7]
+  rw [runs_def, next_543b87]
+  simp only [blk_543b87]
   by_cases hrun : 2 ≤ r0 % 4
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543c9f]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543c7f]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _) hrdi
@@ -1071,11 +1071,11 @@ theorem v_tail2_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
       loadInt_32_blk' _ _ _ _ _ (d0) (d1)
     have ostep : ∀ v0 v1 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) 5622112#64 16 = some 2 := fun v0 v1 => by
       simpa [stores, offAddr] using off_fact hc hinv (by omega) 2 (by omega) [(b, v0), ((b + 1), v1)] (by simp; omega)
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, S0, D0, ostep, next_543bf0, blk_543bf0, next_543c0a, blk_543c0a, label_543c0a, label_543bf0]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, S0, D0, ostep, next_543bd0, blk_543bd0, next_543bea, blk_543bea, label_543bea, label_543bd0]
     intros
     apply reaches_of_runs
     rw [runs_def]
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, S0, D0, ostep, next_543bf0, blk_543bf0, next_543c0a, blk_543c0a]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, S0, D0, ostep, next_543bd0, blk_543bd0, next_543bea, blk_543bea]
     intros
     rw [← runs_def]
     apply kont (b + 2) _ (by simp [hrun])
@@ -1092,15 +1092,15 @@ theorem v_tail2_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 2 blocks at 543ba7, AES-192: if bit 2 of the
+/-- The VAES group of 2 blocks at 543b87, AES-192: if bit 2 of the
 remaining count is set, it encrypts blocks `b .. b+1`, and steps the pointers and the counter. -/
 theorem v_tail2_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 4 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 2 ≤ r0 % 4 then b + 2 else b) →
-      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543c9f)) :
-    Runs exe Q (s, 0x543ba7) := by
+      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543c7f)) :
+    Runs exe Q (s, 0x543b87) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 12 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -1108,11 +1108,11 @@ theorem v_tail2_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
   have hy9 := hs.y9
   have hy10 := hs.y10
   have hbit := vtest_bit_2 r0 hr0
-  rw [runs_def, next_543ba7]
-  simp only [blk_543ba7]
+  rw [runs_def, next_543b87]
+  simp only [blk_543b87]
   by_cases hrun : 2 ≤ r0 % 4
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543c9f]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543c7f]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _) hrdi
@@ -1172,11 +1172,11 @@ theorem v_tail2_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
       loadInt_32_blk' _ _ _ _ _ (d0) (d1)
     have ostep : ∀ v0 v1 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) 5622112#64 16 = some 2 := fun v0 v1 => by
       simpa [stores, offAddr] using off_fact hc hinv (by omega) 2 (by omega) [(b, v0), ((b + 1), v1)] (by simp; omega)
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, S0, D0, ostep, next_543bf0, blk_543bf0, next_543c0a, blk_543c0a, label_543c0a, label_543bf0]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, S0, D0, ostep, next_543bd0, blk_543bd0, next_543bea, blk_543bea, label_543bea, label_543bd0]
     intros
     apply reaches_of_runs
     rw [runs_def]
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, S0, D0, ostep, next_543bf0, blk_543bf0, next_543c0a, blk_543c0a]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, S0, D0, ostep, next_543bd0, blk_543bd0, next_543bea, blk_543bea]
     intros
     rw [← runs_def]
     apply kont (b + 2) _ (by simp [hrun])
@@ -1193,15 +1193,15 @@ theorem v_tail2_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 2 blocks at 543ba7, AES-256: if bit 2 of the
+/-- The VAES group of 2 blocks at 543b87, AES-256: if bit 2 of the
 remaining count is set, it encrypts blocks `b .. b+1`, and steps the pointers and the counter. -/
 theorem v_tail2_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 4 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 2 ≤ r0 % 4 then b + 2 else b) →
-      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543c9f)) :
-    Runs exe Q (s, 0x543ba7) := by
+      VRegs c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543c7f)) :
+    Runs exe Q (s, 0x543b87) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 14 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -1209,11 +1209,11 @@ theorem v_tail2_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
   have hy9 := hs.y9
   have hy10 := hs.y10
   have hbit := vtest_bit_2 r0 hr0
-  rw [runs_def, next_543ba7]
-  simp only [blk_543ba7]
+  rw [runs_def, next_543b87]
+  simp only [blk_543b87]
   by_cases hrun : 2 ≤ r0 % 4
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543c9f]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, label_543c7f]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _) hrdi
@@ -1277,7 +1277,7 @@ theorem v_tail2_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
       loadInt_32_blk' _ _ _ _ _ (d0) (d1)
     have ostep : ∀ v0 v1 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) 5622112#64 16 = some 2 := fun v0 v1 => by
       simpa [stores, offAddr] using off_fact hc hinv (by omega) 2 (by omega) [(b, v0), ((b + 1), v1)] (by simp; omega)
-    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, o0, S0, D0, ostep, next_543bf0, blk_543bf0, next_543c0a, blk_543c0a, label_543c0a, label_543bf0]
+    vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, o0, S0, D0, ostep, next_543bd0, blk_543bd0, next_543bea, blk_543bea, label_543bea, label_543bd0]
     intros
     rw [← runs_def]
     apply kont (b + 2) _ (by simp [hrun])
@@ -1294,15 +1294,15 @@ theorem v_tail2_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 1 blocks at 543c9f, AES-128: if bit 1 of the
+/-- The VAES group of 1 blocks at 543c7f, AES-128: if bit 1 of the
 remaining count is set, it encrypts blocks `b .. b+0`. -/
 theorem v_tail1_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 2 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 1 ≤ r0 % 2 then b + 1 else b) →
-      NIFinal c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543d72)) :
-    Runs exe Q (s, 0x543c9f) := by
+      NIFinal c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543d52)) :
+    Runs exe Q (s, 0x543c7f) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 10 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -1310,11 +1310,11 @@ theorem v_tail1_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
   have hx9 := hs.x9
   have hx10 := hs.x10
   have hbit := vtest_bit_1 r0 hr0
-  rw [runs_def, next_543c9f]
-  simp only [blk_543c9f]
+  rw [runs_def, next_543c7f]
+  simp only [blk_543c7f]
   by_cases hrun : 1 ≤ r0 % 2
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, label_543d72]
+    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, label_543d52]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _).final hrdi
@@ -1352,11 +1352,11 @@ theorem v_tail1_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
     obtain ⟨z0, hz0⟩ := hc.dsts b (by omega)
     have d0 : Mem.loadInt s.dmem (blockAddr c.dst b) 16 = some z0 :=
       (dst_fact hc.toBufs hinv b (by omega) (by omega) [] (by simp)).trans hz0
-    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, s0, d0, next_543ce5, blk_543ce5, next_543cfd, blk_543cfd, label_543cfd, label_543ce5]
+    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, s0, d0, next_543cc5, blk_543cc5, next_543cdd, blk_543cdd, label_543cdd, label_543cc5]
     intros
     apply reaches_of_runs
     rw [runs_def]
-    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, s0, d0, next_543ce5, blk_543ce5, next_543cfd, blk_543cfd]
+    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, s0, d0, next_543cc5, blk_543cc5, next_543cdd, blk_543cdd]
     intros
     rw [← runs_def]
     apply kont (b + 1) _ (by simp [hrun])
@@ -1368,15 +1368,15 @@ theorem v_tail1_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 1 blocks at 543c9f, AES-192: if bit 1 of the
+/-- The VAES group of 1 blocks at 543c7f, AES-192: if bit 1 of the
 remaining count is set, it encrypts blocks `b .. b+0`. -/
 theorem v_tail1_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 2 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 1 ≤ r0 % 2 then b + 1 else b) →
-      NIFinal c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543d72)) :
-    Runs exe Q (s, 0x543c9f) := by
+      NIFinal c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543d52)) :
+    Runs exe Q (s, 0x543c7f) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 12 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -1384,11 +1384,11 @@ theorem v_tail1_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
   have hx9 := hs.x9
   have hx10 := hs.x10
   have hbit := vtest_bit_1 r0 hr0
-  rw [runs_def, next_543c9f]
-  simp only [blk_543c9f]
+  rw [runs_def, next_543c7f]
+  simp only [blk_543c7f]
   by_cases hrun : 1 ≤ r0 % 2
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, label_543d72]
+    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, label_543d52]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _).final hrdi
@@ -1430,11 +1430,11 @@ theorem v_tail1_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
     obtain ⟨z0, hz0⟩ := hc.dsts b (by omega)
     have d0 : Mem.loadInt s.dmem (blockAddr c.dst b) 16 = some z0 :=
       (dst_fact hc.toBufs hinv b (by omega) (by omega) [] (by simp)).trans hz0
-    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, s0, d0, next_543ce5, blk_543ce5, next_543cfd, blk_543cfd, label_543cfd, label_543ce5]
+    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, s0, d0, next_543cc5, blk_543cc5, next_543cdd, blk_543cdd, label_543cdd, label_543cc5]
     intros
     apply reaches_of_runs
     rw [runs_def]
-    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, s0, d0, next_543ce5, blk_543ce5, next_543cfd, blk_543cfd]
+    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, s0, d0, next_543cc5, blk_543cc5, next_543cdd, blk_543cdd]
     intros
     rw [← runs_def]
     apply kont (b + 1) _ (by simp [hrun])
@@ -1446,15 +1446,15 @@ theorem v_tail1_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
       exact hs.mem
     · exact hrdi
 
-/-- The VAES group of 1 blocks at 543c9f, AES-256: if bit 1 of the
+/-- The VAES group of 1 blocks at 543c7f, AES-256: if bit 1 of the
 remaining count is set, it encrypts blocks `b .. b+0`. -/
 theorem v_tail1_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
     (b r0 : Nat) (hr0 : r0 < 16) (hb : b + r0 % 2 = c.n)
     (Q : MachineState → Prop) (s : MachineData) (hs : VRegs c b s)
     (hrdi : s.regs.rdi.toBitVec = BitVec.ofNat 64 r0)
     (kont : ∀ (b' : Nat) (s' : MachineData), b' = (if 1 ≤ r0 % 2 then b + 1 else b) →
-      NIFinal c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543d72)) :
-    Runs exe Q (s, 0x543c9f) := by
+      NIFinal c b' s' → s'.regs.rdi.toBitVec = BitVec.ofNat 64 r0 → Runs exe Q (s', 0x543d52)) :
+    Runs exe Q (s, 0x543c7f) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 14 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -1462,11 +1462,11 @@ theorem v_tail1_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
   have hx9 := hs.x9
   have hx10 := hs.x10
   have hbit := vtest_bit_1 r0 hr0
-  rw [runs_def, next_543c9f]
-  simp only [blk_543c9f]
+  rw [runs_def, next_543c7f]
+  simp only [blk_543c7f]
   by_cases hrun : 1 ≤ r0 % 2
   case neg =>
-    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, label_543d72]
+    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, label_543d52]
     intros
     apply reaches_of_runs
     exact kont b _ (by simp [hrun]) (vRegs_status hs _).final hrdi
@@ -1512,7 +1512,7 @@ theorem v_tail1_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
     obtain ⟨z0, hz0⟩ := hc.dsts b (by omega)
     have d0 : Mem.loadInt s.dmem (blockAddr c.dst b) 16 = some z0 :=
       (dst_fact hc.toBufs hinv b (by omega) (by omega) [] (by simp)).trans hz0
-    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, o0, s0, d0, next_543ce5, blk_543ce5, next_543cfd, blk_543cfd, label_543cfd, label_543ce5]
+    vstep [hrax, hrbx, hrsi, hrdx, hx9, hx10, hrdi, hbit, hrun, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, o0, s0, d0, next_543cc5, blk_543cc5, next_543cdd, blk_543cdd, label_543cdd, label_543cc5]
     intros
     rw [← runs_def]
     apply kont (b + 1) _ (by simp [hrun])
@@ -1524,7 +1524,7 @@ theorem v_tail1_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
       exact hs.mem
     · exact hrdi
 
-/-- One iteration of the VAES loop at 543469, AES-128: it encrypts
+/-- One iteration of the VAES loop at 543449, AES-128: it encrypts
 blocks `b .. b+15`, steps the pointers and the counter, and goes back to the
 loop while 16 or more blocks are left. -/
 theorem v_loop_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
@@ -1535,11 +1535,11 @@ theorem v_loop_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
     (kloop : ∀ s' : MachineData, VRegs c (b + 16) s' →
       s'.regs.rdi.toBitVec = BitVec.ofNat 64 (c.n - (b + 16)) →
       BitVec.setWidth 256 s'.zmms.zmm11 = 16#128 ++ 16#128 → b + 32 ≤ c.n →
-      Runs exe Q (s', 0x543469))
+      Runs exe Q (s', 0x543449))
     (ktail : ∀ s' : MachineData, VRegs c (b + 16) s' →
       s'.regs.rdi.toBitVec = BitVec.ofNat 64 (c.n - (b + 16)) → c.n < b + 32 →
-      Runs exe Q (s', 0x543829)) :
-    Runs exe Q (s, 0x543469) := by
+      Runs exe Q (s', 0x543809)) :
+    Runs exe Q (s, 0x543449) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 10 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -1550,8 +1550,8 @@ theorem v_loop_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
   have hsub : BitVec.ofNat 64 (c.n - b) - BitVec.ofNat 64 16 = BitVec.ofNat 64 (c.n - (b + 16)) :=
     (ofNat_sub_ofNat _ _ (by omega) hn64).trans (by rw [Nat.sub_sub])
   have hn64' : c.n - (b + 16) < 2 ^ 64 := by omega
-  rw [runs_def, next_543469]
-  simp only [blk_543469]
+  rw [runs_def, next_543449]
+  simp only [blk_543449]
 
   have hinv := hs.mem
   have k0 : Mem.loadInt s.dmem c.xk 16 = some ((c.rk 0).toNat : Int) := by
@@ -1768,11 +1768,11 @@ theorem v_loop_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
       fun v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 => loadInt_32_blk _ _ _ _ _ (s14 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13) (s15 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13)
   have D7 : ∀ v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) (blockAddr c.dst (b + 2)) 16 v2) (blockAddr c.dst (b + 3)) 16 v3) (blockAddr c.dst (b + 4)) 16 v4) (blockAddr c.dst (b + 5)) 16 v5) (blockAddr c.dst (b + 6)) 16 v6) (blockAddr c.dst (b + 7)) 16 v7) (blockAddr c.dst (b + 8)) 16 v8) (blockAddr c.dst (b + 9)) 16 v9) (blockAddr c.dst (b + 10)) 16 v10) (blockAddr c.dst (b + 11)) 16 v11) (blockAddr c.dst (b + 12)) 16 v12) (blockAddr c.dst (b + 13)) 16 v13) (blockAddr c.dst (b + 14)) 32 = some (z14 + 2 ^ 128 * z15) :=
       fun v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 => loadInt_32_blk' _ _ _ _ _ (d14 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13) (d15 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13)
-  vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hy11, hsub, hn64', k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, o2, o3, o4, o5, o6, o7, S0, D0, S1, D1, S2, D2, S3, D3, S4, D4, S5, D5, S6, D6, S7, D7, next_54356d, blk_54356d, next_5435cd, blk_5435cd, label_5435cd, label_54356d, label_543469]
+  vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hy11, hsub, hn64', k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, o2, o3, o4, o5, o6, o7, S0, D0, S1, D1, S2, D2, S3, D3, S4, D4, S5, D5, S6, D6, S7, D7, next_54354d, blk_54354d, next_5435ad, blk_5435ad, label_5435ad, label_54354d, label_543449]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, o2, o3, o4, o5, o6, o7, S0, D0, S1, D1, S2, D2, S3, D3, S4, D4, S5, D5, S6, D6, S7, D7, next_54356d, blk_54356d, next_5435cd, blk_5435cd, hrdi, hy11, hsub, hn64', label_543469]
+  vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, o0, o1, o2, o3, o4, o5, o6, o7, S0, D0, S1, D1, S2, D2, S3, D3, S4, D4, S5, D5, S6, D6, S7, D7, next_54354d, blk_54354d, next_5435ad, blk_5435ad, hrdi, hy11, hsub, hn64', label_543449]
   intros
   by_cases hmore : b + 32 ≤ c.n
   · -- 16 or more blocks left: back to the loop
@@ -1925,7 +1925,7 @@ theorem v_loop_10 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 10)
     · rfl
     · omega
 
-/-- One iteration of the VAES loop at 543469, AES-192: it encrypts
+/-- One iteration of the VAES loop at 543449, AES-192: it encrypts
 blocks `b .. b+15`, steps the pointers and the counter, and goes back to the
 loop while 16 or more blocks are left. -/
 theorem v_loop_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
@@ -1936,11 +1936,11 @@ theorem v_loop_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
     (kloop : ∀ s' : MachineData, VRegs c (b + 16) s' →
       s'.regs.rdi.toBitVec = BitVec.ofNat 64 (c.n - (b + 16)) →
       BitVec.setWidth 256 s'.zmms.zmm11 = 16#128 ++ 16#128 → b + 32 ≤ c.n →
-      Runs exe Q (s', 0x543469))
+      Runs exe Q (s', 0x543449))
     (ktail : ∀ s' : MachineData, VRegs c (b + 16) s' →
       s'.regs.rdi.toBitVec = BitVec.ofNat 64 (c.n - (b + 16)) → c.n < b + 32 →
-      Runs exe Q (s', 0x543829)) :
-    Runs exe Q (s, 0x543469) := by
+      Runs exe Q (s', 0x543809)) :
+    Runs exe Q (s, 0x543449) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 12 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -1951,8 +1951,8 @@ theorem v_loop_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
   have hsub : BitVec.ofNat 64 (c.n - b) - BitVec.ofNat 64 16 = BitVec.ofNat 64 (c.n - (b + 16)) :=
     (ofNat_sub_ofNat _ _ (by omega) hn64).trans (by rw [Nat.sub_sub])
   have hn64' : c.n - (b + 16) < 2 ^ 64 := by omega
-  rw [runs_def, next_543469]
-  simp only [blk_543469]
+  rw [runs_def, next_543449]
+  simp only [blk_543449]
 
   have hinv := hs.mem
   have k0 : Mem.loadInt s.dmem c.xk 16 = some ((c.rk 0).toNat : Int) := by
@@ -2173,11 +2173,11 @@ theorem v_loop_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
       fun v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 => loadInt_32_blk _ _ _ _ _ (s14 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13) (s15 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13)
   have D7 : ∀ v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) (blockAddr c.dst (b + 2)) 16 v2) (blockAddr c.dst (b + 3)) 16 v3) (blockAddr c.dst (b + 4)) 16 v4) (blockAddr c.dst (b + 5)) 16 v5) (blockAddr c.dst (b + 6)) 16 v6) (blockAddr c.dst (b + 7)) 16 v7) (blockAddr c.dst (b + 8)) 16 v8) (blockAddr c.dst (b + 9)) 16 v9) (blockAddr c.dst (b + 10)) 16 v10) (blockAddr c.dst (b + 11)) 16 v11) (blockAddr c.dst (b + 12)) 16 v12) (blockAddr c.dst (b + 13)) 16 v13) (blockAddr c.dst (b + 14)) 32 = some (z14 + 2 ^ 128 * z15) :=
       fun v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 => loadInt_32_blk' _ _ _ _ _ (d14 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13) (d15 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13)
-  vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hy11, hsub, hn64', k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, o2, o3, o4, o5, o6, o7, S0, D0, S1, D1, S2, D2, S3, D3, S4, D4, S5, D5, S6, D6, S7, D7, next_54356d, blk_54356d, next_5435cd, blk_5435cd, label_5435cd, label_54356d, label_543469]
+  vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hy11, hsub, hn64', k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, o2, o3, o4, o5, o6, o7, S0, D0, S1, D1, S2, D2, S3, D3, S4, D4, S5, D5, S6, D6, S7, D7, next_54354d, blk_54354d, next_5435ad, blk_5435ad, label_5435ad, label_54354d, label_543449]
   intros
   apply reaches_of_runs
   rw [runs_def]
-  vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, o2, o3, o4, o5, o6, o7, S0, D0, S1, D1, S2, D2, S3, D3, S4, D4, S5, D5, S6, D6, S7, D7, next_54356d, blk_54356d, next_5435cd, blk_5435cd, hrdi, hy11, hsub, hn64', label_543469]
+  vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, o0, o1, o2, o3, o4, o5, o6, o7, S0, D0, S1, D1, S2, D2, S3, D3, S4, D4, S5, D5, S6, D6, S7, D7, next_54354d, blk_54354d, next_5435ad, blk_5435ad, hrdi, hy11, hsub, hn64', label_543449]
   intros
   by_cases hmore : b + 32 ≤ c.n
   · -- 16 or more blocks left: back to the loop
@@ -2330,7 +2330,7 @@ theorem v_loop_12 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 12)
     · rfl
     · omega
 
-/-- One iteration of the VAES loop at 543469, AES-256: it encrypts
+/-- One iteration of the VAES loop at 543449, AES-256: it encrypts
 blocks `b .. b+15`, steps the pointers and the counter, and goes back to the
 loop while 16 or more blocks are left. -/
 theorem v_loop_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
@@ -2341,11 +2341,11 @@ theorem v_loop_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
     (kloop : ∀ s' : MachineData, VRegs c (b + 16) s' →
       s'.regs.rdi.toBitVec = BitVec.ofNat 64 (c.n - (b + 16)) →
       BitVec.setWidth 256 s'.zmms.zmm11 = 16#128 ++ 16#128 → b + 32 ≤ c.n →
-      Runs exe Q (s', 0x543469))
+      Runs exe Q (s', 0x543449))
     (ktail : ∀ s' : MachineData, VRegs c (b + 16) s' →
       s'.regs.rdi.toBitVec = BitVec.ofNat 64 (c.n - (b + 16)) → c.n < b + 32 →
-      Runs exe Q (s', 0x543829)) :
-    Runs exe Q (s, 0x543469) := by
+      Runs exe Q (s', 0x543809)) :
+    Runs exe Q (s, 0x543449) := by
   have hrax : s.regs.rax.toBitVec = BitVec.ofNat 64 14 := by rw [hs.rax, hnr]
   have hrbx := hs.rbx
   have hrsi := hs.rsi
@@ -2356,8 +2356,8 @@ theorem v_loop_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
   have hsub : BitVec.ofNat 64 (c.n - b) - BitVec.ofNat 64 16 = BitVec.ofNat 64 (c.n - (b + 16)) :=
     (ofNat_sub_ofNat _ _ (by omega) hn64).trans (by rw [Nat.sub_sub])
   have hn64' : c.n - (b + 16) < 2 ^ 64 := by omega
-  rw [runs_def, next_543469]
-  simp only [blk_543469]
+  rw [runs_def, next_543449]
+  simp only [blk_543449]
 
   have hinv := hs.mem
   have k0 : Mem.loadInt s.dmem c.xk 16 = some ((c.rk 0).toNat : Int) := by
@@ -2582,7 +2582,7 @@ theorem v_loop_14 (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = 14)
       fun v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 => loadInt_32_blk _ _ _ _ _ (s14 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13) (s15 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13)
   have D7 : ∀ v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 : Int, Mem.loadInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt (Mem.storeInt s.dmem (blockAddr c.dst b) 16 v0) (blockAddr c.dst (b + 1)) 16 v1) (blockAddr c.dst (b + 2)) 16 v2) (blockAddr c.dst (b + 3)) 16 v3) (blockAddr c.dst (b + 4)) 16 v4) (blockAddr c.dst (b + 5)) 16 v5) (blockAddr c.dst (b + 6)) 16 v6) (blockAddr c.dst (b + 7)) 16 v7) (blockAddr c.dst (b + 8)) 16 v8) (blockAddr c.dst (b + 9)) 16 v9) (blockAddr c.dst (b + 10)) 16 v10) (blockAddr c.dst (b + 11)) 16 v11) (blockAddr c.dst (b + 12)) 16 v12) (blockAddr c.dst (b + 13)) 16 v13) (blockAddr c.dst (b + 14)) 32 = some (z14 + 2 ^ 128 * z15) :=
       fun v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 => loadInt_32_blk' _ _ _ _ _ (d14 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13) (d15 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13)
-  vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hy11, hsub, hn64', k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, o0, o1, o2, o3, o4, o5, o6, o7, S0, D0, S1, D1, S2, D2, S3, D3, S4, D4, S5, D5, S6, D6, S7, D7, next_54356d, blk_54356d, next_5435cd, blk_5435cd, label_5435cd, label_54356d, label_543469]
+  vstep [hrax, hrbx, hrsi, hrdx, hy9, hy10, hrdi, hy11, hsub, hn64', k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, o0, o1, o2, o3, o4, o5, o6, o7, S0, D0, S1, D1, S2, D2, S3, D3, S4, D4, S5, D5, S6, D6, S7, D7, next_54354d, blk_54354d, next_5435ad, blk_5435ad, label_5435ad, label_54354d, label_543449]
   intros
   by_cases hmore : b + 32 ≤ c.n
   · -- 16 or more blocks left: back to the loop

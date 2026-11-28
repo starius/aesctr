@@ -16,11 +16,11 @@ OFF = 0x55c940          # ctrOffsets in the linked binary
 
 # name, entry label, R192 label, R128 label, exit label, registers (blocks).
 GROUPS = [
-    ("tail4", 0x542f49, 0x543002, 0x543042, 0x5431c6, 4),
-    ("tail2", 0x5431c6, 0x543233, 0x54325b, 0x543347, 2),
-    ("tail1", 0x543347, 0x543390, 0x5433ac, 0x54343b, 1),
+    ("tail4", 0x542f29, 0x542fe2, 0x543022, 0x5431a6, 4),
+    ("tail2", 0x5431a6, 0x543213, 0x54323b, 0x543327, 2),
+    ("tail1", 0x543327, 0x543370, 0x54338c, 0x54341b, 1),
 ]
-LOOP = ("loop", 0x542ad9, 0x542c15, 0x542c85, 0x542f49, 8)
+LOOP = ("loop", 0x542ab9, 0x542bf5, 0x542c65, 0x542f29, 8)
 
 
 def stores_term(j):
@@ -229,12 +229,12 @@ theorem ni_loop_%(nr)d (c : Call) (v : Bool) (hc : Pre c v) (hnr : c.nr = %(nr)d
 # The groups of 16, 8, 4 and 2 blocks use ymm registers (two blocks each), the
 # group of 1 block an xmm register.
 VGROUPS = [
-    ("tail8", 0x543829, 0x5438c6, 0x5438fe, 0x543a4d, 8),
-    ("tail4", 0x543a4d, 0x543ab2, 0x543ad6, 0x543ba7, 4),
-    ("tail2", 0x543ba7, 0x543bf0, 0x543c0a, 0x543c9f, 2),
-    ("tail1", 0x543c9f, 0x543ce5, 0x543cfd, 0x543d72, 1),
+    ("tail8", 0x543809, 0x5438a6, 0x5438de, 0x543a2d, 8),
+    ("tail4", 0x543a2d, 0x543a92, 0x543ab6, 0x543b87, 4),
+    ("tail2", 0x543b87, 0x543bd0, 0x543bea, 0x543c7f, 2),
+    ("tail1", 0x543c7f, 0x543cc5, 0x543cdd, 0x543d52, 1),
 ]
-VLOOP = ("loop", 0x543469, 0x54356d, 0x5435cd, 0x543829, 16)
+VLOOP = ("loop", 0x543449, 0x54354d, 0x5435ad, 0x543809, 16)
 
 
 def vfacts(k, nr, step):
